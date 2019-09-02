@@ -5,8 +5,6 @@
   background-color: lightgray;
 }
 
-
-
 .card-action{
   border: none !important;
 }
@@ -97,6 +95,7 @@ html{
 
 #nLocalizado, #inativo{
   font-size: 1rem !important;
+  font-weight: bold;
 }
 
 
