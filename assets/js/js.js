@@ -51,6 +51,7 @@ $(document).ready(function(){
                 }else{
                     $("#loadUsuario").attr("hidden","hidden");
                     $("#nLocalizado").attr("hidden","hidden");
+                    $("#inativo").attr("hidden","hidden");
                     $("#nomeUsuario").html(dados[0]);
                     $("#cardUsuario").hide("slide", { direction: "left" }, 200, function(){
                     $("#cardSenha").show("slide", {direction: "right"}, 200);
@@ -63,18 +64,16 @@ $(document).ready(function(){
     // autentica a senha do usuario e loga na aplicação //
 
     $("#logar").click(function(){
-        //alert($("#usuario").val())
-
-            $.ajax({
+        $.ajax({
             url:'http://10.11.194.42/ajaxLogin',
             type:'POST',
             async: false,
             data:{senha: $("#password").val(), tipo: 2, id_usuario: $("#usuario").val()},
             success: function(r) {
                 if(r == false){
-                    alert("usuario ou senha invalidos");                
+                    $("#senhaInvalida").removeAttr("hidden")               
                 }else{
-                    $("#nomeUsuario").html(r);
+                    window.location.href = r;
                 }       
             }
         });

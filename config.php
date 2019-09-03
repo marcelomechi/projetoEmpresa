@@ -11,6 +11,7 @@ if (ENVIRONMENT == 'development'){
 	$config['dbuser'] = 'userAPI';
 	$config['dbpass'] = 'MI$j4g9s6J7D6ik';
 }else{
+	define("BASE_URL","http://10.11.194.50/");
 	$config['dbname'] = 'login';
 	$config['host'] = 'localhost';
 	$config['dbuser'] = 'root';

@@ -65,7 +65,8 @@ Vamos criar oa tela de login
                       <div class="card-title w100 flow-text">Olá, <span id="nomeUsuario"></span>!</div>
                         <div class="input-field col s12">              
                           <input type="password" class="validate" name="password" id="password"/>
-                          <label for="password" data-error="wrong" data-success="ok">Senha</label>
+                          <label for="password" data-error="Preencha corretamente o campo Senha" data-success="">Senha</label>
+                          <span class="flow-text red-text" id="senhaInvalida" hidden>Usuário ou senha inválido.</span>
                         </div>
                             <p class="left-align">
                               <input type="checkbox" class="filled-in left" id="filled-in-box"  />

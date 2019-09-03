@@ -42,15 +42,19 @@ class AjaxLoginController extends Controller{
 						$senha = addslashes($_POST['senha']);
 
 						$usuario = new Usuarios();	
-						$retorno = $usuario -> autenticaUsuario($login,$senha);
-
-
+						$retorno = $usuario -> primeiroLogin($login,$senha);
 
 						$dados = array(
 								'logado'=> $retorno['status']								
 							); 
-
+						
+						
 						$this -> loadView('ajaxLogin',$dados);
+						
+
+						
+						
+						
 
 						/*if (md5($_POST['senha']) == $senha){
 							$dados = array(

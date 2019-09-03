@@ -5,12 +5,10 @@ class Usuarios extends Model {
 	public function verificaLogin(){
 		
 		/* se não tiver setado ou se tiver setado e tiver vazio */
-
-		if(!isset($_SESSION['usuario']) || (isset($_SESSION['usuario']) && !empty($_SESSION['usuario']))  ){
-
+	
+		if(empty($_SESSION['usuario'])){
 			header("Location: ".BASE_URL."login");
 			exit;
-
 		}
 		
 	}
@@ -50,33 +48,64 @@ class Usuarios extends Model {
 		
 	}
 
-	public function autenticaUsuario($login, $senha){
-				$dados = array(
-					'status' => ''
-				);
+	public function primeiroLogin($login, $senha){
+		$dados = array(
+			'status' => ''
+		);
 
-				$sql = "SELECT * FROM usuarios WHERE id_usuario = :id_usuario AND senha_inicial = md5(:senha_inicial)";
-				$sql = $this-> db -> prepare($sql);
-				$sql -> bindValue(':id_usuario',$login);
-				$sql -> bindValue(':senha_inicial',$senha);
-				$sql -> execute();
+				$_SESSION['usuario'] = '';	
+				$_SESSION['senha'] = '';
+				$_SESSION['CPF'] = '';
+				$_SESSION['id_perfil_acesso'] = '';
+				$_SESSION['id_tema_preferido'] = '';
+				$_SESSION['exibir_aniversario'] = '';
+				$_SESSION['foto'] = '';
 
-				if($sql -> rowCount() > 0){
-					$sql = $sql -> fetch();
-					
-					$_SESSION['id_usuario'] = $sql['id_usuario'];	
-					$_SESSION['senha_inicial'] = $sql['senha_inicial'];		
 
+		if($login == $senha){
+			
+			$sql = "SELECT U.PIN, U.CPF, U.SENHA, U.ID_PERFIL_ACESSO, P.ID_TEMA_PREFERIDO, P.EXIBIR_ANIVERSARIO, P.APELIDO, P.CAMINHO_FOTO  FROM TB_WFM_USUARIO U ";
+			$sql .= "JOIN TB_WFM_PERFIL_PESSOAL P ON P.CPF = U.CPF ";
+			$sql .= "WHERE U.CPF = :senha_inicial ";
+								
+			$sql = $this-> db -> prepare($sql);
+			$sql -> bindValue(':senha_inicial',$senha);
+			$sql -> execute();
+
+			if($sql -> rowCount() > 0){
+				$sql = $sql -> fetch();
+				
+				/*$sqlUpdate = "UPDATE TB_WFM_USUARIO SET SENHA = :senha WHERE CPF = :senha";
+				$sqlUpdate = $this -> db -> prepare($sqlUpdate);
+				$sqlUpdate->bindValue(':senha',$senha);
+				$sqlUpdate->execute();*/
+
+				$_SESSION['usuario'] = $sql['CPF'];	
+	
 					$dados = array(
-						'status' => 'logado'
-					); 
+						'status' => BASE_URL
+					);
 
-					return $dados;	
-				}else{
-					return false;	
-				}
+					return $dados;
+				
+			}else{
+				$dados = array(
+					'status' => 'n_logado'
+				);
+				
+				return $dados;
+			}
 
-	}
+		}else{
+			return false;
+		}
+
+					
+
+}
+
+	
+	
 }
 
 

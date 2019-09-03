@@ -14,10 +14,11 @@ class HomeController extends Controller{
 
 	public function index(){
 		
-		$usuarios = new Usuarios();
+		$login = new Usuarios();
+		$login -> verificaLogin();
 
 		$dados = array(
-			'nome' => $usuarios -> getUsuario(),
+			'nome' => 'marcelo',
 			'sobrenome' => 'Mechi'
 		);
 

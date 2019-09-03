@@ -8,6 +8,7 @@ if (isset($nome) && !empty($nome)){
     echo $dados;
 }else{
     echo $logado;
+
 }
 
 

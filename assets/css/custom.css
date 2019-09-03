@@ -93,7 +93,7 @@ html{
 }
 
 
-#nLocalizado, #inativo{
+#nLocalizado, #inativo,#senhaInvalida{
   font-size: 1rem !important;
   font-weight: bold;
 }
