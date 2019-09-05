@@ -9,6 +9,9 @@
   <!-- Compiled and minified CSS -->
     <link rel="stylesheet" href="<?php echo BASE_URL;?>assets/css/cssFramework/css/materialize.css">
     <link rel="stylesheet" href="<?php echo BASE_URL;?>assets/js/jquery-ui-1.12.1/jquery-ui.min.css">
+    <link href="<?php echo BASE_URL;?>/assets/css/fontA/css/fontawesome.css" rel="stylesheet">
+    <link href="<?php echo BASE_URL;?>/assets/css/fontA/css/brands.css" rel="stylesheet">
+    <link href="<?php echo BASE_URL;?>/assets/css/fontA/css/solid.css" rel="stylesheet">
     <link rel="stylesheet" href="<?php echo BASE_URL;?>assets/css/custom.css">
 
 </head>
@@ -47,7 +50,7 @@ Vamos criar oa tela de login
                       <a href="#" id="recuperaSenha">Não me lembro</a>
                   </div>
                      <div class="input-field">
-                        <button type="submit" id="proximo" class="btn waves-effect waves-light w100">Proximo</button>
+                        <button type="submit" id="proximo" class="btn waves-effect waves-light w100">Próximo</button>
                      </div> 
                      <div id="loadUsuario" class="input-field" hidden> 
                          <div class="progress">
@@ -59,9 +62,10 @@ Vamos criar oa tela de login
 
                 <section id="cardSenha" class="esquerda" hidden> 
                       <div class="card-title left-align">
-                        <i id="voltar" class="material-icons">arrow_back</i>   
+                        
+                        <i id="voltar" class="fas fa-arrow-left"></i> 
                       </div>                                
-                          <i class="large material-icons center">account_circle</i>  
+                            <i class="fas fa-user-circle large"></i> 
                       <div class="card-title w100 flow-text">Olá, <span id="nomeUsuario"></span>!</div>
                         <div class="input-field col s12">              
                           <input type="password" class="validate" name="password" id="password"/>
@@ -165,6 +169,9 @@ Vamos criar oa tela de login
 <script src="<?php echo BASE_URL;?>assets/js/jquery-3.4.1.js"></script>
 <script src="<?php echo BASE_URL;?>assets/css/cssFramework/js/materialize.js"></script>
 <script src="<?php echo BASE_URL;?>assets/js/jquery-ui-1.12.1/jquery-ui.js"></script>
+<script src="<?php echo BASE_URL;?>assets/css/fontA/js/brands.js"></script>
+<script src="<?php echo BASE_URL;?>assets/css/fontA/js/solid.js"></script>
+<script src="<?php echo BASE_URL;?>assets/css/fontA/js/fontawesome.js"></script>
 <script src="<?php echo BASE_URL;?>assets/js/js.js"></script>
 
 <script>
