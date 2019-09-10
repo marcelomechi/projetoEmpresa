@@ -91,7 +91,7 @@ $(document).ready(function(){
     // Exibe e oculta a recuperação de senha //
     
     $("#recuperaSenha").click(function(){
-        $("#cardUsuario").hide(200, function(){
+        $("#cardSenha").hide(200, function(){
             $("#cardEsqueciSenha").show(200);
         });
     });
@@ -100,7 +100,7 @@ $(document).ready(function(){
     
     $("#cancelaEsqueciSenha").click(function(){
         $("#cardEsqueciSenha").hide(200, function(){
-            $("#cardUsuario").show(200);
+            $("#cardSenha").show(200);
         });
     });
 

@@ -21,10 +21,7 @@ Vamos criar oa tela de login
 -->
   <div class="grid centro">
 
-    <div>
-
-
-    </div>
+   
      
       <div  class="card-panel hoverables center-align">                 
 
@@ -43,15 +40,15 @@ Vamos criar oa tela de login
                   <div class="input-field">
                       <input type="text" autocomplete="off" class="validate" name="usuario" id="usuario" onkeypress="return SomenteNumero(event)" />
                       <label for="usuario" data-error="Preencha corretamente o campo Usuário" data-success="">CPF</label>
-                      <span class="flow-text red-text" id="nLocalizado" hidden>Usuário não localizado.</span>
-                      <span class="flow-text red-text" id="inativo" hidden>Usuário inativo.</span>
-                  </div>
-                  <div class="input-field left-align">
-                      <a href="#" id="recuperaSenha">Não me lembro</a>
-                  </div>
+                      <span class="flow-text red-text" id="nLocalizado" hidden>Usuário não localizado</span>
+                      <span class="flow-text red-text" id="inativo" hidden>Usuário inativo</span>
+                  </div>                  
                      <div class="input-field">
                         <button type="submit" id="proximo" class="btn waves-effect waves-light w100">Próximo</button>
                      </div> 
+                     <div class="input-field left-align">
+                              <a href="#" id="recuperaSenha">Acesso Convidado</a>
+                        </div>
                      <div id="loadUsuario" class="input-field" hidden> 
                          <div class="progress">
                              <div class="indeterminate"></div>
@@ -70,12 +67,17 @@ Vamos criar oa tela de login
                         <div class="input-field col s12">              
                           <input type="password" class="validate" name="password" id="password"/>
                           <label for="password" data-error="Preencha corretamente o campo Senha" data-success="">Senha</label>
-                          <span class="flow-text red-text" id="senhaInvalida" hidden>Usuário ou senha inválido.</span>
+                          <span class="flow-text red-text" id="senhaInvalida" hidden>Senha inválida</span>
                         </div>
-                            <p class="left-align">
-                              <input type="checkbox" class="filled-in left" id="filled-in-box"  />
-                              <label for="filled-in-box">Mantenha-me Conectado.</label>
-                            </p>
+                        <div class="left-align">
+                        <label>
+                            <input type="checkbox" class="filled-in"/>
+                           <span>Mantenha-me conectado</span>
+                        </label>                        
+                        </div>
+                        <div class="input-field left-align">
+                              <a href="#" id="recuperaSenha">Não me lembro</a>
+                        </div>
                          <div class="input-field">
                               <button class="btn waves-effect waves-light w100" id="logar">Entrar</button>
                         </div>
