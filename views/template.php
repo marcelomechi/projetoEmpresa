@@ -65,7 +65,20 @@
   cursor: pointer;
 }
 
+#entrantesAbandonadas{
+  max-height: 300px;
+  width: auto;
+}
 
+@media (max-width: 600px) 
+{
+
+  #dadosPessoais{
+    display: none;
+  }
+
+
+}
 
 
 
@@ -88,11 +101,11 @@
 </head>
 <body>
 <nav>
-    <div class="row">
+    <div class="row">        
       <div class="nav-wrapper indigo col s12 m12 l12">
-
+      <a href="#" class="brand-logo center">Dashboard</a>  
         <div id="main" data-target="sidebar" class="sidenav-trigger"><i class="material-icons white-text"><i class="fas fa-bars hvr"></i></i></div>
-          <ul class="right">                   
+          <ul id="dadosPessoais" class="right">                   
             <li><a href="#"><i class="material-icons center-align"><img id="profile" class="responsive-img h10" src="assets/images/marcelo.jpg"></i></a></li>      
             <li><a href="#"><i class="fas fa-bell"></i></a></li>
             <li><a href="#"><i class="fas fa-sign-out-alt"></i></a></li>
@@ -636,7 +649,9 @@ window.chartColors = {
       Lavender: 'rgb(230,230,250)',
       tealAccent4: 'rgb(0,191,165)',
       purpleLighten4: 'rgb(225,190,231)',
-      pinkAccent2: 'rgb(255,64,129)'
+      pinkAccent2: 'rgb(255,64,129)',
+      DarkSlateGray4: 'rgb(82,139,139)',
+      CadetBlue3: 'rgb(122,197,205)'
 
       
     };
@@ -743,7 +758,8 @@ window.chartColors = {
         ]
       },
       options: {
-        responsive: true
+        responsive: true,
+        maintainAspectRatio: false
       }
     };
 
@@ -857,7 +873,7 @@ window.chartColors = {
       }, {
         type: 'bar',
         label: 'Absenteísmo',
-        backgroundColor: window.chartColors.SkyBlue,
+        backgroundColor: window.chartColors.CadetBlue3,
         data: [
             randomScalingFactor(),
             randomScalingFactor(),
@@ -1036,7 +1052,7 @@ window.chartColors = {
       }
     };
 
-    function carregaUltimoGrafico() {
+    function graficoPausas() {
       var ctx = document.getElementById('pausas').getContext('2d');
       window.myLine = new Chart(ctx, config5);
     };
@@ -1062,7 +1078,7 @@ window.chartColors = {
 
 
 
-     function carragaOutroGrafico3(){
+     function graficoTMA(){
       var ctx = document.getElementById('tma').getContext('2d');
       window.myMixedChart = new Chart(ctx, {
         type: 'bar',
@@ -1103,7 +1119,7 @@ window.chartColors = {
 
 
 
-    function carragaOutroGrafico(){
+    function carregaGraficoABS(){
       var ctx = document.getElementById('abs').getContext('2d');
       window.myMixedChart = new Chart(ctx, {
         type: 'bar',
@@ -1164,7 +1180,7 @@ window.chartColors = {
 
 
 
-    function grafico5(){
+    function graficoTML(){
 
 
       var ctx = document.getElementById('tml').getContext('2d');
@@ -1228,7 +1244,7 @@ window.chartColors = {
 
 
 
-    function carregaEssaPorra() {
+    function graficoEntrantesAbandonadas() {
       var ctx2 = document.getElementById('entrantesAbandonadas').getContext('2d');
       window.myPie = new Chart(ctx2, config);
     };
@@ -1250,7 +1266,7 @@ window.chartColors = {
 
     
 
-    function grafico3(){
+    function graficoFaturamento(){
       var ctx = document.getElementById('faturamento').getContext('2d');
       window.myBar = new Chart(ctx, {
         type: 'bar',
@@ -1291,12 +1307,12 @@ window.chartColors = {
      // window.myPie = new Chart(ctx, config);
      // var contexto = document.getElementById("grafico1").getContext("2d");
      // carrega();
-     grafico3();
-      carregaEssaPorra();
-     grafico5()
-     carragaOutroGrafico()
-     carragaOutroGrafico3()
-     carregaUltimoGrafico()
+     graficoFaturamento();
+     graficoEntrantesAbandonadas();
+     graficoTML();
+     carregaGraficoABS();
+     graficoTMA();
+     graficoPausas();
 
     };
 

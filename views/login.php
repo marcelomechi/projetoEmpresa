@@ -13,6 +13,7 @@
     <link href="<?php echo BASE_URL;?>/assets/css/fontA/css/brands.css" rel="stylesheet">
     <link href="<?php echo BASE_URL;?>/assets/css/fontA/css/solid.css" rel="stylesheet">
     <link rel="stylesheet" href="<?php echo BASE_URL;?>assets/css/custom.css">
+    <link rel="icon" href="data:,">
 
 </head>
 <body>
@@ -47,8 +48,8 @@ Vamos criar oa tela de login
                         <button type="submit" id="proximo" class="btn waves-effect waves-light w100">Próximo</button>
                      </div> 
                      <div class="input-field left-align">
-                              <a href="#" id="recuperaSenha">Acesso Convidado</a>
-                        </div>
+                              <a href="#">Acesso Convidado</a>
+                     </div>
                      <div id="loadUsuario" class="input-field" hidden> 
                          <div class="progress">
                              <div class="indeterminate"></div>
