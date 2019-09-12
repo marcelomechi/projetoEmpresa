@@ -166,12 +166,22 @@
             </div>
           </li>
 
+
+           <li>
+          <a class="collapsible-header"><i class="material icons"><img id="img" class="circle" src="assets/images/sistema.png"></i><i class="material icons small right"><i class="fas fa-angle-down"></i></i>Administração</a>
+            <div class="collapsible-body">
+              <ul>
+                <li><a href="#!">Administrar Módulos</a></li>
+              </ul>
+            </div>
+          </li>
+
         </ul>
 </div>   
 
 
 <div class="row">
-     <div class="col s12 m6 l2">
+     <div class="col s12 m6 l2 valign-wrapper">
          
        <div class="valign-wrapper item-linha-1">
            <div class="input-field w100">
@@ -180,7 +190,7 @@
                         <option value="1">Brasília</option>
                         <option value="2">São Paulo</option>
                       </select>
-                    <label>Selecione a Filial</label>
+                    <label>Filial</label>
                 </div>
        </div>
 
@@ -194,7 +204,7 @@
                         <option value="1">PMSP</option>
                         <option value="2">MEC</option>
                       </select>
-                    <label>Selecione o Contrato</label>
+                    <label>Contrato</label>
                 </div>
        </div>
     </div>
@@ -547,7 +557,7 @@
       <canvas class="item-linha-2" id="tma"></canvas>
     </div>
   </div>
-    <div class="row">
+<div class="row">
   <div class="col s12 m12 l6 item-linha-2">
     <div class="valign-wrapper item-linha-2">
       <canvas class="item-linha-2" id="pausas"></canvas>

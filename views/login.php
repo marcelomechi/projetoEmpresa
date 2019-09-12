@@ -12,17 +12,35 @@
     <link href="<?php echo BASE_URL;?>/assets/css/fontA/css/fontawesome.css" rel="stylesheet">
     <link href="<?php echo BASE_URL;?>/assets/css/fontA/css/brands.css" rel="stylesheet">
     <link href="<?php echo BASE_URL;?>/assets/css/fontA/css/solid.css" rel="stylesheet">
-    <link rel="stylesheet" href="<?php echo BASE_URL;?>assets/css/custom.css">
+    <?php if (preg_match('~MSIE|Internet Explorer~i', $_SERVER['HTTP_USER_AGENT']) || (strpos($_SERVER['HTTP_USER_AGENT'], 'Trident/7.0; rv:11.0') !== false)) {
+    ?>   
+    <link rel="stylesheet" href="<?php echo BASE_URL;?>assets/css/customIE.css">
+    <?php
+    }else{
+    ?>
+      <link rel="stylesheet" href="<?php echo BASE_URL;?>assets/css/custom.css">  
+    <?php    
+    }
+    ?>    
     <link rel="icon" href="data:,">
 
 </head>
+      
 <body>
 <!--
 Vamos criar oa tela de login
 -->
-  <div class="grid centro">
+
+<div id="msgInternetExplorer" class="card teal darken-1 white-text">
+        <div class="card-content">
+          <span class="card-title">Aviso</span>
+          <p>Navegador não suportado.</p>
+        </div>
+      </div>
+  <div class="oculta grid centro">
 
    
+
      
       <div  class="card-panel hoverables center-align">                 
 

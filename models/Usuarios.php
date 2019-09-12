@@ -33,7 +33,7 @@ class Usuarios extends Model {
 					
 					$pin = $sql['PIN'];
 					$nome = $sql['NOME'];
-					$id_perfil_acesso = $sql['ID_PERFIL_ACESSO'];
+					$id_perfil_acesso = $sql['ATIVO'];
 
 					$dados = array(
 						'pin' => $pin,
@@ -64,7 +64,7 @@ class Usuarios extends Model {
 
 		if($login == $senha){
 			
-			$sql = "SELECT U.PIN, U.CPF, U.SENHA, U.ID_PERFIL_ACESSO, P.ID_TEMA_PREFERIDO, P.EXIBIR_ANIVERSARIO, P.APELIDO, P.CAMINHO_FOTO  FROM TB_WFM_USUARIO U ";
+			$sql = "SELECT U.PIN, U.CPF, U.SENHA, U.ATIVO, P.ID_TEMA_PREFERIDO, P.EXIBIR_ANIVERSARIO, P.APELIDO, P.CAMINHO_FOTO  FROM TB_WFM_USUARIO U ";
 			$sql .= "JOIN TB_WFM_PERFIL_PESSOAL P ON P.CPF = U.CPF ";
 			$sql .= "WHERE U.CPF = :senha_inicial ";
 								
