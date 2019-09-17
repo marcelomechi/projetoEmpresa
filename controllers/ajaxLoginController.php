@@ -30,7 +30,7 @@ class AjaxLoginController extends Controller{
 			 		'tipo' => '1'
 				);
 			
-			$this -> loadView('ajaxLogin',$dados);
+			$this -> loadViewAjax('login','ajaxLogin',$dados);
 
 			}
 
@@ -49,7 +49,7 @@ class AjaxLoginController extends Controller{
 							); 
 						
 						
-						$this -> loadView('ajaxLogin',$dados);
+						$this -> loadViewAjax('login','ajaxLogin',$dados);
 						
 
 						

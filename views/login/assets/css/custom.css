@@ -21,14 +21,6 @@ html{
   display: none;
 }
 
-.container-flex{
-  width:100%;
-  height:100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-}
 
 .w80{
   width: 80%;
@@ -57,9 +49,7 @@ html{
   cursor: pointer;
 }
 
-.mostrar{
-  z-index: 1;
-}
+
 
 .w900{
   width: 900px;

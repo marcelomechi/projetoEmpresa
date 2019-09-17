@@ -3,6 +3,7 @@
 class Core {
 	public function start(){
 		
+		
 		$url = "/";
 		$params = array();
 		

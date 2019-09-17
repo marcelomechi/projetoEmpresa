@@ -14,11 +14,11 @@
     <link href="<?php echo BASE_URL;?>/assets/css/fontA/css/solid.css" rel="stylesheet">
     <?php if (preg_match('~MSIE|Internet Explorer~i', $_SERVER['HTTP_USER_AGENT']) || (strpos($_SERVER['HTTP_USER_AGENT'], 'Trident/7.0; rv:11.0') !== false)) {
     ?>   
-    <link rel="stylesheet" href="<?php echo BASE_URL;?>assets/css/customIE.css">
+    <link rel="stylesheet" href="<?php echo BASE_URL;?>views/login/assets/css/customIE.css">
     <?php
     }else{
     ?>
-      <link rel="stylesheet" href="<?php echo BASE_URL;?>assets/css/custom.css">  
+      <link rel="stylesheet" href="<?php echo BASE_URL;?>views/login/assets/css/custom.css">  
     <?php    
     }
     ?>    
@@ -193,7 +193,7 @@ Vamos criar oa tela de login
 <script src="<?php echo BASE_URL;?>assets/css/fontA/js/brands.js"></script>
 <script src="<?php echo BASE_URL;?>assets/css/fontA/js/solid.js"></script>
 <script src="<?php echo BASE_URL;?>assets/css/fontA/js/fontawesome.js"></script>
-<script src="<?php echo BASE_URL;?>assets/js/js.js"></script>
+<script src="<?php echo BASE_URL;?>views/login/assets/js/js.js"></script>
 
 <script>
     // valida campo somente numeros //

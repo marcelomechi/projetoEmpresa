@@ -4,18 +4,6 @@ $(document).ready(function(){
       dismissible: false, // Modal can be dismissed by clicking outside of the modal
     });
 
-
-    // validacao de campos somente numericos (não está funcionando no onkeypress tenho que deixar a função na view)
-    function SomenteNumero(e){
-        var tecla=(window.event)?event.keyCode:e.which;   
-        if((tecla>47 && tecla<58)) return true;
-        else{
-            if (tecla==8 || tecla==0) return true;
-        else  return false;
-        }
-    }
-
-
     /*
     Autenticação de usuarios na aplicação
     1- Pega o nome de usuario e a foto de Perfil
