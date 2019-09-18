@@ -15,7 +15,9 @@ class Core {
 			$url = explode('/', $url);
 			array_shift($url); //removendo o primeiro registro, no caso a /
 
+			//$currentFolder = $url[0].'/';
 			$currentController = $url[0].'Controller';
+
 			array_shift($url);
 
 			if(isset($url[0]) && !empty($url[0]) ){
@@ -39,9 +41,11 @@ class Core {
 		call_user_func_array(array($controller, $currentAction),$params);
 
 		/*echo "<pre>";
+		echo "pasta ".$currentFolder."<br>";
 		echo "controller ".$currentController."<br>";
 		echo "action ".$currentAction."<br>";
-		echo "params ".print_r($params,true)."<br>";*/
+		echo "params ".print_r($params,true)."<br>";
+		echo "pasta ".$_GET['url']."<br>";*/
 	}
 }
 

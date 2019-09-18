@@ -3,11 +3,13 @@
 		
 		public function loadView($viewName, $viewData = array()){
 			extract($viewData);
+			$_SESSION['folderController'] =  $viewName;
 			require 'views/'.$viewName.'/'.$viewName.'.php';
 		}
 
 		public function loadViewAjax($viewName, $viewAjax, $viewData = array()){
 			extract($viewData);
+			$_SESSION['folderController'] =  $viewName;
 			require 'views/'.$viewName.'/'.$viewAjax.'.php';
 		}
 	
@@ -15,6 +17,7 @@
 	/* aqui puxa o template do site (tudo que é exibido em todas as páginas, no caso o menu) */
 
 	public function loadTemplate($viewName, $viewData = array()){
+		$_SESSION['folderController'] =  $viewName;
 		require 'views/template/template.php';
 	}
 
@@ -22,6 +25,7 @@
 
 	public function loadViewInTemplate($viewName, $viewData = array()){
 		extract($viewData); // o extract serve para extrair os dados do array e transformar em variáveis
+		$_SESSION['folderController'] =  $viewName;
 		require 'views/'.$viewName.'/'.$viewName.'.php';
 	}
 

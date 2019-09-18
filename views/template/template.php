@@ -2,88 +2,7 @@
 <html>
 <head>
 
-<style>
-
-#img{
-  height: 20px;
-}
-
-#main{
-  width: 50px !important;
-}
-
-.w20{
-  width: 20px !important;
-  align: center !important;
-  margin: 0 !important;
-  padding: 0 !important;
-}
-
-.h{
-  height: 110px !important;
-  border-radius: 50% !important;
-}
-
-.h10{
-  height: 30px !important;
-  border-radius: 50% !important;
-}
-
-.graficoPizza{
-  min-height: 300px;
-}
-
-.item-linha-1{
-  min-height: 200px !important;
-  
-}
-
-.item-linha-2{
-  min-height: 600px !important;
-}
-
-
-.w100{
-  width: 100% !important;
-}
-
-#example_wrapper{
-  width: 100% !important;
-}
-
-
-
-
-
-#grafico{
-  width: 100%;
-  height: 100%;
-}
-
-
-.hvr{
-  cursor: pointer;
-}
-
-#entrantesAbandonadas{
-  max-height: 300px;
-  width: auto;
-}
-
-@media (max-width: 600px) 
-{
-
-  #dadosPessoais{
-    display: none;
-  }
-
-
-}
-
-
-
-</style>
-	<title></title>
+<title></title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 
@@ -96,6 +15,7 @@
     <link href="<?php echo BASE_URL;?>/assets/css/fontA/css/brands.css" rel="stylesheet">
     <link href="<?php echo BASE_URL;?>/assets/css/fontA/css/solid.css" rel="stylesheet">
     <link rel="stylesheet" href="<?php echo BASE_URL;?>assets/css/datatable.css">
+    <link rel="stylesheet" href="<?php echo BASE_URL;?>views/template/assets/css/customTemplate.css">
       <!-- Corrige o erro 500 -->
     <link rel="icon" href="data:,">
 </head>
@@ -171,7 +91,7 @@
           <a class="collapsible-header"><i class="material icons"><img id="img" class="circle" src="assets/images/sistema.png"></i><i class="material icons small right"><i class="fas fa-angle-down"></i></i>Administração</a>
             <div class="collapsible-body">
               <ul>
-                <li><a href="#!">Administrar Módulos</a></li>
+                <li><a href="<?php echo BASE_URL;?>modulos">Módulos</a></li>                
               </ul>
             </div>
           </li>
@@ -187,15 +107,6 @@
 
         </ul>
 </div>   
-
-<div>
-  <?php// $this -> loadViewInTemplate($viewName, $viewData); ?>
-
-</div>
-
-
-
-
     
 <script src="<?php echo BASE_URL;?>assets/js/jquery-3.4.1.js"></script>
 <script src="<?php echo BASE_URL;?>assets/js/jquery-ui-1.12.1/jquery-ui.js"></script>
@@ -205,35 +116,10 @@
 <script src="<?php echo BASE_URL;?>assets/css/cssFramework/js/materialize.js"></script>
 <script src="<?php echo BASE_URL;?>assets/js/Chart.min.js"></script>
 <script type="text/javascript" src="<?php echo BASE_URL;?>assets/js/datatable.js"></script>
+<script type="text/javascript" src="<?php echo BASE_URL;?>views/template/assets/js/jsTemplate.js"></script>
+
+<?php $this -> loadViewInTemplate($viewName, $viewData); ?>
 
 
 </body>
 </html>
-
-<script>
-/* Definir a largura da barra lateral para 250px e a margem esquerda do conteúdo da página para 250px */
-
-$(document).ready(function(){
- $('.collapsible').collapsible();
- $('.tap-target').tapTarget('open');
- 
-  /* inicia a sidenav */
-   $(".sidenav").sidenav({
-    onOpenStart: function(){
-     // document.getElementById("main").style.marginLeft = "300px";
-     //document.getElementById("main").style.transition = "0.1s";
-     // document.getElementById("main2").style.marginLeft = "300px";
-     // document.getElementById("main2").style.transition = "0.1s";
-    },
-    onCloseEnd: function(){
-     // document.getElementById("main").style.marginLeft = "18px";
-     // document.getElementById("main").style.transition = "0.1s";
-     // document.getElementById("main2").style.marginLeft = "auto";
-     // document.getElementById("main2").style.transition = "0.1s";      
-    }
-   });
-
-  })
-
-   
-	</script>

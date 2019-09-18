@@ -52,6 +52,7 @@ $(document).ready(function(){
     // autentica a senha do usuario e loga na aplicação //
 
     $("#logar").click(function(){
+         
         $.ajax({
             url:'http://10.11.194.42/ajaxLogin',
             type:'POST',
@@ -61,7 +62,7 @@ $(document).ready(function(){
                 if(r == false){
                     $("#senhaInvalida").removeAttr("hidden")               
                 }else{
-                    window.location.href = r;
+                    window.location.href = r + 'home';
                 }       
             }
         });

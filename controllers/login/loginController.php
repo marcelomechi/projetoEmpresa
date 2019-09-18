@@ -23,7 +23,10 @@ class LoginController extends Controller{
 
 		//$this -> loadView('login',$dados);
 	}
+
+	
 }
+
 
 
 

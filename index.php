@@ -10,8 +10,33 @@ spl_autoload_register(function($classe){
 		models
 		core
 	*/
-	if(file_exists('controllers/'.$classe.'.php')){
-		require 'controllers/'.$classe.'.php';			
+
+
+
+	$x = '';
+	$y = '';
+	$folderController = '';
+
+
+
+	if(!isset($_GET['url']) && empty($_GET['url'])){
+		$x = 'home';
+	}else{
+		$x = $_GET['url'];
+	}
+	
+	$y = explode("ajax",$x);
+
+
+	if(isset($y[0]) && !empty($y[0])){
+		$folderController = strtolower($y[0]);
+	}else{
+		$folderController = strtolower($y[1]);
+	}
+
+
+	if(file_exists('controllers/'.$folderController.'/'.$classe.'.php')){
+		require 'controllers/'.$folderController.'/'.$classe.'.php';
 	}else if (file_exists('models/'.$classe.'.php')){
 		require 'models/'.$classe.'.php';		
 	}else if (file_exists('core/'.$classe.'.php')){

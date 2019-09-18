@@ -28,6 +28,8 @@ class Usuarios extends Model {
 				$sql -> bindValue(':cpf',$login);
 				$sql -> execute();
 
+
+
 				if($sql -> rowCount() > 0){
 					$sql = $sql -> fetch();					
 					
