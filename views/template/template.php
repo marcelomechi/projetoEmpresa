@@ -9,7 +9,7 @@
      <!--Import Google Icon Font-->
       <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <!-- Compiled and minified CSS -->
-    <link rel="stylesheet" href="<?php echo BASE_URL;?>assets/css/cssFramework/css/materialize.css">
+    <link rel="stylesheet" href="<?php echo BASE_URL;?>assets/css/cssFramework/css/material.css">
     <link rel="stylesheet" href="<?php echo BASE_URL;?>assets/js/jquery-ui-1.12.1/jquery-ui.min.css">
     <link href="<?php echo BASE_URL;?>/assets/css/fontA/css/fontawesome.css" rel="stylesheet">
     <link href="<?php echo BASE_URL;?>/assets/css/fontA/css/brands.css" rel="stylesheet">
@@ -20,21 +20,20 @@
     <link rel="icon" href="data:,">
 </head>
 <body>
-<nav>
-    <div class="row">        
-      <div class="nav-wrapper indigo col s12 m12 l12">
-      <a href="#" class="brand-logo center"></a>  
-        <div id="main" data-target="sidebar" class="sidenav-trigger"><i class="material-icons white-text"><i class="fas fa-bars hvr"></i></i></div>
-          <ul id="dadosPessoais" class="right">                   
-            <li><a href="#"><i class="material-icons center-align"><img id="profile" class="responsive-img h10" src="assets/images/marcelo.jpg"></i></a></li>      
-            <li><a href="#"><i class="fas fa-bell"></i></a></li>
-            <li><a href="#"><i class="fas fa-sign-out-alt"></i></a></li>
-          </ul>
-        </div>
-      </div>
-    </div>
+<div class="navbar-fixed"> 
+  <nav class="indigo">
+              <div class="nav-wrapper">
+              <a href="#" class="brand-logo center"></a>  
+                <div id="main" data-target="sidebar" class="sidenav-trigger"><i class="material-icons white-text"><i class="fas fa-bars hvr"></i></i></div>
+                  <span class="brand-logo center"><?php echo $_SESSION['relatorio']; ?></span>
+                  <ul id="dadosPessoais" class="right">                   
+                    <li><a href="#"><i class="material-icons center-align"><img id="profile" class="responsive-img h10" src="assets/images/marcelo.jpg"></i></a></li>      
+                    <li><a href="#"><i class="fas fa-bell"></i></a></li>
+                    <li><a href="#"><i class="fas fa-sign-out-alt"></i></a></li>
+                  </ul>
+            </div>
   </nav>
-              
+</div>              
   <div id="sidebar" class="sidenav">    
               <div class="user-view">
                 <div class="background">
@@ -113,7 +112,7 @@
 <script src="<?php echo BASE_URL;?>assets/css/fontA/js/brands.js"></script>
 <script src="<?php echo BASE_URL;?>assets/css/fontA/js/solid.js"></script>
 <script src="<?php echo BASE_URL;?>assets/css/fontA/js/fontawesome.js"></script>
-<script src="<?php echo BASE_URL;?>assets/css/cssFramework/js/materialize.js"></script>
+<script src="<?php echo BASE_URL;?>assets/css/cssFramework/js/jsMaterial.js"></script>
 <script src="<?php echo BASE_URL;?>assets/js/Chart.min.js"></script>
 <script type="text/javascript" src="<?php echo BASE_URL;?>assets/js/datatable.js"></script>
 <script type="text/javascript" src="<?php echo BASE_URL;?>views/template/assets/js/jsTemplate.js"></script>

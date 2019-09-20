@@ -11,12 +11,9 @@ spl_autoload_register(function($classe){
 		core
 	*/
 
-
-
 	$x = '';
 	$y = '';
 	$folderController = '';
-
 
 
 	if(!isset($_GET['url']) && empty($_GET['url'])){

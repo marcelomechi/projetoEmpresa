@@ -1,3 +1,3 @@
-<div class="blue">
-	<?php echo $_SESSION['usuario']; ?>
+<div class="blue center-align">
+	<?php echo $_SESSION['usuario'].' '.$nome.' '.$relatorio; ?>
 </div>
