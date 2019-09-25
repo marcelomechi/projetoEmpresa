@@ -385,4 +385,5 @@
     </div>
 </div>
 
+<link rel="stylesheet" href="<?php echo BASE_URL;?>views/dashboard/assets/css/custom.css">
 <script type="text/javascript" src="<?php echo BASE_URL?>views/dashboard/assets/js/js.js"></script>
