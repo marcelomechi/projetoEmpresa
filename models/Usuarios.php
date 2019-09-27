@@ -66,8 +66,9 @@ class Usuarios extends Model {
 
 		if($login == $senha){
 			
-			$sql = "SELECT U.PIN, U.CPF, U.SENHA, U.ATIVO, P.ID_TEMA_PREFERIDO, P.EXIBIR_ANIVERSARIO, P.APELIDO, P.CAMINHO_FOTO  FROM TB_WFM_USUARIO U ";
+			$sql = "SELECT U.PIN, U.CPF, U.SENHA, U.ATIVO, P.ID_TEMA_PREFERIDO, P.EXIBIR_ANIVERSARIO, P.APELIDO, P.CAMINHO_FOTO, UP.ID_PERFIL FROM TB_WFM_USUARIO U ";
 			$sql .= "JOIN TB_WFM_PERFIL_PESSOAL P ON P.CPF = U.CPF ";
+			$sql .= "JOIN TB_WFM_USUARIO_PERFIL UP ON U.CPF = UP.CPF ";
 			$sql .= "WHERE U.CPF = :senha_inicial ";
 								
 			$sql = $this-> db -> prepare($sql);
@@ -82,7 +83,8 @@ class Usuarios extends Model {
 				$sqlUpdate->bindValue(':senha',$senha);
 				$sqlUpdate->execute();*/
 
-				$_SESSION['usuario'] = $sql['CPF'];	
+				$_SESSION['usuario'] = $sql['CPF'];
+				$_SESSION['permissao'] = $sql['ID_PERFIL'];	
 	
 					$dados = array(
 						'status' => BASE_URL

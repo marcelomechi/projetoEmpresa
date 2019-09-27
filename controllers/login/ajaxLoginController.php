@@ -23,14 +23,25 @@ class AjaxLoginController extends Controller{
 				$usuario = new Usuarios();	
 				$retorno = $usuario -> dadosUsuario(addslashes($_POST['id_usuario']));
 
-				$dados = array(
+				if($retorno == false){
+					$dados = array(
+						'logado' => false
+					);
+
+					$this -> loadViewAjax('login','ajaxLogin',$dados);
+
+				}else{
+					$dados = array(
 			 		'pin' => $retorno['pin'],
 					'nome' => $retorno['nome'],
 					'id_perfil_acesso' => $retorno['id_perfil_acesso'],
 			 		'tipo' => '1'
 				);
 			
-			$this -> loadViewAjax('login','ajaxLogin',$dados);
+					$this -> loadViewAjax('login','ajaxLogin',$dados);
+				}
+
+				
 
 			}
 

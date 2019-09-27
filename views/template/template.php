@@ -33,7 +33,54 @@
                   </ul>
             </div>
   </nav>
-</div>              
+</div>
+
+
+<?php
+class CarregaMenu extends Model
+{
+  public function menu(){
+     $sql = "SELECT * ";
+     $sql.= "FROM TB_WFM_MODULO ";
+     $sql.= "WHERE ID_MODULO IN( ";
+     $sql.="              SELECT ID_MODULO ";
+     $sql.="              FROM TB_WFM_MODULO_ACESSO_PERFIL";
+     $sql.="              WHERE ID_PERFIL = :id_permissao";
+     $sql.="              )";
+     $sql.=" AND ID_MODULO_REFERENCIA IS NULL";
+     $sql.=" ORDER BY ORDENACAO;";
+
+     $sql = $this-> db -> prepare($sql);
+     $sql -> bindValue(':id_permissao',$_SESSION['permissao']);
+     $sql -> execute();
+
+    if($sql -> rowCount() > 0){
+          $sql = $sql -> fetchAll();
+
+          foreach ($sql as $key => $value) {
+            echo '<li>';
+            echo '<a href="'.$value['CAMINHO_LINK'].'" class="collapsible-header"><i class="material icons"><img class="circle responsive-img iconeTemplate" src="'.$value['CAMINHO_ICONE'].'"></i>'.$value['NOME_MODULO'].'</a>';
+            echo '</li>';
+          }
+
+    }else{
+      return false;
+    }
+  
+  }
+}
+
+
+$menu = new CarregaMenu();  
+$item = $menu -> menu();
+
+
+
+
+?>
+
+
+
   <div id="sidebar" class="sidenav">    
               <div class="user-view">
                 <div class="background">
