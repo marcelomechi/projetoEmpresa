@@ -3,7 +3,8 @@
 class PerfilController extends Controller{
 
 	public function index(){
-		$_SESSION['relatorio'] = 'Editar Perfil';
+		$dados = array();
+		$_SESSION['relatorio'] = 'Perfil Pessoal';
 		$this -> loadTemplate('perfil',$dados);
 	}
 

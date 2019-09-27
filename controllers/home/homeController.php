@@ -2,13 +2,9 @@
 
 class HomeController extends Controller{
 	
-
-
-
 	public function index(){
-
-		$_SESSION['relatorio'] = '';
-		
+		$_SESSION['relatorio'] = 'Home';
+	
 		$login = new Usuarios();
 		$login -> verificaLogin();
 

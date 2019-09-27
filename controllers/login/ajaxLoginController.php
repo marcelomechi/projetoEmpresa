@@ -26,7 +26,7 @@ class AjaxLoginController extends Controller{
 				if($retorno == false){
 					$dados = array(
 						'logado' => false
-					);
+				   );
 
 					$this -> loadViewAjax('login','ajaxLogin',$dados);
 

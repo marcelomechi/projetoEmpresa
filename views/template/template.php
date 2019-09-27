@@ -4,6 +4,7 @@
 
 <title>WFM</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 
 
      <!--Import Google Icon Font-->
@@ -34,53 +35,6 @@
             </div>
   </nav>
 </div>
-
-
-<?php
-class CarregaMenu extends Model
-{
-  public function menu(){
-     $sql = "SELECT * ";
-     $sql.= "FROM TB_WFM_MODULO ";
-     $sql.= "WHERE ID_MODULO IN( ";
-     $sql.="              SELECT ID_MODULO ";
-     $sql.="              FROM TB_WFM_MODULO_ACESSO_PERFIL";
-     $sql.="              WHERE ID_PERFIL = :id_permissao";
-     $sql.="              )";
-     $sql.=" AND ID_MODULO_REFERENCIA IS NULL";
-     $sql.=" ORDER BY ORDENACAO;";
-
-     $sql = $this-> db -> prepare($sql);
-     $sql -> bindValue(':id_permissao',$_SESSION['permissao']);
-     $sql -> execute();
-
-    if($sql -> rowCount() > 0){
-          $sql = $sql -> fetchAll();
-
-          foreach ($sql as $key => $value) {
-            echo '<li>';
-            echo '<a href="'.$value['CAMINHO_LINK'].'" class="collapsible-header"><i class="material icons"><img class="circle responsive-img iconeTemplate" src="'.$value['CAMINHO_ICONE'].'"></i>'.$value['NOME_MODULO'].'</a>';
-            echo '</li>';
-          }
-
-    }else{
-      return false;
-    }
-  
-  }
-}
-
-
-$menu = new CarregaMenu();  
-$item = $menu -> menu();
-
-
-
-
-?>
-
-
-
   <div id="sidebar" class="sidenav">    
               <div class="user-view">
                 <div class="background">
@@ -91,68 +45,10 @@ $item = $menu -> menu();
                 <a href="#!email"><span class="white-text email">marcelo.goncalves@brbpo.com.br</span></a>
               </div>
         <ul class="collapsible">
-          <li>
-          <a href="<?php echo BASE_URL;?>perfil" class="collapsible-header"><i class="material icons"><img class="circle responsive-img iconeTemplate" src="assets/images/perfil.png"></i>Editar Perfil</a>
-          </li>
-          <div class='divider'></div>
-          <li>
-              <a class="collapsible-header"><i class="material icons"><img class="circle responsive-img iconeTemplate" src="assets/images/trabalho-em-equipe.png"></i><i class="material icons small right"><i class="fas fa-angle-down"></i></i>DH</a>
-              <div class="collapsible-body">
-                        <ul>
-                          <li><a href="#!">Avaliações</a></li>
-                          <li><a href="#!">Processos Seletivos</a></li>
-                              <ul class="collapsible">
-                                  <li>
-                                  <a class="collapsible-header"><i class="material icons small right"><i class="fas fa-angle-down"></i></i>Relatórios</a>
-                                  <div class="collapsible-body">
-                                      <ul>
-                                      <li><a href="#!">Desempenho</a></li>
-                                      </ul>
-                                  </div>
-                                  </li>
-                              </ul>
-                              <li><a href="#!">Quadro de Funcionários</a></li>
-                        </ul>
-                </div>
-          </li>
-          <li>
-                <a class="collapsible-header"><i class="material icons"><img class="circle responsive-img iconeTemplate" src="assets/images/inteligencia.png"></i>Planejamento<i class="material icons small right"><i class="fas fa-angle-down"></i></i></a>
-                <div class="collapsible-body">
-                  <ul>                    
-                    <li><a href="#!">Atendimento de Demandas</a></li>
-                    <li><a href="#!">Dimensionamento</a></li>
-                    <li><a href="#!">Faturamento</a></li>
-                  </ul>
-                </div>
-          </li>
-          <li>
-          <a class="collapsible-header"><i class="material icons"><img class="circle responsive-img iconeTemplate" src="assets/images/hospital.png"></i><i class="material icons small right"><i class="fas fa-angle-down"></i></i>Sesmt</a>
-            <div class="collapsible-body">
-              <ul>
-                <li><a href="#!">Atestados</a></li>
-              </ul>
-            </div>
-          </li>
-
-
-           <li>
-          <a class="collapsible-header"><i class="material icons"><img class="circle responsive-img iconeTemplate" src="assets/images/sistema.png"></i><i class="material icons small right"><i class="fas fa-angle-down"></i></i>Administração</a>
-            <div class="collapsible-body">
-              <ul>
-                <li><a href="<?php echo BASE_URL;?>modulos">Módulos</a></li>                
-              </ul>
-            </div>
-          </li>
-
-                     <li>
-          <a class="collapsible-header"><i class="material-icons"><img class="circle responsive-img iconeTemplate" src="assets/images/report.png"></i><i class="material-icons small right"><i class="fas fa-angle-down"></i></i>Relatórios</a>
-            <div class="collapsible-body">
-              <ul>
-                <li><a href="<?php echo BASE_URL;?>dashboard">Dashboard</a></li>
-              </ul>
-            </div>
-          </li>
-
+          <?php 
+            $menu = new Usuarios();  
+            $item = $menu -> menu();
+          ?>
         </ul>
 </div>   
     

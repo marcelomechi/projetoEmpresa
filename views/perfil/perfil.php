@@ -11,9 +11,9 @@
 
 .background-image{
 	  background-image: url("<?php echo BASE_URL;?>assets/images/tecnologia.jpg");
-  	  background-size: cover;
-  	  height: 222px;
-  	  width: 300px;
+	  background-size: cover;
+	  height: 222px;
+	  width: 300px;
 }
 
 </style>
@@ -43,23 +43,23 @@
 <div class="row">
 			<div class="input-field col s12">
 					<div class="file-field input-field">
-					      <div class="btn waves-effect">
-					        <span>Editar Foto</span>
-					        <input type="file" id="imgInp"><i class="fas fa-camera"></i>
-					      </div>
-					      <div class="file-path-wrapper hide">
-					        <input class="file-path validate" type="text">
-					      </div>
-				    </div>
-				    <div class="file-field input-field">
-					      <div class="btn fundo waves-effect">
-					        <span>Editar Imagem de Fundo</span>
-					        <input type="file" id="imgInp"><i class="fas fa-camera"></i>
-					      </div>
-					      <div class="file-path-wrapper hide">
-					        <input class="file-path validate" type="text">
-					      </div>
-				    </div>
+						  <div class="btn waves-effect">
+							<span>Editar Foto</span>
+							<input type="file" id="imgInp"><i class="fas fa-camera"></i>
+						  </div>
+						  <div class="file-path-wrapper hide">
+							<input class="file-path validate" type="text">
+						  </div>
+					</div>
+					<div class="file-field input-field">
+						  <div class="btn fundo waves-effect">
+							<span>Editar Imagem de Fundo</span>
+							<input type="file" id="imgInp"><i class="fas fa-camera"></i>
+						  </div>
+						  <div class="file-path-wrapper hide">
+							<input class="file-path validate" type="text">
+						  </div>
+					</div>
 			</div>
 </div>
 <!--
@@ -67,17 +67,17 @@
 	<form method="POST">
 					<div class="col s12 m6 l6">
 				<div id="tema" class="switch"><br>
-				    <label class="center-align">
-				      <input type="checkbox">
-				      <span class="lever"></span>
-				    </label>
-	  			</div>
-	  			<label for="tema">Tema Escuro</label>
-	  		</div> 
+					<label class="center-align">
+					  <input type="checkbox">
+					  <span class="lever"></span>
+					</label>
+				</div>
+				<label for="tema">Tema Escuro</label>
+			</div> 
 			<div class="input-field col s12 m6 l6">
-	          <input id="apelido" type="text" class="validate" name="apelido">
-	          <label for="apelido">Nome</label>
-        	</div>
+			  <input id="apelido" type="text" class="validate" name="apelido">
+			  <label for="apelido">Nome</label>
+			</div>
 	</form>
 </div>
 -->
@@ -86,7 +86,7 @@
 	
   $(document).ready(function(){
   
-  	// altera foto do perfil
+	// altera foto do perfil
 		$(".btn").change(function(){
 			$("#img-upload").attr('src',URL.createObjectURL(event.target.files[0]))
 		});

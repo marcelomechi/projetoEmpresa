@@ -3,6 +3,9 @@
 require('environment.php');
 
 $config = array();
+$charset = array(
+    PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES UTF8'
+);
 
 if (ENVIRONMENT == 'development'){
 	define("BASE_URL","http://10.11.194.42/");
@@ -21,7 +24,7 @@ if (ENVIRONMENT == 'development'){
 global $db;
 
 try {
-	$db = new PDO("mysql:dbname=".$config['dbname'].";host=".$config['host'],$config['dbuser'],$config['dbpass']);
+	$db = new PDO("mysql:dbname=".$config['dbname'].";host=".$config['host'],$config['dbuser'],$config['dbpass'],$charset);
 
 }catch (PDOException $e) {
 	echo "erro: ".$e -> getMessage();
