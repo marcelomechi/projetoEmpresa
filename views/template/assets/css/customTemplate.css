@@ -2,6 +2,18 @@
   height: 20px;
 }
 
+.backgroundImgMenu{
+	background-repeat: no-repeat;		
+	background-size: cover;
+	-webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    width: 100% !important;
+    height: 100% !important;
+}
+
+
 .h110Template{
   height: 110px !important;
   width: 110px !important;
@@ -17,6 +29,10 @@
 
 @media (max-width: 600px) 
 {
+
+.tituloMenu{
+	font-size: 25px !important;
+}
 
   #dadosPessoais{
     display: none;

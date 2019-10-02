@@ -20,13 +20,13 @@
       <!-- Corrige o erro 500 -->
     <link rel="icon" href="data:,">
 </head>
-<body>
+<body class="grey lighten-4">
 <div class="navbar-fixed"> 
-  <nav class="indigo">
+  <nav class="grey darken-4">
               <div class="nav-wrapper">
               <a href="#" class="brand-logo center"></a>  
                 <div data-target="sidebar" class="sidenav-trigger"><i class="material-icons white-text"><i class="fas fa-bars menuHoverTemplate"></i></i></div>
-                  <span class="brand-logo center"><?php echo $_SESSION['relatorio']; ?></span>
+                  <span class="brand-logo center tituloMenu"><?php echo $_SESSION['relatorio']; ?></span>
                   <ul id="dadosPessoais" class="right">                   
                     <li><a href="#"><i class="material-icons center-align"><img id="profile" class="circle responsive-img h10Template" src="assets/images/marcelo.jpg"></i></a></li>      
                     <li><a href="#"><i class="fas fa-bell"></i></a></li>
@@ -38,8 +38,8 @@
   <div id="sidebar" class="sidenav">    
               <div class="user-view">
                 <div class="background">
-                  <img src="assets/images/computador.jpg">
-              </div>                
+                  <img src="assets/images/computador.jpg" class="backgroundImgMenu">
+               </div>                
                 <a href="#!user"><img id="profile" class="circle h110Template responsive-img" src="assets/images/marcelo.jpg"></a>
                 <a href="#!name"><span class="white-text name">Marcelo Mechi</span></a>
                 <a href="#!email"><span class="white-text email">marcelo.goncalves@brbpo.com.br</span></a>
@@ -61,6 +61,9 @@
 <script src="<?php echo BASE_URL;?>assets/js/Chart.min.js"></script>
 <script type="text/javascript" src="<?php echo BASE_URL;?>assets/js/datatable.js"></script>
 <script type="text/javascript" src="<?php echo BASE_URL;?>views/template/assets/js/jsTemplate.js"></script>
+<script type="text/javascript" src="<?php echo BASE_URL;?>assets/jQuery-Mask-Plugin-master/dist/jquery.mask.js"></script>
+
+
 
 <?php $this -> loadViewInTemplate($viewName, $viewData); ?>
 
