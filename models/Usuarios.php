@@ -149,17 +149,76 @@ class Usuarios extends Model {
 		}else{
 			return false;
 		}
-
-
-
-
-
 	}
+
+/*
+*	Upload Foto de Perfil
+*
+*/
+
+ public function enviaFotoPerfil($imagem){
+ 	$nomeArquivo = $this -> validaImagem($imagem);
+
+ 	if($nomeArquivo === false){
+            return false;		
+ 	}else{
+            $this -> validaDiretorio($_SESSION['CPF']);
+            move_uploaded_file($imagem['tmp_name'], 'assets/images/'.$_SESSION['CPF'].'/'.$nomeArquivo);
+            return true;
+ 	}
+
+
+ }
+
+ private function validaImagem($imagem){
+ 	if($imagem['type'] == 'image/jpeg' || $imagem['type'] == 'image/jpg' || $imagem['type'] == 'image/png'){
+ 		$tamanhoImagem = intval($imagem['size'] / 1024);
+ 			if($tamanhoImagem <= 400){
+ 				$extImagem = pathinfo($imagem['name'], PATHINFO_EXTENSION);
+ 				$nomeImagem = $_SESSION['CPF'].'.'.strtolower($extImagem);
+
+ 				return $nomeImagem;
+ 			}else{
+ 				return false;
+ 			}
+        }else{
+            return false;
+        }
+
+ }
+
+ private function validaDiretorio($diretorio){
+ 	if(is_dir('assets/images/'.$diretorio)):
+ 		return true;
+ 	else:
+ 		mkdir('assets/images/'.$_SESSION['CPF'], 0755, true);
+ 	endif;
+
+ }
+ 
+ private function gravaFotoPerfilBackground($fotoPerfil, $fotoMenu){
+     $sql = "UPDATE TB_WFM_PERFIL_PESSOAL SET CAMINHO_FOTO = :caminhoPerfil, CAMINHO_BACKGROUND = :caminhoBackground WHERE CPF = :CPF ";
+     $sql = $this -> db -> prepare($sql);
+     $sql -> bindValue(':CPF',$_SESSION['CPF']);
+     $sql -> bindValue(':caminhoPerfil',$fotoPerfil);
+     $sql -> bindValue(':caminhoBackground',$fotoMenu);     
+     $sql -> execute();
+     
+     if($sql -> rowCount() > 0){
+         return true;
+     }else{
+         return false;
+     }
+     
+ }
+
+
+
 
 
  public function menu(){
   
-			  $sql = "SELECT DISTINCT M.ID_MODULO, ";
+              $sql = "SELECT DISTINCT M.ID_MODULO, ";
               $sql.= "M.ID_MODULO_REFERENCIA, ";
               $sql.= "M.TITULO_WEB, ";
               $sql.= "M.ID_WEB_MODULO, ";

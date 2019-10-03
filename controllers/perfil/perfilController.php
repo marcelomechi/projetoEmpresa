@@ -12,6 +12,10 @@ class PerfilController extends Controller{
 		$this -> loadTemplate('perfil',$dados);
 	}
 
+	public function salvar(){
+		
+	}
+
 }
 
 ?>

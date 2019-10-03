@@ -14,6 +14,7 @@ spl_autoload_register(function($classe){
 	$x = '';
 	$y = '';
 	$folderController = '';
+	$pasta = '';
 
 
 	if(!isset($_GET['url']) && empty($_GET['url'])){
@@ -26,9 +27,13 @@ spl_autoload_register(function($classe){
 
 
 	if(isset($y[0]) && !empty($y[0])){
-		$folderController = strtolower($y[0]);
+		$pasta = explode("/", $y[0]);
+		//print_r($teste);
+		$folderController = strtolower($pasta[0]);
 	}else{
-		$folderController = strtolower($y[1]);
+		$pasta = explode("/", $y[1]);
+		//print_r($teste);
+		$folderController = strtolower($pasta[0]);
 	}
 
 

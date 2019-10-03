@@ -1,7 +1,7 @@
 $(document).ready(function(){
     // inicia os modal
     $('.modal').modal({
-      dismissible: false, // Modal can be dismissed by clicking outside of the modal
+      dismissible: false // Modal can be dismissed by clicking outside of the modal
     });
 
     /*

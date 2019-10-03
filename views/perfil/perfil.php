@@ -31,6 +31,8 @@
 }
 
 
+
+
 @media (max-width: 600px) 
 {
 
@@ -49,10 +51,6 @@
 
 
 </style>
-
-
-
-
 <div class="row h500">
 	<div class="col s12 m12 l6">
 							
@@ -71,50 +69,56 @@
 										<span class="white-text email"><?php echo $email;?></span>
 									</div>
 							    </div>
-							    <div class="carousel-item" href="#one!">
-							     	<img src="<?php echo BASE_URL;?>assets/images/backgroundMenu/arrebol.jpg" class="backgroundImgPerfil">
+							    <div id= "1" class="carousel-item" href="#one!">
+							     	<img src="<?php echo BASE_URL;?>assets/images/backgroundMenu/1.jpg" class="backgroundImgPerfil">
 							    </div>
-							    <div class="carousel-item" href="#three!">
-							      	<img src="<?php echo BASE_URL;?>assets/images/backgroundMenu/folhasFrutas.jpg" class="backgroundImgPerfil">
+							    <div id= "2" class="carousel-item" href="#three!">
+							      	<img src="<?php echo BASE_URL;?>assets/images/backgroundMenu/2.jpg" class="backgroundImgPerfil">
 							    </div>
-							    <div class="carousel-item" href="#four!">
-							     	 <img src="<?php echo BASE_URL;?>assets/images/backgroundMenu/gatoLua.jpg" class="backgroundImgPerfil">
+							    <div id= "3" class="carousel-item" href="#four!">
+							     	 <img src="<?php echo BASE_URL;?>assets/images/backgroundMenu/3.jpg" class="backgroundImgPerfil">
 							    </div>
-							    <div class="carousel-item" href="#four!">
-							      	<img src="<?php echo BASE_URL;?>assets/images/backgroundMenu/lampada.jpg" class="backgroundImgPerfil">
+							    <div id= "4" class="carousel-item" href="#four!">
+							      	<img src="<?php echo BASE_URL;?>assets/images/backgroundMenu/4.jpg" class="backgroundImgPerfil">
 							    </div>
-							    <div class="carousel-item" href="#four!">
-							      	<img src="<?php echo BASE_URL;?>assets/images/backgroundMenu/matrix.jpg" class="backgroundImgPerfil">
+							    <div  id= "5" class="carousel-item" href="#four!">
+							      	<img src="<?php echo BASE_URL;?>assets/images/backgroundMenu/5.jpg" class="backgroundImgPerfil">
 							    </div>
-							    <div class="carousel-item" href="#four!">
-							      	<img src="<?php echo BASE_URL;?>assets/images/backgroundMenu/montanhas.jpg" class="backgroundImgPerfil">
+							    <div id= "6" class="carousel-item" href="#four!">
+							      	<img src="<?php echo BASE_URL;?>assets/images/backgroundMenu/6.jpg" class="backgroundImgPerfil">
 							    </div>
-							    <div class="carousel-item" href="#four!">
-							      	<img src="<?php echo BASE_URL;?>assets/images/backgroundMenu/naturezaLampada.jpg" class="backgroundImgPerfil">
+							    <div id= "7"class="carousel-item" href="#four!">
+							      	<img src="<?php echo BASE_URL;?>assets/images/backgroundMenu/7.jpg" class="backgroundImgPerfil">
 							    </div>
-							    <div class="carousel-item" href="#four!">
-							      	<img src="<?php echo BASE_URL;?>assets/images/backgroundMenu/ponteNatureza.jpg" class="backgroundImgPerfil">
+							    <div id= "8" class="carousel-item" href="#four!">
+							      	<img src="<?php echo BASE_URL;?>assets/images/backgroundMenu/8.jpg" class="backgroundImgPerfil">
 							    </div>
-							    <div class="carousel-item" href="#four!">
-							      	<img src="<?php echo BASE_URL;?>assets/images/backgroundMenu/rioFolhas.jpg" class="backgroundImgPerfil">
+							    <div id= "9" class="carousel-item" href="#four!">
+							      	<img src="<?php echo BASE_URL;?>assets/images/backgroundMenu/9.jpg" class="backgroundImgPerfil">
 							    </div>
-							    <div class="carousel-item" href="#four!">
-							      <img src="<?php echo BASE_URL;?>assets/images/backgroundMenu/terra.jpg" class="backgroundImgPerfil">
+							    <div id= "10" class="carousel-item" href="#four!">
+							      <img src="<?php echo BASE_URL;?>assets/images/backgroundMenu/10.jpg" class="backgroundImgPerfil">
 							    </div>
   						</div>
 		  						<div class="center-align">
-						        	<div class="file-field input-field">
-										  <div class="btn waves-effect">
-											<span>Perfil</span>
-											<input type="file" id="imgInp"><i class="fas fa-camera"></i>
-										  </div>
-										  <div class="file-path-wrapper">
-											<input class="file-path validate" type="text">
-										  </div>
-									</div>
-										<div class="right-align">
-						         		 	<a class="waves-effect waves-light btn">Gravar</a>
+		  							<!--<form method="POST" enctype="multipart/form-data" method="post" id="sendProfile">-->
+							        	<div class="file-field input-field">									  
+											  <div class="btn waves-effect">
+												<span>Perfil</span>
+												<input name="profileImg" type="file" id="imgInp"><i class="fas fa-camera"></i>
+											  </div>
+											  <div class="file-path-wrapper">
+												<input class="file-path validate" type="text">
+											  </div>
+										</div>
+										<div class="right-align">															         		 	
+						         		 	<button class="btn waves-effect" id="teste">Gravar</button>
 						         		</div>
+						         		<span class="center-align msg"></span>
+						         		<div class="progress hide">
+     									  <div class="indeterminate"></div>
+  										</div>
+						         	<!--</form>-->
 						        </div>
 				        </div>
      			 </div>				
@@ -158,12 +162,15 @@
       					</label>
       					<div class="right-align">
 						  	<button class="btn waves-effect" type="submit" name="action">Gravar</button>
+						  	 <button data-target="modalMsg" class="btn modal-trigger hide"></button>
 						</div>
 					</form>
 			</div>
 		</div>
 	</div>
 </div>
+
+
 
 
 <!--
@@ -244,14 +251,18 @@
 			$("#img-upload").attr('src',URL.createObjectURL(event.target.files[0]))
 		});
 
+		$('.modal').modal({
+			dismissible: false
+		});
+
 	// altera fundo de tela
 
 	 $('.carousel.carousel-slider').carousel({
    	 	fullWidth: true,
-    	indicators: true
+                indicators: true
   	});
 
-
+// para telefones de sp
 	var SPMaskBehavior = function (val) {
 	  return val.replace(/\D/g, '').length === 11 ? '(00) 00000-0000' : '(00) 0000-00009';
 	},
@@ -265,6 +276,44 @@
 	$('.phone_with_ddd').mask('(00) 0000-0000');
 
 
+
+	   $('#teste').on('click', function(){
+		var data = new FormData();
+		var arquivos = $('input[name=profileImg]')[0].files;
+                var backgroundMenu = $("div .active").attr("id");
+
+		if(arquivos.length > 0) {
+
+			data.append('backgroundMenu', backgroundMenu);        
+                        data.append('foto', arquivos[0]);
+
+			$.ajax({
+				type:'POST',
+				url:'http://10.11.194.42/ajaxPerfil',
+				data:data,
+				contentType:false,
+				processData:false,
+				success:function(r){
+					if(r == "success")
+					{                                      
+                				$('.file-path').val("");
+						$('.msg').html("Alterações efetuadas com sucesso!").addClass("teal-text").fadeOut(5000);
+					}
+					else
+					{
+						$('.file-path').val("");                                            
+						$('.msg').html("Não foi possível importar, verfique o tamanho e o tipo do arquivo.").addClass("red-text").fadeOut(5000);
+					}
+					
+					$('.progress').addClass('hide');
+					//$('.modal-trigger').click();
+				}
+			});
+		}
+	
+
+
+	});
 
 
 		
