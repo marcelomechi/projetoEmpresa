@@ -156,15 +156,27 @@ class Usuarios extends Model {
 *
 */
 
- public function enviaFotoPerfil($imagem){
+ public function enviaFotoPerfil($imagem, $imagemFundo){
  	$nomeArquivo = $this -> validaImagem($imagem);
 
  	if($nomeArquivo === false){
             return false;		
  	}else{
             $this -> validaDiretorio($_SESSION['CPF']);
+            $caminho = 'assets/images/'.$_SESSION['CPF'].'/'.$nomeArquivo;
+            $caminhoFotoFundo = 'assets/images/backgroundMenu/'.$imagemFundo.'.jpg';
+
             move_uploaded_file($imagem['tmp_name'], 'assets/images/'.$_SESSION['CPF'].'/'.$nomeArquivo);
-            return true;
+            $gravaImagem = $this -> gravaFotoPerfilBackground($caminho, $caminhoFotoFundo);
+                if($gravaImagem === true){
+                    return true;
+                   
+                }else{
+                    return false;
+                }
+            
+            
+           
  	}
 
 
@@ -196,13 +208,15 @@ class Usuarios extends Model {
 
  }
  
- private function gravaFotoPerfilBackground($fotoPerfil, $fotoMenu){
-     $sql = "UPDATE TB_WFM_PERFIL_PESSOAL SET CAMINHO_FOTO = :caminhoPerfil, CAMINHO_BACKGROUND = :caminhoBackground WHERE CPF = :CPF ";
+ private function gravaFotoPerfilBackground($caminhoFotoPerfil, $caminhoFotoPlanoFundo){
+     $sql = "UPDATE TB_WFM_PERFIL_PESSOAL SET CAMINHO_FOTO = :caminhoPerfil, CAMINHO_PLANO_FUNDO = :caminhoBackground WHERE CPF = :CPF ";
      $sql = $this -> db -> prepare($sql);
      $sql -> bindValue(':CPF',$_SESSION['CPF']);
-     $sql -> bindValue(':caminhoPerfil',$fotoPerfil);
-     $sql -> bindValue(':caminhoBackground',$fotoMenu);     
+     $sql -> bindValue(':caminhoPerfil',$caminhoFotoPerfil);
+     $sql -> bindValue(':caminhoBackground',$caminhoFotoPlanoFundo);     
      $sql -> execute();
+     
+     //print_r($sql);
      
      if($sql -> rowCount() > 0){
          return true;
@@ -210,6 +224,11 @@ class Usuarios extends Model {
          return false;
      }
      
+ }
+ 
+ 
+ public function gravaPreferenciasPessoais($dados = array()){
+     print_r($dados);
  }
 
 
