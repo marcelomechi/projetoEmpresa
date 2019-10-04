@@ -69,36 +69,15 @@
                             <span class="white-text email"><?php echo $email; ?></span>
                         </div>
                     </div>
-                    <div id= "1" class="carousel-item" href="#one!">
-                        <img src="<?php echo BASE_URL; ?>assets/images/backgroundMenu/1.jpg" class="backgroundImgPerfil">
-                    </div>
-                    <div id= "2" class="carousel-item" href="#three!">
-                        <img src="<?php echo BASE_URL; ?>assets/images/backgroundMenu/2.jpg" class="backgroundImgPerfil">
-                    </div>
-                    <div id= "3" class="carousel-item" href="#four!">
-                        <img src="<?php echo BASE_URL; ?>assets/images/backgroundMenu/3.jpg" class="backgroundImgPerfil">
-                    </div>
-                    <div id= "4" class="carousel-item" href="#four!">
-                        <img src="<?php echo BASE_URL; ?>assets/images/backgroundMenu/4.jpg" class="backgroundImgPerfil">
-                    </div>
-                    <div  id= "5" class="carousel-item" href="#four!">
-                        <img src="<?php echo BASE_URL; ?>assets/images/backgroundMenu/5.jpg" class="backgroundImgPerfil">
-                    </div>
-                    <div id= "6" class="carousel-item" href="#four!">
-                        <img src="<?php echo BASE_URL; ?>assets/images/backgroundMenu/6.jpg" class="backgroundImgPerfil">
-                    </div>
-                    <div id= "7"class="carousel-item" href="#four!">
-                        <img src="<?php echo BASE_URL; ?>assets/images/backgroundMenu/7.jpg" class="backgroundImgPerfil">
-                    </div>
-                    <div id= "8" class="carousel-item" href="#four!">
-                        <img src="<?php echo BASE_URL; ?>assets/images/backgroundMenu/8.jpg" class="backgroundImgPerfil">
-                    </div>
-                    <div id= "9" class="carousel-item" href="#four!">
-                        <img src="<?php echo BASE_URL; ?>assets/images/backgroundMenu/9.jpg" class="backgroundImgPerfil">
-                    </div>
-                    <div id= "10" class="carousel-item" href="#four!">
-                        <img src="<?php echo BASE_URL; ?>assets/images/backgroundMenu/10.jpg" class="backgroundImgPerfil">
-                    </div>
+                    
+                    <?php
+                        $usuarios = new Usuarios();
+                        $carousel = $usuarios -> carregaCarousel();
+                    
+                    ?>
+                    
+                    
+                    
                 </div>
                 <div class="center-align">
                     <!--<form method="POST" enctype="multipart/form-data" method="post" id="sendProfile">-->
@@ -257,12 +236,13 @@
                 } else {
                  var  aniversario = 0;            
                 } 
-                                          
+             
+             
             var apelido = $("input[name=apelido]").val();
-            var email = $("input[name=email]").val();
-            var telefoneFixo = $("input[name=telefoneFixo]").val();
-            var telefoneCelular = $("input[name=telefoneCelular]").val();
-            var telefoneRecado = $("input[name=telefoneRecado]").val();           
+            var email = $("input[name=email]").val() === "" ? null : $("input[name=email]").val();
+            var telefoneFixo = $("input[name=telefoneFixo]").val() === "" ? null : $("input[name=telefoneFixo]").val();
+            var telefoneCelular = $("input[name=telefoneCelular]").val() === "" ? null : $("input[name=telefoneCelular]").val();
+            var telefoneRecado = $("input[name=telefoneRecado]").val() === "" ? null : $("input[name=telefoneRecado]").val();           
             
             data.append('tema', tema);
             data.append('apelido', apelido);
@@ -281,7 +261,12 @@
                     contentType: false,
                     processData: false,
                     success: function (r) {
-                        alert(r)
+                        if(r == "success"){
+                            $(".name").html($("input[name=apelido]").val());
+                            $(".email").html($("input[name=email]").val());   
+                        }else{
+                            return false;
+                        }
                     }
                 });
             });

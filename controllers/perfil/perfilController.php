@@ -6,7 +6,7 @@ class PerfilController extends Controller{
 		$dados = array();
 		
 		$preferencias = new Usuarios();
-		$dados = $preferencias -> getPreferencias($_SESSION['CPF']);
+		$dados = $preferencias -> getPreferencias($_SESSION['PIN']);
 
 		$_SESSION['relatorio'] = 'Perfil Pessoal';
 		$this -> loadTemplate('perfil',$dados);

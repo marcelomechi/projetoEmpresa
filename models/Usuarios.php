@@ -14,7 +14,7 @@ class Usuarios extends Model {
 		
 		/* se não tiver setado ou se tiver setado e tiver vazio */
 	
-		if(empty($_SESSION['usuario'])){
+		if(empty($_SESSION['PIN'])){
 			header("Location: ".BASE_URL."login");
 			exit;
 		}
@@ -63,20 +63,20 @@ class Usuarios extends Model {
 			'status' => ''
 		);
 
-				$_SESSION['usuario'] = '';	
 				$_SESSION['senha'] = '';
 				$_SESSION['CPF'] = '';
 				$_SESSION['id_perfil_acesso'] = '';
 				$_SESSION['id_tema_preferido'] = '';
 				$_SESSION['exibir_aniversario'] = '';
 				$_SESSION['foto'] = '';
+                                $_SESSION['PIN'] = '';
 
 
 		if($login == $senha){
 			
 			$sql = "SELECT U.PIN, U.CPF, U.SENHA, U.ATIVO, P.ID_TEMA_PREFERIDO, P.EXIBIR_ANIVERSARIO, P.APELIDO, P.CAMINHO_FOTO, UP.ID_PERFIL FROM TB_WFM_USUARIO U ";
-			$sql .= "JOIN TB_WFM_PERFIL_PESSOAL P ON P.CPF = U.CPF ";
-			$sql .= "JOIN TB_WFM_USUARIO_PERFIL UP ON U.CPF = UP.CPF ";
+			$sql .= "JOIN TB_WFM_PERFIL_PESSOAL P ON P.PIN = U.PIN ";
+			$sql .= "JOIN TB_WFM_USUARIO_PERFIL UP ON U.PIN = UP.PIN ";
 			$sql .= "WHERE U.CPF = :senha_inicial ";
 								
 			$sql = $this-> db -> prepare($sql);
@@ -91,9 +91,10 @@ class Usuarios extends Model {
 				$sqlUpdate->bindValue(':senha',$senha);
 				$sqlUpdate->execute();*/
 
-				$_SESSION['usuario'] = $sql['CPF'];
+				//$_SESSION['usuario'] = $sql['CPF'];
 				$_SESSION['CPF'] = $sql['CPF'];
 				$_SESSION['permissao'] = $sql['ID_PERFIL'];
+                                $_SESSION['PIN'] = $sql['PIN'];
 	
 					$dados = array(
 						'status' => BASE_URL
@@ -119,13 +120,13 @@ class Usuarios extends Model {
 	}
 
 
-	public function getPreferencias($cpf){
+	public function getPreferencias($pin){
 
 		$sql = "SELECT * FROM TB_WFM_PERFIL_PESSOAL ";
-		$sql.= "WHERE CPF = :CPF ";
+		$sql.= "WHERE PIN = :PIN ";
 
 		$sql = $this-> db -> prepare($sql);
-		$sql -> bindValue(':CPF',$cpf);
+		$sql -> bindValue(':PIN',$pin);
 		$sql -> execute();
 
 		if($sql -> rowCount() > 0){
@@ -133,7 +134,7 @@ class Usuarios extends Model {
 			$nome = ucfirst(strtolower($sql['APELIDO']));			
 			
 			$dados = array(
-				'cpf' => $sql['CPF'],
+				'cpf' => $sql['PIN'],
 				'telefone1' => $sql['TEL1'],
 				'telefone2' => $sql['TEL2'],
 				'telefone3' => $sql['TEL3'],
@@ -163,11 +164,10 @@ class Usuarios extends Model {
             return false;		
  	}else{
             $this -> validaDiretorio($_SESSION['CPF']);
-            $caminho = 'assets/images/'.$_SESSION['CPF'].'/'.$nomeArquivo;
-            $caminhoFotoFundo = 'assets/images/backgroundMenu/'.$imagemFundo.'.jpg';
+            $caminho = 'assets/images/'.$_SESSION['CPF'].'/'.$nomeArquivo;            
 
             move_uploaded_file($imagem['tmp_name'], 'assets/images/'.$_SESSION['CPF'].'/'.$nomeArquivo);
-            $gravaImagem = $this -> gravaFotoPerfilBackground($caminho, $caminhoFotoFundo);
+            $gravaImagem = $this -> gravaFotoPerfilBackground($caminho, $imagemFundo);
                 if($gravaImagem === true){
                     return true;
                    
@@ -208,12 +208,12 @@ class Usuarios extends Model {
 
  }
  
- private function gravaFotoPerfilBackground($caminhoFotoPerfil, $caminhoFotoPlanoFundo){
-     $sql = "UPDATE TB_WFM_PERFIL_PESSOAL SET CAMINHO_FOTO = :caminhoPerfil, CAMINHO_PLANO_FUNDO = :caminhoBackground WHERE CPF = :CPF ";
+ private function gravaFotoPerfilBackground($caminhoFotoPerfil, $idImagemFundo){
+     $sql = "UPDATE TB_WFM_PERFIL_PESSOAL SET CAMINHO_FOTO = :caminhoPerfil, ID_IMAGEM_FUNDO = :idImagemFundo WHERE PIN = :PIN ";
      $sql = $this -> db -> prepare($sql);
-     $sql -> bindValue(':CPF',$_SESSION['CPF']);
+     $sql -> bindValue(':PIN',$_SESSION['PIN']);
      $sql -> bindValue(':caminhoPerfil',$caminhoFotoPerfil);
-     $sql -> bindValue(':caminhoBackground',$caminhoFotoPlanoFundo);     
+     $sql -> bindValue(':idImagemFundo',$idImagemFundo);     
      $sql -> execute();
      
      //print_r($sql);
@@ -227,12 +227,59 @@ class Usuarios extends Model {
  }
  
  
- public function gravaPreferenciasPessoais($dados = array()){
-     print_r($dados);
+ public function gravaPreferenciasPessoais($dados){
+   
+     $sql = "UPDATE TB_WFM_PERFIL_PESSOAL ";
+     $sql .= "SET TEL1 = :telefoneFixo, ";
+     $sql .= "TEL2 = :telefoneCelular, ";
+     $sql .= "TEL3 = :telefoneRecado, ";
+     $sql .= "EMAIL = :email, ";
+     $sql .= "ID_TEMA_PREFERIDO = :id_tema, ";
+     $sql .= "EXIBIR_ANIVERSARIO = :id_aniversario, ";
+     $sql .= "APELIDO = :apelido ";
+     $sql .= "WHERE PIN = :PIN ";
+     
+     $sql = $this -> db -> prepare($sql);   
+     $sql -> bindValue(':telefoneFixo',$dados['telefoneFixo']);
+     $sql -> bindValue(':telefoneCelular', $dados['telefoneCelular']);
+     $sql -> bindValue(':telefoneRecado', $dados['telefoneRecado']);
+     $sql -> bindValue(':email', $dados['email']);
+     $sql -> bindValue(':id_tema', $dados['tema']);
+     $sql -> bindValue(':id_aniversario', (int)$dados['aniversario'],PDO::PARAM_INT); // para campos BIT tenho que fazer isso.
+     $sql -> bindValue(':apelido', $dados['apelido']);
+     $sql -> bindValue(':PIN', $_SESSION['PIN']);
+ 
+     $sql -> execute();
+     
+     if($sql -> rowCount() > 0){
+         return true;
+     }else{
+         return false;
+     }
+     
+     
  }
 
-
-
+public function carregaCarousel(){
+       $sql = "SELECT  ID_IMAGEM_FUNDO, ";
+       $sql .= "       ID_TIPO_FUNDO, ";
+       $sql .= "       CAMINHO_IMAGEM, ";
+       $sql .= "       ATIVO, ";
+       $sql .= "       (SELECT ID_IMAGEM_FUNDO FROM TB_WFM_PERFIL_PESSOAL WHERE PIN = :PIN) AS PREFERENCIA ";
+       $sql .= "FROM TB_WFM_IMAGEM_FUNDO ";
+       $sql .= "WHERE ATIVO = 1 ";
+        
+       $sql = $this -> db -> prepare($sql);
+       $sql -> bindValue(':PIN', $_SESSION['PIN']);
+       $sql -> execute();     
+   
+       foreach ($sql as $img) {
+             echo  '<div id= "'.$img['ID_IMAGEM_FUNDO'].'" class="carousel-item" href="#one!"><img src="'.BASE_URL.$img['CAMINHO_IMAGEM'].'" class="backgroundImgPerfil"></div>';
+                
+         
+           
+       }
+}
 
 
  public function menu(){
@@ -254,22 +301,22 @@ class Usuarios extends Model {
 			  $sql.=          "WHERE ID_PERFIL IN ";
 			  $sql.=	              "(SELECT ID_PERFIL ";
 			  $sql.=	              "FROM TB_WFM_USUARIO_PERFIL ";
-			  $sql.=	              "WHERE CPF = :CPF ) ) ";
+			  $sql.=	              "WHERE PIN = :PIN ) ) ";
 			  $sql.=       "OR M.ID_MODULO IN ";
 			  $sql.= 	         "(SELECT ID_MODULO ";
 			  $sql.=	          "FROM TB_WFM_MODULO_ACESSO_INDIVIDUAL ";
-			  $sql.=          "WHERE CPF = :CPF ";
+			  $sql.=          "WHERE PIN = :PIN ";
 			  $sql.=	            "AND LIBERADO = 1 )) ";
 			  $sql.=  "AND M.ID_MODULO NOT IN ";
 			  $sql.=    "(SELECT ID_MODULO ";
 			  $sql.=     "FROM TB_WFM_MODULO_ACESSO_INDIVIDUAL ";
-			  $sql.=     "WHERE CPF = :CPF ";
+			  $sql.=     "WHERE PIN = :PIN ";
 			  $sql.=	       "AND BLOQUEADO = 1 ) ";
 			  $sql.= "GROUP BY M.ID_MODULO, M.TITULO_WEB, M.ID_WEB_MODULO, M.CAMINHO_ICONE, M.CAMINHO_LINK, M.ORDENACAO
 				ORDER BY M.ORDENACAO; ";
-
+                                           
 			  $sql = $this-> db -> prepare($sql);
-			  $sql -> bindValue(':CPF',$_SESSION['CPF']);
+			  $sql -> bindValue(':PIN',$_SESSION['PIN']);
 			  $sql -> execute();
 
 

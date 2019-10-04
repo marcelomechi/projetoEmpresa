@@ -1,95 +1,64 @@
 <?php
 
-class AjaxLoginController extends Controller{
-	
-	public function __construct() {
-		
-	}
+class AjaxLoginController extends Controller {
 
-	public function index(){
-		$dados = array(
-			'pin' => '',
-			'senha' => '',
-			'nome' => '',
-			'a' =>''
-		);
+    public function __construct() {
+        
+    }
 
-		/* verificar uma forma de comparar os dados recebidos do ajax com o que puxei do banco para saber se o login e a senha conferem. */
-		
-		if ($_POST['tipo'] == 1){
+    public function index() {
+        $dados = array(
+            'pin' => '',
+            'senha' => '',
+            'nome' => ''
+        );
 
-			if (isset($_POST['id_usuario']) && !empty($_POST['id_usuario'])){
-			
-				$usuario = new Usuarios();	
-				$retorno = $usuario -> dadosUsuario(addslashes($_POST['id_usuario']));
+        /* verificar uma forma de comparar os dados recebidos do ajax com o que puxei do banco para saber se o login e a senha conferem. */
 
-				if($retorno == false){
-					$dados = array(
-						'logado' => false
-				   );
+        if ($_POST['tipo'] == 1) {
 
-					$this -> loadViewAjax('login','ajaxLogin',$dados);
+            if (isset($_POST['id_usuario']) && !empty($_POST['id_usuario'])) {
 
-				}else{
-					$dados = array(
-			 		'pin' => $retorno['pin'],
-					'nome' => $retorno['nome'],
-					'id_perfil_acesso' => $retorno['id_perfil_acesso'],
-			 		'tipo' => '1'
-				);
-			
-					$this -> loadViewAjax('login','ajaxLogin',$dados);
-				}
+                $usuario = new Usuarios();
+                $retorno = $usuario->dadosUsuario(addslashes($_POST['id_usuario']));
 
-				
+                if ($retorno == false) {
+                    $dados = array(
+                        'logado' => false
+                    );
 
-			}
+                    $this->loadViewAjax('login', 'ajaxLogin', $dados);
+                } else {
+                    $dados = array(
+                        'pin' => $retorno['pin'],
+                        'nome' => $retorno['nome'],
+                        'id_perfil_acesso' => $retorno['id_perfil_acesso'],
+                        'tipo' => '1'
+                    );
 
-		}else if ($_POST['tipo'] == 2){
-					
-					if (isset($_POST['senha']) && !empty($_POST['senha'])){
+                    $this->loadViewAjax('login', 'ajaxLogin', $dados);
+                }
+            }
+        } else if ($_POST['tipo'] == 2) {
 
-						$login = addslashes($_POST['id_usuario']);
-						$senha = addslashes($_POST['senha']);
+            if (isset($_POST['senha']) && !empty($_POST['senha'])) {
 
-						$usuario = new Usuarios();	
-						$retorno = $usuario -> primeiroLogin($login,$senha);
+                $login = addslashes($_POST['id_usuario']);
+                $senha = addslashes($_POST['senha']);
 
-						$dados = array(
-								'logado'=> $retorno['status']								
-							); 
-						
-						
-						$this -> loadViewAjax('login','ajaxLogin',$dados);
-						
+                $usuario = new Usuarios();
+                $retorno = $usuario->primeiroLogin($login, $senha);
 
-						
-						
-						
+                $dados = array(
+                    'logado' => $retorno['status']
+                );
 
-						/*if (md5($_POST['senha']) == $senha){
-							$dados = array(
-								'senha' => "oi",
-								'tipo' => '2',
-								'senha2'=> $senha								
-							); 
-							$this -> loadView('ajaxLogin',$dados);
 
-						}else{
-							$dados = array(
-								'senha' => "adfasdf",
-								'tipo' => '2',
-								'senha2'=> $senha
-							); 
-							$this -> loadView('ajaxLogin',$dados);
-						}
-						*/
-						
-					}
-	    }				
-		
-	}
-	
+                $this->loadViewAjax('login', 'ajaxLogin', $dados);
+            }
+        }
+    }
+
 }
 
 ?>

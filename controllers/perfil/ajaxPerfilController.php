@@ -42,7 +42,15 @@ public function index(){
          'aniversario' => $_POST['aniversario']
         );
         
-        $teste = $usuarios -> gravaPreferenciasPessoais($dadosPessoais);
+        $gravaDadosPessoais = $usuarios -> gravaPreferenciasPessoais($dadosPessoais);
+        
+        if($gravaDadosPessoais === true)
+		{
+                    echo "success";
+		}else
+		{
+		    echo "fail";
+		}
                 
     }
 	
