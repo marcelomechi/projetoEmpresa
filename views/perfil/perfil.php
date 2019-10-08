@@ -60,7 +60,11 @@
                 <div class="carousel carousel-slider center h350">
                     <div class="carousel-fixed-item center">						     	
                         <div class="input-field left-align padding">
-                            <img id="img-upload" src="assets/images/marcelo.jpg" class="circle responsive-img asdffdsa">
+                            <?php if($caminhoFoto == "null"): ?>
+                                <img id="img-upload" src="assets/images/marcelo.jpg" class="circle responsive-img asdffdsa">
+                            <?php else: ?>
+                                <img id="img-upload" src="<?php echo BASE_URL.$caminhoFoto?>" class="circle responsive-img asdffdsa">
+                            <?php endif; ?>
                         </div>	
                         <div class="input-field left-align padding">
                             <span class="white-text name"><?php echo $apelido; ?></span>               
@@ -107,35 +111,64 @@
         <div class="card grey lighten-3 h500">
             <div class="card-content">
                 <span class="card-title center-align"><h5>Dados e preferências pessoais</h5></span>
+                    
                     <div id="tema" class="switch"><br>
                         <label class="center-align">
-                            <input type="checkbox" name="tema">
+                            <?php if ($id_tema_preferido == 0): ?>
+                                <input type="checkbox" name="tema">
+                            <?php else: ?>
+                                <input type="checkbox" name="tema" checked="checked">
+                            <?php endif; ?>
                             <span class="lever"></span>
                         </label>
                     </div>
                     <label for="tema">Tema Escuro</label>
                     <div class="input-field">
-                        <input id="apelido" type="text" class="validate" name="apelido" value="<?php echo $apelido; ?>">
+                       <?php if($apelido == "null"): ?>
+                        <input id="apelido" type="text" class="validate" name="apelido">
+                       <?php else: ?>
+                        <input id="apelido" type="text" class="validate" name="apelido" value="<?php echo $apelido;?>">
+                       <?php endif; ?>
                         <label for="apelido">Como gostaria de ser chamado?</label>
                     </div>
                     <div class="input-field">
-                        <input id="email" type="email" class="validate" name="email" value="<?php echo $email; ?>">
+                        <?php if($email == "null"): ?>
+                        <input id="email" type="email" class="validate" name="email">
+                         <?php else: ?>
+                        <input id="email" type="email" class="validate" name="email" value="<?php echo $email;?>">
+                        <?php endif; ?>
                         <label for="email">E-mail</label>
                     </div>
                     <div class="input-field">
-                        <input id="telefone1" type="text" class="validate phone_with_ddd" name="telefoneFixo" value="<?php echo $telefone1; ?>">
+                        <?php if($telefone1 == "null"): ?>
+                        <input id="telefone1" type="text" class="validate phone_with_ddd" name="telefoneFixo">
+                        <?php else: ?>
+                        <input id="telefone1" type="text" class="validate phone_with_ddd" name="telefoneFixo" value="<?php echo $telefone1;?>">
+                        <?php endif; ?>
                         <label for="telefone1">Telefone Fixo</label>
                     </div>
                     <div class="input-field">
-                        <input id="telefone2" type="text" class="validate sp_celphones" name="telefoneCelular" value="<?php echo $telefone2; ?>" onkeypress="return SomenteNumero(event)">
+                        <?php if($telefone2 == "null"): ?>
+                        <input id="telefone2" type="text" class="validate sp_celphones" name="telefoneCelular">
+                        <?php else: ?>
+                        <input id="telefone2" type="text" class="validate sp_celphones" name="telefoneCelular" value="<?php echo $telefone2 ?>">
+                        <?php endif; ?>
                         <label for="telefone2">Telefone Celular</label>
                     </div>
                     <div class="input-field">
-                        <input id="telefone3" type="text" class="validate sp_celphones" name="telefoneRecado" value="<?php echo $telefone3; ?>" onkeypress="return SomenteNumero(event)">
+                        <?php if($telefone3 == "null"): ?>
+                        <input id="telefone3" type="text" class="validate sp_celphones" name="telefoneRecado">
+                        <?php else: ?>
+                        <input id="telefone3" type="text" class="validate sp_celphones" name="telefoneRecado" value="<?php echo $telefone3; ?>">
+                        <?php endif; ?>
                         <label for="telefone3">Telefone Recado</label>
                     </div>
                     <label>
-                        <input type="checkbox" class="filled-in" checked="checked" name="exibeAniversario"/>
+                        <?php if($exibir_aniversario == 1): ?>
+                            <input type="checkbox" class="filled-in" checked="checked" name="exibeAniversario"/>
+                        <?php else: ?>
+                            <input type="checkbox" class="filled-in" name="exibeAniversario"/>
+                        <?php endif; ?>
                         <span>Exibir Aniversário?</span>
                     </label>
                     <div class="right-align">
@@ -151,6 +184,7 @@
 <script type="text/javascript">
 
     $(document).ready(function () {
+  
 
         // altera foto do perfil
         $(".btn").change(function () {
@@ -184,46 +218,50 @@
 
 
         $('#enviaFotos').on('click', function () {
-            var data = new FormData();
+                    
+            var dadosImg = new FormData();
             var arquivos = $('input[name=profileImg]')[0].files;
             var backgroundMenu = $("div .active").attr("id");
+                 
 
             if (arquivos.length > 0) {
+                dadosImg.append('backgroundMenu', backgroundMenu);
+                dadosImg.append('foto', arquivos[0]);
+                dadosImg.append('tipo', 1);
+            }else{
+                dadosImg.append('backgroundMenu', backgroundMenu);
+                dadosImg.append('tipo', 1);
+            }
 
-                data.append('backgroundMenu', backgroundMenu);
-                data.append('foto', arquivos[0]);
-                data.append('tipo', 1);
-
-                $.ajax({
+               $.ajax({
                     type: 'POST',
                     url: 'http://10.11.194.42/ajaxPerfil',
-                    data: data,
+                    data: dadosImg,
                     contentType: false,
                     processData: false,
                     success: function (r) {
-                        if (r == "success")
-                        {
-                            $('.file-path').val("");
-                            $('.msg').html("Alterações efetuadas com sucesso!").addClass("teal-text").fadeOut(5000);
-                        } else
-                        {
-                            $('.file-path').val("");
-                            $('.msg').html("Não foi possível importar, verfique o tamanho e o tipo do arquivo.").addClass("red-text").fadeOut(5000);
+                       
+                        if (r == "success"){ 
+                           M.toast({html: 'Alterações efetuadas com sucesso!', classes: 'teal accent-4'}); 
+                        }else{ 
+                           M.toast({html: 'Não foi possível importar, verfique o tamanho e o tipo do arquivo.', classes: 'red lighten-2' });
                         }
 
                         $('.progress').addClass('hide');
-                        //$('.modal-trigger').click();
                     }
                 });
-            }
+    
         });
         
-    
-
-        
+              
         
         $('#gravaPreferencias').on('click', function () {
-            var data = new FormData();
+               if($("input[name=apelido]").val() == ""){
+                   M.toast({html: 'Preencha o campo "Como gostaria de ser chamado?".', classes: 'red lighten-2' });
+                   return 0;
+               }
+        
+               var data = new FormData();
             
                 if( $("input[name=tema]").is(':checked') ){
                  var  tema = 1;
@@ -262,10 +300,10 @@
                     processData: false,
                     success: function (r) {
                         if(r == "success"){
-                            $(".name").html($("input[name=apelido]").val());
-                            $(".email").html($("input[name=email]").val());   
+                            M.toast({html: 'Preferências alteradas com sucesso!', classes: 'teal accent-4'}); 
+                      
                         }else{
-                            return false;
+                             M.toast({html: 'Não foi possível gravar as alterações verifique as informações preenchidas.', classes: 'red lighten-2' });
                         }
                     }
                 });

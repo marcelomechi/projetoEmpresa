@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <style>
 
-<title>WFM</title>
+    </style>
+<title>Workforce Management</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 
@@ -28,9 +30,11 @@
                 <div data-target="sidebar" class="sidenav-trigger"><i class="material-icons white-text"><i class="fas fa-bars menuHoverTemplate"></i></i></div>
                   <span class="brand-logo center tituloMenu"><?php echo $_SESSION['relatorio']; ?></span>
                   <ul id="dadosPessoais" class="right">                   
-                    <li><a href="#"><i class="material-icons center-align"><img id="profile" class="circle responsive-img h10Template" src="assets/images/marcelo.jpg"></i></a></li>      
-                    <li><a href="#"><i class="fas fa-bell"></i></a></li>
-                    <li><a href="#"><i class="fas fa-sign-out-alt"></i></a></li>
+                    <li><a><img id="profile" class="circle responsive-img fotoUsuarioMenu" src="<?php echo BASE_URL.$_SESSION['foto_perfil']; ?>"></a></li>      
+                    <li><a href="<?php echo BASE_URL.'home'; ?>" class="tooltipped" data-position="left" data-tooltip="Voltar para a página inicial"><i class="fas fa-home"></i></a></li>
+                    <li><a href="<?php echo BASE_URL.'logout'; ?>" class="tooltipped" data-position="left" data-tooltip="Deslogar"><i class="fas fa-power-off"></i></a></li>
+                    
+
                   </ul>
             </div>
   </nav>
@@ -38,17 +42,26 @@
   <div id="sidebar" class="sidenav">    
               <div class="user-view">
                 <div class="background">
-                  <img src="assets/images/computador.jpg" class="backgroundImgMenu">
+                  <?php if(!isset($_SESSION['foto_menu']) && empty($_SESSION['foto_menu'])): ?>  
+                    <div class="blue"></div>
+                  <?php else: ?>
+                    <img src="<?php echo BASE_URL.$_SESSION['foto_menu']; ?>" class="backgroundImgMenu">
+                  <?php endif; ?>
                </div>                
-                <a href="#!user"><img id="profile" class="circle h110Template responsive-img" src="assets/images/marcelo.jpg"></a>
-                <a href="#!name"><span class="white-text name">Marcelo Mechi</span></a>
-                <a href="#!email"><span class="white-text email">marcelo.goncalves@brbpo.com.br</span></a>
+                 <img id="perfilFoto" class="circle responsive-img fotoUser" src="<?php echo BASE_URL.$_SESSION['foto_perfil']; ?>">
+                 
+                <a><span class="white-text name"><?php echo $_SESSION['apelido']; ?></span></a>
+                <a><span class="white-text email"><?php echo $_SESSION['email']; ?></span></a>
               </div>
         <ul class="collapsible">
+            <li class="hide-on-med-and-up"><a href="<?php echo BASE_URL.'home'; ?>" class="collapsible-header"><i class="material-icons"><i class="fas fa-home"></i></i>Home</a></li>
           <?php 
             $menu = new Usuarios();  
             $item = $menu -> menu();
           ?>
+            <li class="hide-on-med-and-up"><div class="divider"></div></li>
+            <li class="hide-on-med-and-up"><a href="<?php echo BASE_URL.'logout'; ?>" class="collapsible-header"><i class="material-icons"><i class="fas fa-power-off"></i></i>Logout</a></li>
+            
         </ul>
 </div>   
     

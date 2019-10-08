@@ -1,6 +1,7 @@
 $(document).ready(function(){
     $('.collapsible').collapsible();
     $('.tap-target').tapTarget('open');
+    $('.tooltipped').tooltip();
 
     $(".sidenav").sidenav({
         onOpenStart: function(){

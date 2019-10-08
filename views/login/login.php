@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<title>WFM</title>
+	<title>Workforce Management</title>
   <!--Import Google Icon Font-->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <!-- Compiled and minified CSS -->
@@ -23,6 +23,11 @@
     }
     ?>    
     <link rel="icon" href="data:,">
+    <?php
+        /*$dir    = 'assets/images/backgroundLogin';
+        $files1 = scandir($dir);
+        print_r($files1);*/
+    ?>
 
 </head>
       
@@ -54,7 +59,7 @@ Vamos criar oa tela de login
                         <img src="<?php echo BASE_URL;?>assets/images/wfm.png" class="responsive-img foto">
                    </div>
                    <div class="input-field">   
-                      <div class="card-title w100 flow-text center-align"><b>Workforce Menagement</b></div>
+                      <div class="card-title w100 flow-text center-align"><b>Workforce Management</b></div>
                    </div> 
                   <div class="input-field">
                       <input type="text" autocomplete="off" class="validate" name="usuario" id="usuario" onkeypress="return SomenteNumero(event)" />
@@ -81,7 +86,9 @@ Vamos criar oa tela de login
                         
                         <i id="voltar" class="fas fa-arrow-left"></i> 
                       </div>                                
-                            <i class="fas fa-user-circle large"></i> 
+                                      
+                        <img id="imagemUser" src="<?php echo BASE_URL;?>" class="circle responsive-img imgLogin">                                                         
+                                                  
                       <div class="card-title w100 flow-text">Olá, <span id="nomeUsuario"></span>!</div>
                         <div class="input-field col s12">              
                           <input type="password" class="validate" name="password" id="password"/>

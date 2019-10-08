@@ -2,6 +2,12 @@
 
 class PerfilController extends Controller{
 
+        public function __construct() {
+           Usuarios::verificaLogin();
+            $updateSession = new Usuarios();                       
+            $updateSession -> updateSession($_SESSION['PIN']);
+        }
+    
 	public function index(){
 		$dados = array();
 		

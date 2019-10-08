@@ -23,6 +23,24 @@
   height: 30px !important;
 }
 
+.fotoUsuarioMenu{
+  /*background-color: #ddd;
+  border-radius: 100%;*/
+  height: 30px !important;
+  width: 30px !important;
+  margin: 0;
+  vertical-align: middle;
+  box-sizing: border-box;
+ 
+}
+
+
+.fotoUser{
+    height: 110px !important;
+    width: 110px !important;
+}
+
+
 .menuHoverTemplate{
   cursor: pointer;
 }

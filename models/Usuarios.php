@@ -9,8 +9,9 @@
 
 
 class Usuarios extends Model {
+    
 
-	public function verificaLogin(){
+	public static function verificaLogin(){
 		
 		/* se não tiver setado ou se tiver setado e tiver vazio */
 	
@@ -20,9 +21,11 @@ class Usuarios extends Model {
 		}
 		
 	}
+        
+        
 
 	public function dadosUsuario($login){
-			
+
 				$dados = array(
 					'id_usuario' => '',
 					'nome' => ''
@@ -30,7 +33,9 @@ class Usuarios extends Model {
 
 				$sql =  "SELECT * FROM TB_WFM_USUARIO U ";
 				$sql .= "JOIN TB_CAD_COLABORADOR C ON C.CPF = U.CPF ";
+                                $sql .= "JOIN TB_WFM_PERFIL_PESSOAL P ON P.PIN = U.PIN ";
 				$sql .= "WHERE U.CPF = :cpf ";
+                                $sql .= "LIMIT 1 ";
 
 				$sql = $this-> db -> prepare($sql);
 				$sql -> bindValue(':cpf',$login);
@@ -42,13 +47,24 @@ class Usuarios extends Model {
 					$sql = $sql -> fetch();					
 					
 					$pin = $sql['PIN'];
-					$nome = $sql['NOME'];
+					$nome = $sql['APELIDO'];
 					$id_perfil_acesso = $sql['ATIVO'];
+                                        $foto_perfil = $sql['CAMINHO_FOTO'];
+                                        
+                                        if(empty($sql['CAMINHO_FOTO'])){
+                                            $_SESSION['foto_perfil'] = "assets/images/default.png";
+                                        }else{
+                                            $_SESSION['foto_perfil'] = $sql['CAMINHO_FOTO'];  
+                                        }
+                                        
+                                        
+                                        
 
 					$dados = array(
 						'pin' => $pin,
 						'nome' => $nome,
-						'id_perfil_acesso' => $id_perfil_acesso
+						'id_perfil_acesso' => $id_perfil_acesso,
+                                                'foto_perfil' => $foto_perfil
 					); 
 
 					return $dados;	
@@ -61,22 +77,15 @@ class Usuarios extends Model {
 	public function primeiroLogin($login, $senha){
 		$dados = array(
 			'status' => ''
-		);
-
-				$_SESSION['senha'] = '';
-				$_SESSION['CPF'] = '';
-				$_SESSION['id_perfil_acesso'] = '';
-				$_SESSION['id_tema_preferido'] = '';
-				$_SESSION['exibir_aniversario'] = '';
-				$_SESSION['foto'] = '';
-                                $_SESSION['PIN'] = '';
+		);			
 
 
 		if($login == $senha){
 			
-			$sql = "SELECT U.PIN, U.CPF, U.SENHA, U.ATIVO, P.ID_TEMA_PREFERIDO, P.EXIBIR_ANIVERSARIO, P.APELIDO, P.CAMINHO_FOTO, UP.ID_PERFIL FROM TB_WFM_USUARIO U ";
+			$sql = "SELECT U.PIN, U.CPF, U.SENHA, U.ATIVO, P.ID_TEMA_PREFERIDO, P.EXIBIR_ANIVERSARIO, P.APELIDO, P.CAMINHO_FOTO, UP.ID_PERFIL, IMFUNDO.CAMINHO_IMAGEM, P.EMAIL FROM TB_WFM_USUARIO U ";
 			$sql .= "JOIN TB_WFM_PERFIL_PESSOAL P ON P.PIN = U.PIN ";
 			$sql .= "JOIN TB_WFM_USUARIO_PERFIL UP ON U.PIN = UP.PIN ";
+                        $sql .= "JOIN TB_WFM_IMAGEM_FUNDO IMFUNDO ON IMFUNDO.ID_IMAGEM_FUNDO = P.ID_IMAGEM_FUNDO ";
 			$sql .= "WHERE U.CPF = :senha_inicial ";
 								
 			$sql = $this-> db -> prepare($sql);
@@ -86,15 +95,13 @@ class Usuarios extends Model {
 			if($sql -> rowCount() > 0){
 				$sql = $sql -> fetch();
 				
-				/*$sqlUpdate = "UPDATE TB_WFM_USUARIO SET SENHA = :senha WHERE CPF = :senha";
-				$sqlUpdate = $this -> db -> prepare($sqlUpdate);
-				$sqlUpdate->bindValue(':senha',$senha);
-				$sqlUpdate->execute();*/
-
-				//$_SESSION['usuario'] = $sql['CPF'];
 				$_SESSION['CPF'] = $sql['CPF'];
 				$_SESSION['permissao'] = $sql['ID_PERFIL'];
                                 $_SESSION['PIN'] = $sql['PIN'];
+                                $_SESSION['foto_menu'] = $sql['CAMINHO_IMAGEM'];
+                                $_SESSION['apelido'] = $sql['APELIDO'];
+                                $_SESSION['email'] = $sql['EMAIL'];
+                                
 	
 					$dados = array(
 						'status' => BASE_URL
@@ -122,8 +129,8 @@ class Usuarios extends Model {
 
 	public function getPreferencias($pin){
 
-		$sql = "SELECT * FROM TB_WFM_PERFIL_PESSOAL ";
-		$sql.= "WHERE PIN = :PIN ";
+		$sql = "SELECT * FROM TB_WFM_PERFIL_PESSOAL P JOIN TB_WFM_IMAGEM_FUNDO IMFUNDO ON IMFUNDO.ID_IMAGEM_FUNDO = P.ID_IMAGEM_FUNDO ";
+		$sql.= "WHERE P.PIN = :PIN ";
 
 		$sql = $this-> db -> prepare($sql);
 		$sql -> bindValue(':PIN',$pin);
@@ -131,7 +138,16 @@ class Usuarios extends Model {
 
 		if($sql -> rowCount() > 0){
 			$sql = $sql -> fetch();
-			$nome = ucfirst(strtolower($sql['APELIDO']));			
+			$nome = ucfirst(strtolower($sql['APELIDO']));	
+                        
+                        if(empty($sql['CAMINHO_FOTO']) || !isset($sql['CAMINHO_FOTO'])){
+                            $fotoPerfil = "assets/images/default.png";
+                        }else{
+                             $fotoPerfil = $sql['CAMINHO_FOTO'];
+                        }
+                        
+                        $_SESSION['foto_perfil'] = $fotoPerfil;
+                        $_SESSION['foto_menu'] = $sql['CAMINHO_IMAGEM'];
 			
 			$dados = array(
 				'cpf' => $sql['PIN'],
@@ -142,8 +158,11 @@ class Usuarios extends Model {
 				'id_tema_preferido' => $sql['ID_TEMA_PREFERIDO'],
 				'exibir_aniversario' => $sql['EXIBIR_ANIVERSARIO'],
 				'apelido' => $nome,
-				'caminhoFoto' => $sql['CAMINHO_FOTO']
+				'caminhoFoto' =>  $fotoPerfil,
+                                'caminhoFundo' => $sql['CAMINHO_IMAGEM']
 			);
+                        
+                        
 
 			return $dados;
 
@@ -156,6 +175,26 @@ class Usuarios extends Model {
 *	Upload Foto de Perfil
 *
 */
+        
+public function gravaBackground($idBackground){
+     $sql = "UPDATE TB_WFM_PERFIL_PESSOAL ";
+     $sql .= "SET ID_IMAGEM_FUNDO = :background ";
+     $sql .= "WHERE PIN = :PIN ";
+     
+     $sql = $this -> db -> prepare($sql);   
+     $sql -> bindValue(':background',$idBackground);
+     $sql -> bindValue(':PIN', $_SESSION['PIN']);
+ 
+     $sql -> execute();
+     
+     $linhasAfetadas = $sql -> rowCount();
+     
+     if($linhasAfetadas === 0 || $linhasAfetadas > 0){
+         return true;
+     }else{
+         return false;
+     }
+}        
 
  public function enviaFotoPerfil($imagem, $imagemFundo){
  	$nomeArquivo = $this -> validaImagem($imagem);
@@ -170,7 +209,7 @@ class Usuarios extends Model {
             $gravaImagem = $this -> gravaFotoPerfilBackground($caminho, $imagemFundo);
                 if($gravaImagem === true){
                     return true;
-                   
+                               
                 }else{
                     return false;
                 }
@@ -216,9 +255,9 @@ class Usuarios extends Model {
      $sql -> bindValue(':idImagemFundo',$idImagemFundo);     
      $sql -> execute();
      
-     //print_r($sql);
+     $linhasAfetadas = $sql -> rowCount();
      
-     if($sql -> rowCount() > 0){
+     if($linhasAfetadas === 0 || $linhasAfetadas > 0){
          return true;
      }else{
          return false;
@@ -251,7 +290,9 @@ class Usuarios extends Model {
  
      $sql -> execute();
      
-     if($sql -> rowCount() > 0){
+     $linhasAfetadas = $sql -> rowCount();
+     
+     if($linhasAfetadas === 0 || $linhasAfetadas > 0){
          return true;
      }else{
          return false;
@@ -261,13 +302,17 @@ class Usuarios extends Model {
  }
 
 public function carregaCarousel(){
-       $sql = "SELECT  ID_IMAGEM_FUNDO, ";
-       $sql .= "       ID_TIPO_FUNDO, ";
-       $sql .= "       CAMINHO_IMAGEM, ";
-       $sql .= "       ATIVO, ";
-       $sql .= "       (SELECT ID_IMAGEM_FUNDO FROM TB_WFM_PERFIL_PESSOAL WHERE PIN = :PIN) AS PREFERENCIA ";
-       $sql .= "FROM TB_WFM_IMAGEM_FUNDO ";
-       $sql .= "WHERE ATIVO = 1 ";
+       $sql = "SELECT PIN, ";
+       $sql .= "      FUNDO.ID_IMAGEM_FUNDO, ";
+       $sql .= "      FUNDO.CAMINHO_IMAGEM, ";
+       $sql .= "      FUNDO.ATIVO, ";
+       $sql .= "      TPFUNDO.TIPO   ";
+       $sql .= "FROM  TB_WFM_PERFIL_PESSOAL PERF ";
+       $sql .= "RIGHT JOIN TB_WFM_IMAGEM_FUNDO FUNDO ON FUNDO.ID_IMAGEM_FUNDO = PERF.ID_IMAGEM_FUNDO ";
+       $sql .= "JOIN  TB_WFM_IMAGEM_FUNDO_TIPO TPFUNDO ON TPFUNDO.ID_TIPO_FUNDO = FUNDO.ID_TIPO_FUNDO ";
+       $sql .= "WHERE (PIN = :PIN OR PIN IS NULL) ";
+       $sql .= "AND (FUNDO.ID_TIPO_FUNDO = 2 OR FUNDO.ID_TIPO_FUNDO IS NULL) ";
+       $sql .= "ORDER BY PIN DESC, FUNDO.ID_IMAGEM_FUNDO ";
         
        $sql = $this -> db -> prepare($sql);
        $sql -> bindValue(':PIN', $_SESSION['PIN']);
@@ -279,6 +324,31 @@ public function carregaCarousel(){
          
            
        }
+}
+
+public function updateSession($pin){
+    $sql = "SELECT * FROM TB_WFM_PERFIL_PESSOAL P JOIN TB_WFM_IMAGEM_FUNDO IMFUNDO ON IMFUNDO.ID_IMAGEM_FUNDO = P.ID_IMAGEM_FUNDO ";
+    $sql.= "WHERE P.PIN = :PIN ";
+
+    $sql = $this-> db -> prepare($sql);
+    $sql -> bindValue(':PIN',$pin);
+    $sql -> execute();
+    
+    if($sql -> rowCount() > 0){
+        $sql = $sql -> fetch();
+        $nome = ucfirst(strtolower($sql['APELIDO']));
+        
+            
+        $_SESSION['apelido'] = $nome;
+        $_SESSION['email'] = $sql['EMAIL'];
+        $_SESSION['foto_menu'] = $sql['CAMINHO_IMAGEM'];
+        $_SESSION['foto_perfil'] = $sql['CAMINHO_FOTO'];
+        return true;
+        
+    }else{
+        return false;
+    }
+    
 }
 
 

@@ -2,12 +2,16 @@
 
 class HomeController extends Controller{
 	
+        public function __construct() {
+            Usuarios::verificaLogin();
+            $updateSession = new Usuarios();                       
+            $updateSession -> updateSession($_SESSION['PIN']);
+        }
+    
+    
 	public function index(){
 		$_SESSION['relatorio'] = 'Home';
 	
-		$login = new Usuarios();
-		$login -> verificaLogin();
-
 		$dados = array(
 			'nome' => 'marcelo',
 			'sobrenome' => 'Mechi'

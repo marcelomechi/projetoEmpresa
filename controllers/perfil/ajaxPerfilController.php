@@ -9,13 +9,11 @@ public function index(){
     $usuarios = new Usuarios();  
       
     if($_POST['tipo'] == 1){
+        $idBackground = $_POST['backgroundMenu'];        
         
-        if(isset($_FILES['foto']))
-	{
-		$foto = $_FILES['foto'];
-                $idBackground = $_POST['backgroundMenu'];     
-                		
-		$retorno = $usuarios -> enviaFotoPerfil($foto,$idBackground);
+        if(isset($_FILES['foto']) && !empty($_FILES['foto'])){
+		$foto = $_FILES['foto'];              
+                $retorno = $usuarios -> enviaFotoPerfil($foto,$idBackground);
 
 		if($retorno === true)
 		{
@@ -25,13 +23,17 @@ public function index(){
 			echo "fail";
 		}
 
-	}
-	else
+	}elseif(!isset($_FILES['foto']))
 	{
-		return false;
+		$saveBackground = $usuarios -> gravaBackground($idBackground);
+                    if($saveBackground === true){
+                        echo "success";
+                    }else{
+                        echo "fail";
+                    }
 	}
         
-    }else{
+    }elseif($_POST['tipo'] == 2){
         $dadosPessoais = array(
          'tema' => $_POST['tema'],
          'apelido' => $_POST['apelido'],
@@ -43,6 +45,8 @@ public function index(){
         );
         
         $gravaDadosPessoais = $usuarios -> gravaPreferenciasPessoais($dadosPessoais);
+        
+        print_r($gravaDadosPessoais['teste']);
         
         if($gravaDadosPessoais === true)
 		{

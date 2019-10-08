@@ -24,8 +24,7 @@ $(document).ready(function(){
             async: false,
             data:{id_usuario: $("#usuario").val(), tipo: 1},
             success: function(r) {
-                dados = r.split("|")
-
+                dados = r.split("|");
                 if(r == false){
 		            $("#nLocalizado").removeAttr("hidden","hidden");
                     $("#loadUsuario").attr("hidden","hidden");
@@ -41,6 +40,11 @@ $(document).ready(function(){
                     $("#nLocalizado").attr("hidden","hidden");
                     $("#inativo").attr("hidden","hidden");
                     $("#nomeUsuario").html(dados[0]);
+                    
+          
+                    
+                    
+                    $("#imagemUser").attr("src", dados[2]);
                     $("#cardUsuario").hide("slide", { direction: "left" }, 200, function(){
                     $("#cardSenha").show("slide", {direction: "right"}, 200);
                     });
@@ -104,7 +108,7 @@ $(document).ready(function(){
     // fecha o modal de senha alterada com sucesso //
 
     $("#fechaModalSenha").click(function(){
-            $("#teste").hide(200, function(){
+            $("#imagemUser").hide(200, function(){
             window.location.reload();
         });
     });

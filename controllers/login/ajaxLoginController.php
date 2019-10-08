@@ -33,6 +33,7 @@ class AjaxLoginController extends Controller {
                         'pin' => $retorno['pin'],
                         'nome' => $retorno['nome'],
                         'id_perfil_acesso' => $retorno['id_perfil_acesso'],
+                        'foto_perfil' => $retorno['foto_perfil'],
                         'tipo' => '1'
                     );
 

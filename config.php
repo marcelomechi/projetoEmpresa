@@ -9,7 +9,7 @@ $charset = array(
 
 if (ENVIRONMENT == 'development'){
 	define("BASE_URL","http://10.11.194.42/");
-	$config['dbname'] = 'DB_WFM_HOMOLOGACAO';
+	$config['dbname'] = 'DB_WFM';
 	$config['host'] = '10.11.194.42';
 	$config['dbuser'] = 'userAPI';
 	$config['dbpass'] = 'MI$j4g9s6J7D6ik';
