@@ -9,6 +9,9 @@ public function index(){
     $usuarios = new Usuarios();  
       
     if($_POST['tipo'] == 1){
+        
+        Usuarios::verificaLogin();
+        
         $idBackground = $_POST['backgroundMenu'];        
         
         if(isset($_FILES['foto']) && !empty($_FILES['foto'])){
@@ -34,6 +37,9 @@ public function index(){
 	}
         
     }elseif($_POST['tipo'] == 2){
+        Usuarios::verificaLogin();
+        
+        
         $dadosPessoais = array(
          'tema' => $_POST['tema'],
          'apelido' => $_POST['apelido'],
@@ -45,9 +51,8 @@ public function index(){
         );
         
         $gravaDadosPessoais = $usuarios -> gravaPreferenciasPessoais($dadosPessoais);
-        
-        print_r($gravaDadosPessoais['teste']);
-        
+       
+            
         if($gravaDadosPessoais === true)
 		{
                     echo "success";
@@ -56,7 +61,25 @@ public function index(){
 		    echo "fail";
 		}
                 
+    }elseif($_POST['tipo'] == 3){
+        Usuarios::verificaLogin();
+       
+        if(isset($_POST['tema'])){
+            $gravaTema = $usuarios -> gravaTema($_POST['tema']);
+           
+            if($gravaTema === true){
+                echo "success";
+            }else{
+                echo "fail";
+            }
+        }else{
+            return false;
+        }
+            
+        
     }
+    
+    
 	
 
 	

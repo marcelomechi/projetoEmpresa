@@ -24,11 +24,48 @@
     ?>    
     <link rel="icon" href="data:,">
     <?php
-        /*$dir    = 'assets/images/backgroundLogin';
+        $dir    = 'views/login/assets/images/';
         $files1 = scandir($dir);
-        print_r($files1);*/
+        
+        /*$minVal = array_keys( $files1, min( $files1));
+        $maxVal = array_keys( $files1, max( $files1));*/
+        $arrBackground = $files1;
+       
+        $arquivos1 = array_shift($arrBackground);
+        $arquivos2 = array_shift($arrBackground);
+        $randomWallpaper=array_rand($arrBackground,1);
+        
+       $wallpaper = BASE_URL."views/login/assets/images/".$arrBackground[$randomWallpaper];
+        
+       // print_r(rand($files1));
+        
+       // print_r($dados);
+        
+      // var_dump($arrBackground);
+        
     ?>
 
+    <style>
+        html{
+              background-image: url("<?php echo $wallpaper; ?>");
+              background-repeat: no-repeat; 
+              -moz-background-size: contain; 
+              -webkit-background-size: contain; 
+              background-size: contain;
+              background-position: center center;
+              background-size: cover;
+        }
+        
+        @media only screen and (max-device-width: 900px) {
+            html{
+                background-color: #ccc;
+                background-image: none;
+            }
+        
+        }
+    </style>
+    
+    
 </head>
       
 <body>

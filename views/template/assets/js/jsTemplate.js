@@ -17,4 +17,14 @@ $(document).ready(function(){
          // document.getElementById("main2").style.transition = "0.1s";      
         }
     });
+
+    // tema escuro //
+    
+    
+    
+    
+    const currentTheme = localStorage.getItem('theme');
+        document.documentElement.setAttribute('data-theme', currentTheme);
+
+
 });

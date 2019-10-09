@@ -1,5 +1,5 @@
 <style type="text/css">
-
+  
     .asdffdsa{
         height: 110px !important;
         width: 110px !important;
@@ -15,7 +15,6 @@
         -webkit-background-size: cover;
         -moz-background-size: cover;
         -o-background-size: cover;
-        background-size: cover;
     }
 
     .h350{
@@ -51,10 +50,10 @@
 
 
 </style>
-<div class="row h500">
+<div class="row h500 tool">
     <div class="col s12 m12 l6">
 
-        <div class="card grey lighten-3 h500">
+        <div class="card h500">
             <div class="card-content">
                 <span class="card-title center-align"><h5>Imagem de fundo e foto do perfil</h5></span>
                 <div class="carousel carousel-slider center h350">
@@ -108,12 +107,12 @@
 
     </div>
     <div class="col s12 m12 l6">
-        <div class="card grey lighten-3 h500">
+        <div class="card h500">
             <div class="card-content">
                 <span class="card-title center-align"><h5>Dados e preferências pessoais</h5></span>
                     
                     <div id="tema" class="switch"><br>
-                        <label class="center-align">
+                        <label class="theme-switch">
                             <?php if ($id_tema_preferido == 0): ?>
                                 <input type="checkbox" name="tema">
                             <?php else: ?>
@@ -125,41 +124,41 @@
                     <label for="tema">Tema Escuro</label>
                     <div class="input-field">
                        <?php if($apelido == "null"): ?>
-                        <input id="apelido" type="text" class="validate" name="apelido">
+                        <input id="apelido" type="text" class="validate textoInput" name="apelido">
                        <?php else: ?>
-                        <input id="apelido" type="text" class="validate" name="apelido" value="<?php echo $apelido;?>">
+                        <input id="apelido" type="text" class="validate textoInput" name="apelido" value="<?php echo $apelido;?>">
                        <?php endif; ?>
                         <label for="apelido">Como gostaria de ser chamado?</label>
                     </div>
                     <div class="input-field">
                         <?php if($email == "null"): ?>
-                        <input id="email" type="email" class="validate" name="email">
+                        <input id="email" type="email" class="validate textoInput" name="email">
                          <?php else: ?>
-                        <input id="email" type="email" class="validate" name="email" value="<?php echo $email;?>">
+                        <input id="email" type="email" class="validate textoInput" name="email" value="<?php echo $email;?>">
                         <?php endif; ?>
                         <label for="email">E-mail</label>
                     </div>
                     <div class="input-field">
                         <?php if($telefone1 == "null"): ?>
-                        <input id="telefone1" type="text" class="validate phone_with_ddd" name="telefoneFixo">
+                        <input id="telefone1" type="text" class="validate phone_with_ddd textoInput" name="telefoneFixo">
                         <?php else: ?>
-                        <input id="telefone1" type="text" class="validate phone_with_ddd" name="telefoneFixo" value="<?php echo $telefone1;?>">
+                        <input id="telefone1" type="text" class="validate phone_with_ddd textoInput" name="telefoneFixo" value="<?php echo $telefone1;?>">
                         <?php endif; ?>
                         <label for="telefone1">Telefone Fixo</label>
                     </div>
                     <div class="input-field">
                         <?php if($telefone2 == "null"): ?>
-                        <input id="telefone2" type="text" class="validate sp_celphones" name="telefoneCelular">
+                        <input id="telefone2" type="text" class="validate sp_celphones textoInput" name="telefoneCelular">
                         <?php else: ?>
-                        <input id="telefone2" type="text" class="validate sp_celphones" name="telefoneCelular" value="<?php echo $telefone2 ?>">
+                        <input id="telefone2" type="text" class="validate sp_celphones textoInput" name="telefoneCelular" value="<?php echo $telefone2 ?>">
                         <?php endif; ?>
                         <label for="telefone2">Telefone Celular</label>
                     </div>
                     <div class="input-field">
                         <?php if($telefone3 == "null"): ?>
-                        <input id="telefone3" type="text" class="validate sp_celphones" name="telefoneRecado">
+                        <input id="telefone3" type="text" class="validate sp_celphones textoInput" name="telefoneRecado">
                         <?php else: ?>
-                        <input id="telefone3" type="text" class="validate sp_celphones" name="telefoneRecado" value="<?php echo $telefone3; ?>">
+                        <input id="telefone3" type="text" class="validate sp_celphones textoInput" name="telefoneRecado" value="<?php echo $telefone3; ?>">
                         <?php endif; ?>
                         <label for="telefone3">Telefone Recado</label>
                     </div>
@@ -253,7 +252,53 @@
     
         });
         
-              
+       /* 
+        $("input[name=tema]").on('change',function(){
+            
+           // alert(this);
+            
+            if($(this).is(':checked')){
+                           
+                var tipo = 3;
+                var tema = 1;
+                
+                $.ajax({
+                   url: 'http://10.11.194.42/ajaxPerfil',
+                   type:'POST',
+                   async: false,
+                   data:{tipo: tipo, tema: tema},                            
+                
+                    success: function (r) {
+                        if(r == "success"){
+                           console.log("ok")                     
+                        }else{
+                             console.log("nok");    
+                        }
+                    }
+                });
+                
+                
+            }else{
+                var tipo = 3;
+                var tema = 0;
+                
+                $.ajax({
+                   url: 'http://10.11.194.42/ajaxPerfil',
+                   type:'POST',
+                   async: false,
+                   data:{tipo: tipo, tema: tema},                            
+                
+                    success: function (r) {
+                        if(r == "success"){
+                           console.log("ok")                     
+                        }else{
+                             console.log("nok");    
+                        }
+                    }
+                });
+            }
+        });
+           */   
         
         $('#gravaPreferencias').on('click', function () {
                if($("input[name=apelido]").val() == ""){
@@ -261,7 +306,7 @@
                    return 0;
                }
         
-               var data = new FormData();
+               /*var data = new FormData();*/
             
                 if( $("input[name=tema]").is(':checked') ){
                  var  tema = 1;
@@ -282,26 +327,26 @@
             var telefoneCelular = $("input[name=telefoneCelular]").val() === "" ? null : $("input[name=telefoneCelular]").val();
             var telefoneRecado = $("input[name=telefoneRecado]").val() === "" ? null : $("input[name=telefoneRecado]").val();           
             
-            data.append('tema', tema);
+           /* data.append('tema', tema);
             data.append('apelido', apelido);
             data.append('email', email);
             data.append('telefoneFixo', telefoneFixo);
             data.append('telefoneCelular', telefoneCelular);
             data.append('telefoneRecado', telefoneRecado);
             data.append('aniversario', aniversario);
-            data.append('tipo', 2);
+            data.append('tipo', 2);*/
             
 
                 $.ajax({
-                    type: 'POST',
                     url: 'http://10.11.194.42/ajaxPerfil',
-                    data: data,
-                    contentType: false,
-                    processData: false,
+                    type:'POST',
+                    async: false,
+                    data: {tema: tema, apelido: apelido, email: email, telefoneFixo: telefoneFixo, telefoneCelular: telefoneCelular, telefoneRecado: telefoneRecado, aniversario: aniversario, tipo: 2},                    
                     success: function (r) {
                         if(r == "success"){
                             M.toast({html: 'Preferências alteradas com sucesso!', classes: 'teal accent-4'}); 
-                      
+                            $(".name").html(apelido);
+                            $(".email").html(email);
                         }else{
                              M.toast({html: 'Não foi possível gravar as alterações verifique as informações preenchidas.', classes: 'red lighten-2' });
                         }
@@ -331,6 +376,32 @@
                 return false;
         }
     }
+
+// tema switch
+
+const toggleSwitch = document.querySelector('.theme-switch input[type="checkbox"]');
+
+function switchTheme(e) {
+    if (e.target.checked) {
+        document.documentElement.setAttribute('data-theme', 'dark');
+        localStorage.setItem('theme', 'dark');
+        
+    }
+    else {        
+          document.documentElement.setAttribute('data-theme', 'light');
+          localStorage.setItem('theme', 'light');
+    }    
+}
+
+toggleSwitch.addEventListener('change', switchTheme, false);
+
+<?php
+
+$classe = new Usuarios();
+
+$classe ->updateSession($_SESSION['PIN']);
+
+?>
 
 
 </script>

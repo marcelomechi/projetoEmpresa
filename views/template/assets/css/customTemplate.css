@@ -1,3 +1,136 @@
+/* define tema */
+
+:root {
+    --primary-color: #f5f5f5;
+    --secondary-color: #536390;
+    --font-color: #000000;
+    --bg-color: #F3F3F3;
+    --heading-color: #292922;
+    --card: #eeeeee;
+    --sidenav: #ffffff;
+    --sidenavHover: #b2dfdb;
+    --sidenavI: #6A6A6A;
+    --sidenavDivider: #e0e0e0;
+    --label: #ADADAD;
+    
+}
+
+[data-theme="dark"] {
+    --primary-color: #616161;
+    --secondary-color: #818cab;
+    --font-color: #e1e1ff;
+    --bg-color: #212121;
+    --heading-color: #818cab;
+    --card: #424242;
+    --label: #bdbdbd;
+    --sidenav: #212121;
+    --sidenavHover: #26a69a;
+    --sidenavI: #e1e1ff;
+    --sidenavDivider: #616161;
+    
+}
+
+body{
+    background-color: var(--bg-color);
+    color: var(--font-color);
+}
+  
+.card{
+    background-color: var(--card);
+}
+
+.divider{
+    color: var(--sidenavDivider);
+}
+
+input{
+    color:var(--font-color);
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+/*
+.sidenav li > a > i, .sidenav li > a > [class^="mdi-"], .sidenav li > a li > a > [class*="mdi-"], .sidenav li > a > i.material-icons, .sidenav .collapsible-header, .sidenav.fixed .collapsible-header, .sidenav .collapsible-body li a, .sidenav.fixed .collapsible-body li a {
+    color: var(--font-color);
+}
+
+.sidenav, sidenav li > a > i, .sidenav li > a > [class^="mdi-"], .sidenav li > a li > a > [class*="mdi-"], .sidenav li > a > i.material-icons, .sidenav .collapsible-header, .sidenav.fixed .collapsible-header, .sidenav .collapsible-body li a, .sidenav.fixed .collapsible-body li a{
+    background-color: var(--sidenav);
+}
+*/
+.sidenav{
+    background-color: var(--sidenav);
+}
+
+.sidenav .collapsible-header{
+    background-color: var(--sidenav);
+}
+
+.sidenav li:hover{
+    background-color: var(--sidenavHover);
+}
+/*
+.sidenav .collapsible-body:hover{
+    background-color: red;
+}
+*/
+.sidenav .collapsible-body{
+    background-color: var(--sidenav);
+}
+
+.sidenav li > a > i, .sidenav li > a > [class^="mdi-"], .sidenav li > a li > a > [class*="mdi-"], .sidenav li > a > i.material-icons {
+    color: var(--sidenavI);
+}
+
+
+.sidenav li > a{
+    color: var(--font-color);
+}
+
+label{
+    color: var(--label);
+}
+
+.valid{
+    border-bottom: 1px solid #26a69a !important;
+    box-shadow: 0 1px 0 0 #26a69a !important;
+}
+
+
+/*
+.sidenav .collapsible-header:hover, .sidenav.fixed .collapsible-header:hover{
+    background-color: var(--sidenavHover);
+}
+
+*/
+
+
+/* scroll */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888; 
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555; 
+}
+
+
+
+
 .iconeTemplate{
   height: 20px;
 }
@@ -44,6 +177,11 @@
 .menuHoverTemplate{
   cursor: pointer;
 }
+
+.material-tooltip{
+    background-color: #616161;
+}
+
 
 @media (max-width: 600px) 
 {

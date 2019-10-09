@@ -22,9 +22,9 @@
       <!-- Corrige o erro 500 -->
     <link rel="icon" href="data:,">
 </head>
-<body class="grey lighten-4">
+<body onload="carregaTema(<?php echo $_SESSION['tema'] ?>)">   
 <div class="navbar-fixed"> 
-  <nav class="grey darken-4">
+  <nav class="black">
               <div class="nav-wrapper">
               <a href="#" class="brand-logo center"></a>  
                 <div data-target="sidebar" class="sidenav-trigger"><i class="material-icons white-text"><i class="fas fa-bars menuHoverTemplate"></i></i></div>
@@ -80,6 +80,25 @@
 
 <?php $this -> loadViewInTemplate($viewName, $viewData); ?>
 
+
+<script>
+     function carregaTema(id) {      
+        if (id == 1) {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            localStorage.setItem('theme', 'dark');
+        }
+        else {        
+              document.documentElement.setAttribute('data-theme', 'light');
+              localStorage.setItem('theme', 'light');
+        } 
+    }
+    
+    
+   /* setInterval(function(){
+     //<?//php Usuarios::verificaLogin(); ?>
+     console.log("rodando")
+    },5000)*/
+</script>
 
 </body>
 </html>

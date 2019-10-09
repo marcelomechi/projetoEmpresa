@@ -9,8 +9,8 @@
 
 
 class Usuarios extends Model {
+               
     
-
 	public static function verificaLogin(){
 		
 		/* se não tiver setado ou se tiver setado e tiver vazio */
@@ -101,6 +101,7 @@ class Usuarios extends Model {
                                 $_SESSION['foto_menu'] = $sql['CAMINHO_IMAGEM'];
                                 $_SESSION['apelido'] = $sql['APELIDO'];
                                 $_SESSION['email'] = $sql['EMAIL'];
+                                $_SESSION['tema'] = $sql['ID_TEMA_PREFERIDO'];
                                 
 	
 					$dados = array(
@@ -138,7 +139,7 @@ class Usuarios extends Model {
 
 		if($sql -> rowCount() > 0){
 			$sql = $sql -> fetch();
-			$nome = ucfirst(strtolower($sql['APELIDO']));	
+				
                         
                         if(empty($sql['CAMINHO_FOTO']) || !isset($sql['CAMINHO_FOTO'])){
                             $fotoPerfil = "assets/images/default.png";
@@ -157,7 +158,7 @@ class Usuarios extends Model {
 				'email' => $sql['EMAIL'],
 				'id_tema_preferido' => $sql['ID_TEMA_PREFERIDO'],
 				'exibir_aniversario' => $sql['EXIBIR_ANIVERSARIO'],
-				'apelido' => $nome,
+				'apelido' => $sql['APELIDO'],
 				'caminhoFoto' =>  $fotoPerfil,
                                 'caminhoFundo' => $sql['CAMINHO_IMAGEM']
 			);
@@ -279,7 +280,7 @@ public function gravaBackground($idBackground){
      $sql .= "WHERE PIN = :PIN ";
      
      $sql = $this -> db -> prepare($sql);   
-     $sql -> bindValue(':telefoneFixo',$dados['telefoneFixo']);
+     $sql -> bindValue(':telefoneFixo', empty($dados['telefoneFixo']) === true ? $dados['telefoneFixo'] : NULL );
      $sql -> bindValue(':telefoneCelular', $dados['telefoneCelular']);
      $sql -> bindValue(':telefoneRecado', $dados['telefoneRecado']);
      $sql -> bindValue(':email', $dados['email']);
@@ -298,6 +299,29 @@ public function gravaBackground($idBackground){
          return false;
      }
      
+     
+ }
+ 
+ 
+ public function gravaTema($tema){
+    
+     $sql = "UPDATE TB_WFM_PERFIL_PESSOAL ";
+     $sql .= "SET ID_TEMA_PREFERIDO = :idTema ";
+     $sql .= "WHERE PIN = :PIN ";
+     
+     $sql = $this -> db -> prepare($sql);   
+     $sql -> bindValue(':idTema',$tema);
+     $sql -> bindValue(':PIN', $_SESSION['PIN']);
+     
+     $sql -> execute();
+     
+     $linhasAfetadas = $sql -> rowCount();
+     
+      if($linhasAfetadas === 0 || $linhasAfetadas > 0){
+         return true;
+     }else{
+         return false;
+     }
      
  }
 
@@ -336,13 +360,14 @@ public function updateSession($pin){
     
     if($sql -> rowCount() > 0){
         $sql = $sql -> fetch();
-        $nome = ucfirst(strtolower($sql['APELIDO']));
+        
         
             
-        $_SESSION['apelido'] = $nome;
+        $_SESSION['apelido'] = $sql['APELIDO'];
         $_SESSION['email'] = $sql['EMAIL'];
         $_SESSION['foto_menu'] = $sql['CAMINHO_IMAGEM'];
         $_SESSION['foto_perfil'] = $sql['CAMINHO_FOTO'];
+        $_SESSION['tema'] = $sql['ID_TEMA_PREFERIDO'];
         return true;
         
     }else{

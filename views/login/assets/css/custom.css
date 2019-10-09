@@ -10,12 +10,12 @@
 }
 
 html, body { margin:0; height: 100%;}
-
+/*
 html{
-  background-image: url("../images/backlighting-3799243.jpg");
+    background-image: url("../images/backlighting-3799243.jpg");
   background-size: cover;
   
-}
+}*/
 
 #msgInternetExplorer{
   display: none;
