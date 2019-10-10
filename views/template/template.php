@@ -14,9 +14,9 @@
   <!-- Compiled and minified CSS -->
     <link rel="stylesheet" href="<?php echo BASE_URL;?>assets/css/cssFramework/css/material.css">
     <link rel="stylesheet" href="<?php echo BASE_URL;?>assets/js/jquery-ui-1.12.1/jquery-ui.min.css">
-    <link href="<?php echo BASE_URL;?>/assets/css/fontA/css/fontawesome.css" rel="stylesheet">
-    <link href="<?php echo BASE_URL;?>/assets/css/fontA/css/brands.css" rel="stylesheet">
-    <link href="<?php echo BASE_URL;?>/assets/css/fontA/css/solid.css" rel="stylesheet">
+    <link href="<?php echo BASE_URL;?>assets/css/fontA/css/fontawesome.css" rel="stylesheet">
+    <link href="<?php echo BASE_URL;?>assets/css/fontA/css/brands.css" rel="stylesheet">
+    <link href="<?php echo BASE_URL;?>assets/css/fontA/css/solid.css" rel="stylesheet">
     <link rel="stylesheet" href="<?php echo BASE_URL;?>assets/css/datatable.css">
     <link rel="stylesheet" href="<?php echo BASE_URL;?>views/template/assets/css/customTemplate.css">
       <!-- Corrige o erro 500 -->
@@ -32,7 +32,7 @@
                   <ul id="dadosPessoais" class="right">                   
                     <li><a><img id="profile" class="circle responsive-img fotoUsuarioMenu" src="<?php echo BASE_URL.$_SESSION['foto_perfil']; ?>"></a></li>      
                     <li><a href="<?php echo BASE_URL.'home'; ?>" class="tooltipped" data-position="left" data-tooltip="Voltar para a página inicial"><i class="fas fa-home"></i></a></li>
-                    <li><a href="<?php echo BASE_URL.'logout'; ?>" class="tooltipped" data-position="left" data-tooltip="Deslogar"><i class="fas fa-power-off"></i></a></li>
+                    <li><a href="<?php echo BASE_URL.'logout'; ?>" class="tooltipped" data-position="left" data-tooltip="Sair"><i class="fas fa-power-off"></i></a></li>
                     
 
                   </ul>
@@ -42,25 +42,24 @@
   <div id="sidebar" class="sidenav">    
               <div class="user-view">
                 <div class="background">
-                  <?php if(!isset($_SESSION['foto_menu']) && empty($_SESSION['foto_menu'])): ?>  
-                    <div class="blue"></div>
+                  <?php if(!isset($_SESSION['foto_menu']) || empty($_SESSION['foto_menu'])): ?>  
+                    <div class="backgroundImgMenu teal"></div>
                   <?php else: ?>
                     <img src="<?php echo BASE_URL.$_SESSION['foto_menu']; ?>" class="backgroundImgMenu">
                   <?php endif; ?>
-               </div>                
+               </div>
                  <img id="perfilFoto" class="circle responsive-img fotoUser" src="<?php echo BASE_URL.$_SESSION['foto_perfil']; ?>">
-                 
                 <a><span class="white-text name"><?php echo $_SESSION['apelido']; ?></span></a>
                 <a><span class="white-text email"><?php echo $_SESSION['email']; ?></span></a>
               </div>
         <ul class="collapsible">
-            <li class="hide-on-med-and-up"><a href="<?php echo BASE_URL.'home'; ?>" class="collapsible-header"><i class="material-icons"><i class="fas fa-home"></i></i>Home</a></li>
+            <li class="hide-on-med-and-up"><a href="<?php echo BASE_URL.'home'; ?>" class="collapsible-header"><i class="material-icons"><i class="fas fa-home"></i></i>Página Inicial</a></li>
           <?php 
             $menu = new Usuarios();  
             $item = $menu -> menu();
           ?>
             <li class="hide-on-med-and-up"><div class="divider"></div></li>
-            <li class="hide-on-med-and-up"><a href="<?php echo BASE_URL.'logout'; ?>" class="collapsible-header"><i class="material-icons"><i class="fas fa-power-off"></i></i>Logout</a></li>
+            <li class="hide-on-med-and-up"><a href="<?php echo BASE_URL.'logout'; ?>" class="collapsible-header"><i class="material-icons"><i class="fas fa-power-off"></i></i>Sair</a></li>
             
         </ul>
 </div>   
@@ -84,6 +83,7 @@
 <script>
      function carregaTema(id) {      
         if (id == 1) {
+            //alert("oi")
             document.documentElement.setAttribute('data-theme', 'dark');
             localStorage.setItem('theme', 'dark');
         }

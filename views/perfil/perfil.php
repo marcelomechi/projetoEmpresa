@@ -59,8 +59,8 @@
                 <div class="carousel carousel-slider center h350">
                     <div class="carousel-fixed-item center">						     	
                         <div class="input-field left-align padding">
-                            <?php if($caminhoFoto == "null"): ?>
-                                <img id="img-upload" src="assets/images/marcelo.jpg" class="circle responsive-img asdffdsa">
+                            <?php if(empty($caminhoFoto)): ?>
+                                <img id="img-upload" src="assets/images/default.jpg" class="circle responsive-img asdffdsa">
                             <?php else: ?>
                                 <img id="img-upload" src="<?php echo BASE_URL.$caminhoFoto?>" class="circle responsive-img asdffdsa">
                             <?php endif; ?>
@@ -123,15 +123,11 @@
                     </div>
                     <label for="tema">Tema Escuro</label>
                     <div class="input-field">
-                       <?php if($apelido == "null"): ?>
-                        <input id="apelido" type="text" class="validate textoInput" name="apelido">
-                       <?php else: ?>
-                        <input id="apelido" type="text" class="validate textoInput" name="apelido" value="<?php echo $apelido;?>">
-                       <?php endif; ?>
-                        <label for="apelido">Como gostaria de ser chamado?</label>
+                       <input id="apelido" type="text" class="validate textoInput" name="apelido" value="<?php echo $apelido;?>">
+                       <label for="apelido">Como gostaria de ser chamado?</label>
                     </div>
                     <div class="input-field">
-                        <?php if($email == "null"): ?>
+                        <?php if(empty($email)): ?>
                         <input id="email" type="email" class="validate textoInput" name="email">
                          <?php else: ?>
                         <input id="email" type="email" class="validate textoInput" name="email" value="<?php echo $email;?>">
@@ -139,7 +135,7 @@
                         <label for="email">E-mail</label>
                     </div>
                     <div class="input-field">
-                        <?php if($telefone1 == "null"): ?>
+                        <?php if(empty($telefone1)): ?>
                         <input id="telefone1" type="text" class="validate phone_with_ddd textoInput" name="telefoneFixo">
                         <?php else: ?>
                         <input id="telefone1" type="text" class="validate phone_with_ddd textoInput" name="telefoneFixo" value="<?php echo $telefone1;?>">
@@ -147,7 +143,7 @@
                         <label for="telefone1">Telefone Fixo</label>
                     </div>
                     <div class="input-field">
-                        <?php if($telefone2 == "null"): ?>
+                        <?php if(empty($telefone2)): ?>
                         <input id="telefone2" type="text" class="validate sp_celphones textoInput" name="telefoneCelular">
                         <?php else: ?>
                         <input id="telefone2" type="text" class="validate sp_celphones textoInput" name="telefoneCelular" value="<?php echo $telefone2 ?>">
@@ -155,7 +151,7 @@
                         <label for="telefone2">Telefone Celular</label>
                     </div>
                     <div class="input-field">
-                        <?php if($telefone3 == "null"): ?>
+                        <?php if(empty($telefone3)): ?>
                         <input id="telefone3" type="text" class="validate sp_celphones textoInput" name="telefoneRecado">
                         <?php else: ?>
                         <input id="telefone3" type="text" class="validate sp_celphones textoInput" name="telefoneRecado" value="<?php echo $telefone3; ?>">
@@ -174,7 +170,6 @@
                         <button class="btn waves-effect" id="gravaPreferencias">Gravar</button>
                         <button data-target="modalMsg" class="btn modal-trigger hide"></button>
                     </div>
-                </form>
             </div>
         </div>
     </div>
@@ -323,9 +318,9 @@
              
             var apelido = $("input[name=apelido]").val();
             var email = $("input[name=email]").val() === "" ? null : $("input[name=email]").val();
-            var telefoneFixo = $("input[name=telefoneFixo]").val() === "" ? null : $("input[name=telefoneFixo]").val();
-            var telefoneCelular = $("input[name=telefoneCelular]").val() === "" ? null : $("input[name=telefoneCelular]").val();
-            var telefoneRecado = $("input[name=telefoneRecado]").val() === "" ? null : $("input[name=telefoneRecado]").val();           
+            var telefoneFixo = $("input[name=telefoneFixo]").val() === "" ? null : $("input[name=telefoneFixo]").val().replace(/[^0-9]/g,'');
+            var telefoneCelular = $("input[name=telefoneCelular]").val() === "" ? null : $("input[name=telefoneCelular]").val().replace(/[^0-9]/g,'');
+            var telefoneRecado = $("input[name=telefoneRecado]").val() === "" ? null : $("input[name=telefoneRecado]").val().replace(/[^0-9]/g,'');           
             
            /* data.append('tema', tema);
             data.append('apelido', apelido);
@@ -384,12 +379,12 @@ const toggleSwitch = document.querySelector('.theme-switch input[type="checkbox"
 function switchTheme(e) {
     if (e.target.checked) {
         document.documentElement.setAttribute('data-theme', 'dark');
-        localStorage.setItem('theme', 'dark');
+       // localStorage.setItem('theme', 'dark');
         
     }
     else {        
           document.documentElement.setAttribute('data-theme', 'light');
-          localStorage.setItem('theme', 'light');
+         // localStorage.setItem('theme', 'light');
     }    
 }
 

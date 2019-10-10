@@ -51,7 +51,7 @@ class Usuarios extends Model {
 					$id_perfil_acesso = $sql['ATIVO'];
                                         $foto_perfil = $sql['CAMINHO_FOTO'];
                                         
-                                        if(empty($sql['CAMINHO_FOTO'])){
+                                        if(empty($sql['CAMINHO_FOTO']) || !isset($sql['CAMINHO_FOTO'])){
                                             $_SESSION['foto_perfil'] = "assets/images/default.png";
                                         }else{
                                             $_SESSION['foto_perfil'] = $sql['CAMINHO_FOTO'];  
@@ -85,7 +85,7 @@ class Usuarios extends Model {
 			$sql = "SELECT U.PIN, U.CPF, U.SENHA, U.ATIVO, P.ID_TEMA_PREFERIDO, P.EXIBIR_ANIVERSARIO, P.APELIDO, P.CAMINHO_FOTO, UP.ID_PERFIL, IMFUNDO.CAMINHO_IMAGEM, P.EMAIL FROM TB_WFM_USUARIO U ";
 			$sql .= "JOIN TB_WFM_PERFIL_PESSOAL P ON P.PIN = U.PIN ";
 			$sql .= "JOIN TB_WFM_USUARIO_PERFIL UP ON U.PIN = UP.PIN ";
-                        $sql .= "JOIN TB_WFM_IMAGEM_FUNDO IMFUNDO ON IMFUNDO.ID_IMAGEM_FUNDO = P.ID_IMAGEM_FUNDO ";
+                        $sql .= "LEFT JOIN TB_WFM_IMAGEM_FUNDO IMFUNDO ON IMFUNDO.ID_IMAGEM_FUNDO = P.ID_IMAGEM_FUNDO ";
 			$sql .= "WHERE U.CPF = :senha_inicial ";
 								
 			$sql = $this-> db -> prepare($sql);
@@ -130,7 +130,7 @@ class Usuarios extends Model {
 
 	public function getPreferencias($pin){
 
-		$sql = "SELECT * FROM TB_WFM_PERFIL_PESSOAL P JOIN TB_WFM_IMAGEM_FUNDO IMFUNDO ON IMFUNDO.ID_IMAGEM_FUNDO = P.ID_IMAGEM_FUNDO ";
+		$sql = "SELECT * FROM TB_WFM_PERFIL_PESSOAL P LEFT JOIN TB_WFM_IMAGEM_FUNDO IMFUNDO ON IMFUNDO.ID_IMAGEM_FUNDO = P.ID_IMAGEM_FUNDO ";
 		$sql.= "WHERE P.PIN = :PIN ";
 
 		$sql = $this-> db -> prepare($sql);
@@ -280,10 +280,10 @@ public function gravaBackground($idBackground){
      $sql .= "WHERE PIN = :PIN ";
      
      $sql = $this -> db -> prepare($sql);   
-     $sql -> bindValue(':telefoneFixo', empty($dados['telefoneFixo']) === true ? $dados['telefoneFixo'] : NULL );
-     $sql -> bindValue(':telefoneCelular', $dados['telefoneCelular']);
-     $sql -> bindValue(':telefoneRecado', $dados['telefoneRecado']);
-     $sql -> bindValue(':email', $dados['email']);
+     $sql -> bindValue(':telefoneFixo', empty($dados['telefoneFixo']) ? NULL : $dados['telefoneFixo']);
+     $sql -> bindValue(':telefoneCelular', empty($dados['telefoneCelular']) ? NULL : $dados['telefoneCelular']);
+     $sql -> bindValue(':telefoneRecado', empty($dados['telefoneRecado']) ? NULL : $dados['telefoneRecado']);
+     $sql -> bindValue(':email', empty($dados['email']) ? NULL : $dados['email']);
      $sql -> bindValue(':id_tema', $dados['tema']);
      $sql -> bindValue(':id_aniversario', (int)$dados['aniversario'],PDO::PARAM_INT); // para campos BIT tenho que fazer isso.
      $sql -> bindValue(':apelido', $dados['apelido']);
@@ -351,7 +351,7 @@ public function carregaCarousel(){
 }
 
 public function updateSession($pin){
-    $sql = "SELECT * FROM TB_WFM_PERFIL_PESSOAL P JOIN TB_WFM_IMAGEM_FUNDO IMFUNDO ON IMFUNDO.ID_IMAGEM_FUNDO = P.ID_IMAGEM_FUNDO ";
+    $sql = "SELECT * FROM TB_WFM_PERFIL_PESSOAL P LEFT JOIN TB_WFM_IMAGEM_FUNDO IMFUNDO ON IMFUNDO.ID_IMAGEM_FUNDO = P.ID_IMAGEM_FUNDO ";
     $sql.= "WHERE P.PIN = :PIN ";
 
     $sql = $this-> db -> prepare($sql);
@@ -366,7 +366,7 @@ public function updateSession($pin){
         $_SESSION['apelido'] = $sql['APELIDO'];
         $_SESSION['email'] = $sql['EMAIL'];
         $_SESSION['foto_menu'] = $sql['CAMINHO_IMAGEM'];
-        $_SESSION['foto_perfil'] = $sql['CAMINHO_FOTO'];
+        $_SESSION['foto_perfil'] = empty($sql['CAMINHO_FOTO']) ? "assets/images/default.png" : $sql['CAMINHO_FOTO'];
         $_SESSION['tema'] = $sql['ID_TEMA_PREFERIDO'];
         return true;
         
@@ -416,7 +416,7 @@ public function updateSession($pin){
 
 
 			  if($sql -> rowCount() > 0){	
-                   $sql = $sql -> fetchAll();
+                                   $sql = $sql -> fetchAll();
 
 				   foreach ($sql as $menuPrincipal):
 					if ($menuPrincipal['QTDESUB'] == 0 && $menuPrincipal['ID_MODULO_REFERENCIA'] == NULL):

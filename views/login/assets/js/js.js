@@ -3,6 +3,8 @@ $(document).ready(function(){
     $('.modal').modal({
       dismissible: false // Modal can be dismissed by clicking outside of the modal
     });
+    
+    $('.cpf').mask('000.000.000-00', {reverse: true});
 
     /*
     Autenticação de usuarios na aplicação
@@ -17,16 +19,17 @@ $(document).ready(function(){
     var dados = "";
 
     $("#proximo").click(function(){
+        
         $("#loadUsuario").removeAttr("hidden");                
         $.ajax({
             url:'http://10.11.194.42/ajaxLogin',
             type:'POST',
             async: false,
-            data:{id_usuario: $("#usuario").val(), tipo: 1},
+            data:{id_usuario: $("#usuario").val().replace(/[^0-9]/g,''), tipo: 1},
             success: function(r) {
                 dados = r.split("|");
                 if(r == false){
-		            $("#nLocalizado").removeAttr("hidden","hidden");
+		    $("#nLocalizado").removeAttr("hidden","hidden");
                     $("#loadUsuario").attr("hidden","hidden");
                     $("#inativo").attr("hidden","hidden");
                     return false;
@@ -61,7 +64,7 @@ $(document).ready(function(){
             url:'http://10.11.194.42/ajaxLogin',
             type:'POST',
             async: false,
-            data:{senha: $("#password").val(), tipo: 2, id_usuario: $("#usuario").val()},
+            data:{senha: $("#password").val(), tipo: 2, id_usuario: $("#usuario").val().replace(/[^0-9]/g,'')},
             success: function(r) {
                 if(r == false){
                     $("#senhaInvalida").removeAttr("hidden")               

@@ -99,7 +99,7 @@ Vamos criar oa tela de login
                       <div class="card-title w100 flow-text center-align"><b>Workforce Management</b></div>
                    </div> 
                   <div class="input-field">
-                      <input type="text" autocomplete="off" class="validate" name="usuario" id="usuario" onkeypress="return SomenteNumero(event)" />
+                      <input type="text" autocomplete="off" class="validate cpf" name="usuario" id="usuario"/>
                       <label for="usuario" data-error="Preencha corretamente o campo Usuário" data-success="">CPF</label>
                       <span class="flow-text red-text" id="nLocalizado" hidden>Usuário não localizado</span>
                       <span class="flow-text red-text" id="inativo" hidden>Usuário inativo</span>
@@ -238,6 +238,7 @@ Vamos criar oa tela de login
 <script src="<?php echo BASE_URL;?>assets/css/fontA/js/solid.js"></script>
 <script src="<?php echo BASE_URL;?>assets/css/fontA/js/fontawesome.js"></script>
 <script src="<?php echo BASE_URL;?>views/login/assets/js/js.js"></script>
+<script type="text/javascript" src="<?php echo BASE_URL;?>assets/jQuery-Mask-Plugin-master/dist/jquery.mask.js"></script>
 
 <script>
     // valida campo somente numeros //
