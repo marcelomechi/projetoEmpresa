@@ -1,11 +1,9 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <style>
-
-        </style>
         <title>Workforce Management</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="Content-Language" content="pt-br">
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 
 
@@ -33,8 +31,6 @@
                         <li><a><img id="profile" class="circle responsive-img fotoUsuarioMenu" src="<?php echo BASE_URL . $_SESSION['foto_perfil']; ?>"></a></li>      
                         <li><a href="<?php echo BASE_URL . 'home'; ?>" class="tooltipped" data-position="left" data-tooltip="Voltar para a página inicial"><i class="fas fa-home"></i></a></li>
                         <li><a href="<?php echo BASE_URL . 'logout'; ?>" class="tooltipped" data-position="left" data-tooltip="Sair"><i class="fas fa-power-off"></i></a></li>
-
-
                     </ul>
                 </div>
             </nav>

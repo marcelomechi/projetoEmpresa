@@ -12,6 +12,7 @@
     --sidenavI: #6A6A6A;
     --sidenavDivider: #e0e0e0;
     --label: #ADADAD;
+    --submenuBackground: #e0f2f1;
     
 }
 
@@ -27,6 +28,7 @@
     --sidenavHover: #26a69a;
     --sidenavI: #e1e1ff;
     --sidenavDivider: #616161;
+    --submenuBackground: #424242;
     
 }
 
@@ -52,15 +54,15 @@ input{
     -ms-user-select: none;
     user-select: none;
 }
-/*
-.sidenav li > a > i, .sidenav li > a > [class^="mdi-"], .sidenav li > a li > a > [class*="mdi-"], .sidenav li > a > i.material-icons, .sidenav .collapsible-header, .sidenav.fixed .collapsible-header, .sidenav .collapsible-body li a, .sidenav.fixed .collapsible-body li a {
-    color: var(--font-color);
+
+#sidebar ul li div ul a {
+  background-color: var(--submenuBackground) !important;
 }
 
-.sidenav, sidenav li > a > i, .sidenav li > a > [class^="mdi-"], .sidenav li > a li > a > [class*="mdi-"], .sidenav li > a > i.material-icons, .sidenav .collapsible-header, .sidenav.fixed .collapsible-header, .sidenav .collapsible-body li a, .sidenav.fixed .collapsible-body li a{
-    background-color: var(--sidenav);
+#sidebar ul li div ul a:hover {
+  background-color: var(--sidenavHover) !important;
 }
-*/
+
 .sidenav{
     background-color: var(--sidenav);
 }
