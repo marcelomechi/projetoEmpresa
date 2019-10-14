@@ -16,11 +16,7 @@ class PerfilController extends Controller{
 
 		$_SESSION['relatorio'] = 'Perfil Pessoal';
 		$this -> loadTemplate('perfil',$dados);
-	}
-
-	public function salvar(){
-		
-	}
+	}    
 
 }
 

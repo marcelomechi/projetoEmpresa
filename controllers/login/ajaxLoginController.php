@@ -42,13 +42,13 @@ class AjaxLoginController extends Controller {
             }
         } else if ($_POST['tipo'] == 2) {
 
-            if (isset($_POST['senha']) && !empty($_POST['senha'])) {
+            if (isset($_POST['senha']) && !empty($_POST['senha']) && isset($_POST['id_usuario']) && !empty($_POST['id_usuario'])) {
 
                 $login = addslashes($_POST['id_usuario']);
                 $senha = addslashes($_POST['senha']);
 
                 $usuario = new Usuarios();
-                $retorno = $usuario->primeiroLogin($login, $senha);
+                $retorno = $usuario->login($login, $senha);
 
                 $dados = array(
                     'logado' => $retorno['status']

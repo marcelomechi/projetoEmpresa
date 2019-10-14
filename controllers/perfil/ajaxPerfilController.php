@@ -77,6 +77,17 @@ public function index(){
         }
             
         
+    }elseif($_POST['tipo'] == 4){
+        Usuarios::verificaLogin();
+        
+        $alteraSenha = $usuarios -> gravaAlteracaoSenhaPerfil($_SESSION['PIN'], $_POST['senhaAntiga'], $_POST['novaSenha']);
+        
+         if($alteraSenha === true){
+                echo "success";
+         }else{
+                echo "fail";
+         }
+                
     }
     
     

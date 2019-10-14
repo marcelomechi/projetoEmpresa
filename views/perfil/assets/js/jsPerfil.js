@@ -1,5 +1,5 @@
 $(document).ready(function () {
-
+       
     // altera foto do perfil
     $(".btn").change(function () {
         $("#img-upload").attr('src', URL.createObjectURL(event.target.files[0]));
@@ -122,7 +122,34 @@ $(document).ready(function () {
             }
         });
     });
-
+    
+    
+    $('#gravaAlteracaoSenha').on('click', function () {
+        if($("#senha") == "" || $("#novaSenha") == ""){
+            
+        }else{
+            var senha = $("#senhaAntiga").val();
+            var novaSenha = $("#novaSenha").val();
+            
+            $.ajax({
+                url: 'http://10.11.194.42/ajaxPerfil',
+                type: 'POST',
+                async: false,
+                data: {senhaAntiga: senha, novaSenha: novaSenha, tipo: 4},
+                success: function (r) {
+                    if (r == "success") {
+                        alert("feito.")
+                       // M.toast({html: 'Preferências alteradas com sucesso!', classes: 'teal accent-4'});
+                        //$(".name").html(apelido);
+                        //$(".email").html(email);
+                    } else {
+                        alert("senha atual invalida")
+                        //M.toast({html: 'Não foi possível gravar as alterações verifique as informações preenchidas.', classes: 'red lighten-2'});
+                    }
+                }
+            });
+        }
+    });
 
 
     // tema switch

@@ -13,6 +13,7 @@
     --sidenavDivider: #e0e0e0;
     --label: #ADADAD;
     --submenuBackground: #e0f2f1;
+    --backgroundColorActiveLi:#b2dfdb;
     
 }
 
@@ -25,10 +26,11 @@
     --card: #424242;
     --label: #bdbdbd;
     --sidenav: #212121;
-    --sidenavHover: #26a69a;
+    --sidenavHover: #616161;
     --sidenavI: #e1e1ff;
     --sidenavDivider: #616161;
     --submenuBackground: #424242;
+    --backgroundColorActiveLi: #616161;
     
 }
 
@@ -73,6 +75,10 @@ input{
 
 .sidenav li:hover{
     background-color: var(--sidenavHover);
+}
+
+.sidenav li.active > a{
+    background-color: var(--backgroundColorActiveLi);
 }
 /*
 .sidenav .collapsible-body:hover{

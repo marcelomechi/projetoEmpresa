@@ -35,6 +35,8 @@ class Core {
 			$currentController = 'homeController';
 			$currentAction = 'index';
 		}
+                
+   
 
 		$controller = new $currentController();
 

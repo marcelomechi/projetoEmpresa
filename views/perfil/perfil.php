@@ -36,7 +36,7 @@
                             <input class="file-path validate" type="text">
                         </div>
                     </div>
-                    <div class="right-align">															         		 	
+                    <div class="right-align">
                         <button class="btn waves-effect" id="enviaFotos">Gravar</button>
                     </div>
                     <span class="center-align msg"></span>
@@ -110,6 +110,7 @@
                     <span>Exibir Aniversário?</span>
                 </label>
                 <div class="right-align">
+                    <button data-target="updateSenha" class="btn waves-effect modal-trigger grey" id="alteraSenha">Alterar Senha</button>
                     <button class="btn waves-effect" id="gravaPreferencias">Gravar</button>
                     <button data-target="modalMsg" class="btn modal-trigger hide"></button>
                 </div>
@@ -117,6 +118,26 @@
         </div>
     </div>
 </div>
+
+ <div id="updateSenha" class="modal">
+    <div class="modal-content center-align">
+      <h5>Alteração de Senha</h5>
+        <div class="input-field">
+          <input id="senhaAntiga" type="password" class="validate">
+          <label for="senhaAntiga">Senha Atual</label>
+        </div>
+        <div class="input-field">
+          <input id="novaSenha" type="password" class="validate">
+          <label for="novaSenha">Nova Senha</label>
+        </div>
+    </div>
+     <div class="modal-footer">
+         <div class="right-align">             
+          <button class="modal-close btn waves-effect red lighten-1" id="cancela">Cancelar</button>
+          <button id="gravaAlteracaoSenha" class="btn waves-effect">Gravar</button>
+        </div>
+     </div>
+ </div>
 <script src="<?php echo BASE_URL; ?>views/perfil/assets/js/jsPerfil.js"></script>
 
 <script type="text/javascript">
