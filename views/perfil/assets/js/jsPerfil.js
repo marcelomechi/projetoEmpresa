@@ -125,7 +125,7 @@ $(document).ready(function () {
     
     
     $('#gravaAlteracaoSenha').on('click', function () {
-        if($("#senha") == "" || $("#novaSenha") == ""){
+        if($("#senhaAntiga") == "" || $("#novaSenha") == ""){
             
         }else{
             var senha = $("#senhaAntiga").val();
@@ -138,13 +138,13 @@ $(document).ready(function () {
                 data: {senhaAntiga: senha, novaSenha: novaSenha, tipo: 4},
                 success: function (r) {
                     if (r == "success") {
-                        alert("feito.")
-                       // M.toast({html: 'Preferências alteradas com sucesso!', classes: 'teal accent-4'});
-                        //$(".name").html(apelido);
-                        //$(".email").html(email);
+                        M.toast({html: 'Senha alterada com sucesso!', classes: 'teal accent-4'});
+                        $("#senhaAntiga").val("");
+                        $("#novaSenha").val("");
                     } else {
-                        alert("senha atual invalida")
-                        //M.toast({html: 'Não foi possível gravar as alterações verifique as informações preenchidas.', classes: 'red lighten-2'});
+                       M.toast({html: 'Não foi possível atender sua solicitação, verifique se a senha atual está correta e tente novamente.', classes: 'red lighten-2'});
+                       $("#senhaAntiga").val("");
+                       $("#novaSenha").val("");
                     }
                 }
             });

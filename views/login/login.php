@@ -7,7 +7,7 @@
         <!--Import Google Icon Font-->
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <!-- Compiled and minified CSS -->
-        <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/cssFramework/css/material.css">
+        <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/cssFramework/css/style.css">
         <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/js/jquery-ui-1.12.1/jquery-ui.min.css">
         <link href="<?php echo BASE_URL; ?>/assets/css/fontA/css/fontawesome.css" rel="stylesheet">
         <link href="<?php echo BASE_URL; ?>/assets/css/fontA/css/brands.css" rel="stylesheet">
@@ -229,7 +229,7 @@
 
             <!-- o jquery vem sempre antes do materialize -->
             <script src="<?php echo BASE_URL; ?>assets/js/jquery-3.4.1.js"></script>
-            <script src="<?php echo BASE_URL; ?>assets/css/cssFramework/js/jsMaterial.js"></script>
+            <script src="<?php echo BASE_URL; ?>assets/css/cssFramework/js/jsPrincipal.js"></script>
             <script src="<?php echo BASE_URL; ?>assets/js/jquery-ui-1.12.1/jquery-ui.js"></script>
             <script src="<?php echo BASE_URL; ?>assets/css/fontA/js/brands.js"></script>
             <script src="<?php echo BASE_URL; ?>assets/css/fontA/js/solid.js"></script>

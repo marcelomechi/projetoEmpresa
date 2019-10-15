@@ -10,7 +10,7 @@
         <!--Import Google Icon Font-->
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <!-- Compiled and minified CSS -->
-        <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/cssFramework/css/material.css">
+        <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/cssFramework/css/style.css">
         <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/js/jquery-ui-1.12.1/jquery-ui.min.css">
         <link href="<?php echo BASE_URL; ?>assets/css/fontA/css/fontawesome.css" rel="stylesheet">
         <link href="<?php echo BASE_URL; ?>assets/css/fontA/css/brands.css" rel="stylesheet">
@@ -65,7 +65,7 @@
         <script src="<?php echo BASE_URL; ?>assets/css/fontA/js/brands.js"></script>
         <script src="<?php echo BASE_URL; ?>assets/css/fontA/js/solid.js"></script>
         <script src="<?php echo BASE_URL; ?>assets/css/fontA/js/fontawesome.js"></script>
-        <script src="<?php echo BASE_URL; ?>assets/css/cssFramework/js/jsMaterial.js"></script>
+        <script src="<?php echo BASE_URL; ?>assets/css/cssFramework/js/jsPrincipal.js"></script>
         <script src="<?php echo BASE_URL; ?>assets/js/Chart.min.js"></script>
         <script type="text/javascript" src="<?php echo BASE_URL; ?>assets/js/datatable.js"></script>
         <script type="text/javascript" src="<?php echo BASE_URL; ?>views/template/assets/js/jsTemplate.js"></script>

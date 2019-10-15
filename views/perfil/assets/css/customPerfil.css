@@ -32,7 +32,10 @@ and open the template in the editor.
     .padding{
         padding-left: 40px; 
     }
-
+    
+    #tema{
+        padding-bottom: 20px !important;
+    }
 
 
 

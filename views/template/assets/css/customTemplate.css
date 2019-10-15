@@ -14,6 +14,7 @@
     --label: #ADADAD;
     --submenuBackground: #e0f2f1;
     --backgroundColorActiveLi:#b2dfdb;
+    --modal: #FAFAFA;
     
 }
 
@@ -31,6 +32,7 @@
     --sidenavDivider: #616161;
     --submenuBackground: #424242;
     --backgroundColorActiveLi: #616161;
+    --modal: #424242;
     
 }
 
@@ -47,6 +49,16 @@ body{
     color: var(--sidenavDivider);
 }
 
+.modal{
+  background-color: var(--modal);  
+  color: var(--font-color);
+}
+
+.modal .modal-footer{
+    background-color: var(--modal);
+    color: var(--font-color);
+}
+
 input{
     color:var(--font-color);
     -webkit-touch-callout: none;
@@ -55,6 +67,11 @@ input{
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+}
+
+/* Em teste, remover caso os submenus ativos não fiquem coloridos */
+.sidenav .collapsible-body li.active > a{
+    background-color: orange !important;
 }
 
 #sidebar ul li div ul a {

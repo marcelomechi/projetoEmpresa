@@ -35,15 +35,16 @@ spl_autoload_register(function($classe){
 		//print_r($teste);
 		$folderController = strtolower($pasta[0]);
 	}
-
-
+ 
 	if(file_exists('controllers/'.$folderController.'/'.$classe.'.php')){
 		require 'controllers/'.$folderController.'/'.$classe.'.php';
 	}else if (file_exists('models/'.$classe.'.php')){
 		require 'models/'.$classe.'.php';		
 	}else if (file_exists('core/'.$classe.'.php')){
 		require 'core/'.$classe.'.php';	
-	}
+        }else if(!file_exists('controllers/'.$folderController.'/'.$classe.'.php')){
+            require 'controllers/notfound/notfoundController.php';
+        }
 });
 
 $core = new Core();

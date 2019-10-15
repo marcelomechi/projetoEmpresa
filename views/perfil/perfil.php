@@ -56,6 +56,7 @@
 
                 <div id="tema" class="switch"><br>
                     <label class="theme-switch">
+                        Tema Escuro
                         <?php if ($id_tema_preferido == 0): ?>
                             <input type="checkbox" name="tema">
                         <?php else: ?>
@@ -64,7 +65,6 @@
                         <span class="lever"></span>
                     </label>
                 </div>
-                <label for="tema">Tema Escuro</label>
                 <div class="input-field">
                     <input id="apelido" type="text" class="validate textoInput" name="apelido" value="<?php echo $apelido; ?>">
                     <label for="apelido">Como gostaria de ser chamado?</label>
@@ -133,7 +133,7 @@
     </div>
      <div class="modal-footer">
          <div class="right-align">             
-          <button class="modal-close btn waves-effect red lighten-1" id="cancela">Cancelar</button>
+          <button class="modal-close btn waves-effect red lighten-1" id="cancela">Fechar</button>
           <button id="gravaAlteracaoSenha" class="btn waves-effect">Gravar</button>
         </div>
      </div>
