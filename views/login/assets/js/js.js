@@ -66,10 +66,16 @@ $(document).ready(function(){
             async: false,
             data:{senha: $("#password").val(), tipo: 2, id_usuario: $("#usuario").val().replace(/[^0-9]/g,'')},
             success: function(r) {
+                alert(r);
+                
+                dados = r.split("|");
+                
+              
+                
                 if(r == false){
                     $("#senhaInvalida").removeAttr("hidden")               
                 }else{
-                    window.location.href = r + 'home';
+                    window.location.href = dados[0] + 'home';
                 }       
             }
         });

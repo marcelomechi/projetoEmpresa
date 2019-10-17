@@ -17,11 +17,16 @@ $(document).ready(function(){
          // document.getElementById("main2").style.transition = "0.1s";      
         }
     });
+    
+    /*caso queira uma confirmação antes do usuario sair da pagina, dar f5 e tal...
+     * $(window).bind("beforeunload", function() { 
+            return "asdfasdfasdfas"; 
+    });*/
+    
+
+   
 
     // tema escuro //
-    
-    
-    
     
     const currentTheme = localStorage.getItem('theme');
         document.documentElement.setAttribute('data-theme', currentTheme);

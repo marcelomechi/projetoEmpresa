@@ -29,8 +29,8 @@
                     <span class="brand-logo center tituloMenu"><?php echo $_SESSION['relatorio']; ?></span>
                     <ul id="dadosPessoais" class="right">                   
                         <li><a><img id="profile" class="circle responsive-img fotoUsuarioMenu" src="<?php echo BASE_URL . $_SESSION['foto_perfil']; ?>"></a></li>      
-                        <li><a href="<?php echo BASE_URL . 'home'; ?>" class="tooltipped" data-position="left" data-tooltip="Voltar para a página inicial"><i class="fas fa-home"></i></a></li>
-                        <li><a href="<?php echo BASE_URL . 'logout'; ?>" class="tooltipped" data-position="left" data-tooltip="Sair"><i class="fas fa-power-off"></i></a></li>
+                        <li><a href="<?php echo BASE_URL . 'home'; ?>" class="tooltipped" data-position="bottom" data-tooltip="Voltar para a página inicial"><i class="fas fa-home"></i></a></li>
+                        <li><a href="<?php echo BASE_URL . 'logout'; ?>" class="tooltipped" data-position="bottom" data-tooltip="Sair"><i class="fas fa-power-off"></i></a></li>
                     </ul>
                 </div>
             </nav>
@@ -87,12 +87,18 @@
                 localStorage.setItem('theme', 'light');
             }
         }
+        
 
-
-        /* setInterval(function(){
-         //<?//php Usuarios::verificaLogin(); ?>
+       setInterval(function(){
+        <?php 
+            $classe = new Usuarios();
+            $classe -> deslogaPorInatividade();        
+          //  Usuarios::verificaLogin();
+            
+        ?>
          console.log("rodando")
-         },5000)*/
+         },5000)
+         
         </script>
 
     </body>

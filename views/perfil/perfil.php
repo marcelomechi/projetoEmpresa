@@ -130,6 +130,10 @@
           <input id="novaSenha" type="password" class="validate">
           <label for="novaSenha">Nova Senha</label>
         </div>
+        <div class="input-field">
+          <input id="confirmaNovaSenha" type="password" class="validate">
+          <label for="confirmaNovaSenha">Confirme sua nova senha</label>
+        </div>
     </div>
      <div class="modal-footer">
          <div class="right-align">             

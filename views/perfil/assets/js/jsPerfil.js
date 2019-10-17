@@ -123,10 +123,19 @@ $(document).ready(function () {
         });
     });
     
+    function limpaConsole(){
+        console.log(window.console);
+                if(window.console){
+                    console.clear();
+                }
+    }
+    
     
     $('#gravaAlteracaoSenha').on('click', function () {
-        if($("#senhaAntiga") == "" || $("#novaSenha") == ""){
-            
+        if($("#senhaAntiga").val() == "" || $("#novaSenha").val() == "" || $("#confirmaNovaSenha").val() == ""){
+             M.toast({html: 'Preencha corretamente todos os campos.', classes: 'red lighten-2'});
+        }else if($("#novaSenha").val() != $("#confirmaNovaSenha").val()){
+            M.toast({html: 'As senhas não conferem, tente novamente.', classes: 'red lighten-2'});
         }else{
             var senha = $("#senhaAntiga").val();
             var novaSenha = $("#novaSenha").val();
@@ -135,9 +144,11 @@ $(document).ready(function () {
                 url: 'http://10.11.194.42/ajaxPerfil',
                 type: 'POST',
                 async: false,
+                dataType: "json",
                 data: {senhaAntiga: senha, novaSenha: novaSenha, tipo: 4},
                 success: function (r) {
                     if (r == "success") {
+                        limpaConsole();
                         M.toast({html: 'Senha alterada com sucesso!', classes: 'teal accent-4'});
                         $("#senhaAntiga").val("");
                         $("#novaSenha").val("");
@@ -145,12 +156,19 @@ $(document).ready(function () {
                        M.toast({html: 'Não foi possível atender sua solicitação, verifique se a senha atual está correta e tente novamente.', classes: 'red lighten-2'});
                        $("#senhaAntiga").val("");
                        $("#novaSenha").val("");
+                       $("#confirmaNovaSenha").val("");
                     }
                 }
             });
         }
     });
-
+    
+    
+    $("#cancela").click(function(){
+         $("#senhaAntiga").val("");
+         $("#novaSenha").val("");
+         $("#confirmaNovaSenha").val("");
+    });
 
     // tema switch
 

@@ -8,7 +8,7 @@
  */
 
 class Usuarios extends Model {
-
+    
     public static function verificaLogin() {
 
         /* se não tiver setado ou se tiver setado e tiver vazio */
@@ -17,6 +17,74 @@ class Usuarios extends Model {
             header("Location: " . BASE_URL . "login");
             exit;
         }
+    }
+    
+    public function deslogaPorInatividade(){
+        
+
+        //check to see if $_SESSION['timeout'] is set
+        if(isset($_SESSION['registro'])){
+            $session_life = time() - $_SESSION['limite'];
+           /*     if($session_life > $idleTime){
+                    header("Location: www.google.com.br");
+                }*/
+        }
+        $_SESSION['registro'] = time();
+    }
+    
+    
+    
+    private function criaLoginUnico($pin,$token){
+                 
+         $sql = "UPDATE TB_WFM_SESSAO SET TOKEN = :token, ATIVO = 1 WHERE PIN = :PIN";
+
+         $sql = $this->db->prepare($sql);
+         $sql->bindValue(':PIN', $pin);
+         $sql->bindValue(':token', $token);
+
+         $sql->execute();
+             
+    }
+    public function verificaLoginUnico($pin,$token){
+        
+        
+         $sql = "SELECT * FROM TB_WFM_SESSAO WHERE PIN = :PIN AND ATIVO = TRUE ";
+
+         $sql = $this->db->prepare($sql);
+         $sql->bindValue(':PIN', $pin);
+         $sql->execute();
+         
+        if ($sql -> rowCount() === 1) {
+           $sql = $sql->fetch();
+           
+           
+           if($sql['TOKEN'] != $token){
+               return false;
+           }else{
+               return true;
+           }
+           
+        }else{
+            return true;
+        }
+        
+    }
+    
+    public function desloga($pin){
+        $sql = "UPDATE TB_WFM_SESSAO SET ATIVO = 0 WHERE PIN = :PIN";
+
+        $sql = $this->db->prepare($sql);
+        $sql->bindValue(':PIN', $pin);
+        $sql->execute();
+        
+        $linhasAfetadas = $sql->rowCount();
+
+        if ($linhasAfetadas === 0 || $linhasAfetadas > 0) {
+            return true;
+        } else {
+            return false;
+        }
+        
     }
 
     public function dadosUsuario($login) {
@@ -96,13 +164,57 @@ class Usuarios extends Model {
                 $_SESSION['apelido'] = $sql['APELIDO'];
                 $_SESSION['email'] = $sql['EMAIL'];
                 $_SESSION['tema'] = $sql['ID_TEMA_PREFERIDO'];
-
-
-                $dados = array(
-                    'status' => BASE_URL
-                );
-
-                return $dados;
+                $_SESSION['senha'] = $sql['SENHA'];
+                $_SESSION['token'] = uniqid().date("YmdHis");
+               
+                $_SESSION['registro'] = time(); // armazena o momento em que autenticado //
+                $_SESSION['limite'] = 10;
+                
+                $verifica = $this -> verificaLoginUnico($_SESSION['PIN'],$_SESSION['token']);
+                
+               
+                if($verifica == true){
+                     $this -> criaLoginUnico($_SESSION['PIN'],$_SESSION['token']);
+                     $dados = array(
+                        'statusLogado' => 'n tenho sessao aberta',
+                        'status' => BASE_URL
+                    );
+                    return $dados;
+                }else{
+                    
+                    $dados = array(
+                        'statusLogado' => 'tenho sessao aberta',
+                        'status' => BASE_URL
+                    );
+                    return $dados;
+                }
+                
+                
+               /* $dados = array(
+                        'statusLogado' => $verifica['TOKEN'],
+                        'tokenatual' => $_SESSION['token'],
+                        'status' => BASE_URL
+                    );
+                    return $dados;*/
+                
+                
+                /*if($verifica === true){
+                    $this -> criaLoginUnico($_SESSION['PIN'],$_SESSION['token']);
+                    $dados = array(
+                         'statusLogado' => 'ok',
+                         'status' => BASE_URL
+                    );
+                    return $dados;
+                }else{
+                    $dados = array(
+                        'statusLogado' => 'logadoOutraEstacao',
+                        'status' => BASE_URL
+                    );
+                    return $dados;
+                }*/
+                
+                
+                
             } else {
 
                 $dados = array(
@@ -318,7 +430,9 @@ class Usuarios extends Model {
                 $linhasAfetadas = $sql->rowCount();
 
                 if ($linhasAfetadas === 0 || $linhasAfetadas > 0) {
+                    $_SESSION['senha'] = $senhaNova;
                     return true;
+                    
                 } else {
                     return false;
                 }

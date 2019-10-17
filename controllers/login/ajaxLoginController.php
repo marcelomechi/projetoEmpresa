@@ -51,6 +51,7 @@ class AjaxLoginController extends Controller {
                 $retorno = $usuario->login($login, $senha);
 
                 $dados = array(
+                    'statusLogin' => $retorno['statusLogado'],
                     'logado' => $retorno['status']
                 );
 
