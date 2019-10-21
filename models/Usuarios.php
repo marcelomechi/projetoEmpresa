@@ -88,20 +88,50 @@ class Usuarios extends Model {
         
     }
     
-    public function desloga($pin){
-        $sql = "UPDATE TB_WFM_SESSAO SET ATIVO = 0 WHERE PIN = :PIN";
+    public function desloga($pin,$tipo){
+        /*
+        * tipo 1 desloga na tela de login e derruba a sessao atual        * 
+        */
+        if($tipo == 1){
+            
+            $sql = "UPDATE TB_WFM_SESSAO SET ATIVO = 0 WHERE PIN = :PIN";
 
-        $sql = $this->db->prepare($sql);
-        $sql->bindValue(':PIN', $pin);
-        $sql->execute();
-        
-        $linhasAfetadas = $sql->rowCount();
+            $sql = $this->db->prepare($sql);
+            $sql->bindValue(':PIN', $pin);
+            $sql->execute();
 
-        if ($linhasAfetadas === 0 || $linhasAfetadas > 0) {
-            return true;
-        } else {
-            return false;
+            $linhasAfetadas = $sql->rowCount();
+
+            if ($linhasAfetadas === 0 || $linhasAfetadas > 0) {
+                session_destroy();
+                return true;
+            } else {
+                return false;
+            }
+            
+        }else{
+           /*
+            * tipo 2 desloga na tela de login e derruba a sessao atual        * 
+           */
+            $sql = "UPDATE TB_WFM_SESSAO SET ATIVO = 0 WHERE PIN = :PIN AND TOKEN = :TOKEN";
+
+            $sql = $this->db->prepare($sql);
+            $sql->bindValue(':PIN', $pin);
+            $sql->bindValue(':TOKEN', $_SESSION['token']);
+            $sql->execute();
+
+            $linhasAfetadas = $sql->rowCount();
+
+            if ($linhasAfetadas === 0 || $linhasAfetadas > 0) {
+                session_destroy();
+                return true;
+            } else {
+                return false;
+            }
         }
+        
+        
+        
         
     }
 
