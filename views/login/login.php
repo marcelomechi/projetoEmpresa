@@ -225,6 +225,18 @@
                     <button id="fecha" class="btn modal-close modal-action red">Fechar</button>
                 </div>
             </div>
+            
+            
+            
+            <div id="modalSessaoAberta" class="modal">
+                <div class="modal-content">
+                   <p>Identificamos que seu usuário está logado em outra estação de trabalho, deseja encerrar a sessão aberta e prosseguir com o login?</p>
+                </div>
+                <div class="modal-footer">
+                    <a href="<?php echo BASE_URL;?>logout/closeSession" class="btn waves-effect">Sim</a>                  
+                    <button id="fecha" class="btn modal-close modal-action red">Não</button>
+                </div>
+            </div>
 
 
             <!-- o jquery vem sempre antes do materialize -->

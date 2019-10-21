@@ -18,21 +18,27 @@ class Usuarios extends Model {
             exit;
         }
     }
+   
     
-    public function deslogaPorInatividade(){
-        
-
-        //check to see if $_SESSION['timeout'] is set
-        if(isset($_SESSION['registro'])){
-            $session_life = time() - $_SESSION['limite'];
-           /*     if($session_life > $idleTime){
-                    header("Location: www.google.com.br");
-                }*/
+    public function deslogaPinInvalido($token){
+        $sql = "SELECT * FROM TB_WFM_SESSAO WHERE ATIVO = 1 AND PIN = :PIN";
+        $sql = $this->db->prepare($sql);
+        $sql->bindValue(':PIN', $_SESSION['PIN']);
+        $sql->execute();        
+         
+        if ($sql -> rowCount() > 0) {
+           $sql = $sql->fetch();        
+           
+           if($sql['TOKEN'] == $token){
+               return true;
+           }else{
+               return false;
+           }    
+        }else{
+              return false;
         }
-        $_SESSION['registro'] = time();
+        
     }
-    
-    
     
     private function criaLoginUnico($pin,$token){
                  
@@ -43,25 +49,32 @@ class Usuarios extends Model {
          $sql->bindValue(':token', $token);
 
          $sql->execute();
+         
+        $linhasAfetadas = $sql->rowCount();
+
+        if ($linhasAfetadas === 0 || $linhasAfetadas > 0) {
+            return true;
+        } else {
+            return false;
+        }
              
     }
     public function verificaLoginUnico($pin,$token){
         
         
-         $sql = "SELECT * FROM TB_WFM_SESSAO WHERE PIN = :PIN AND ATIVO = TRUE ";
+         $sql = "SELECT * FROM TB_WFM_SESSAO WHERE PIN = :PIN AND ATIVO = 1";
 
          $sql = $this->db->prepare($sql);
          $sql->bindValue(':PIN', $pin);
          $sql->execute();
          
-        if ($sql -> rowCount() === 1) {
-           $sql = $sql->fetch();
+        if ($sql -> rowCount() > 0) {
+           $sql = $sql->fetch();        
            
-           
-           if($sql['TOKEN'] != $token){
-               return false;
-           }else{
+           if($sql['TOKEN'] == $token){
                return true;
+           }else{
+               return false;
            }
            
         }else{
@@ -109,26 +122,47 @@ class Usuarios extends Model {
         if ($sql->rowCount() > 0) {
             $sql = $sql->fetch();
 
-            $pin = $sql['PIN'];
             $nome = $sql['APELIDO'];
             $id_perfil_acesso = $sql['ATIVO'];
             $foto_perfil = $sql['CAMINHO_FOTO'];
-
+            
+            $_SESSION['token'] = uniqid().date("YmdHis");
+            $_SESSION['PIN'] = $sql['PIN'];
+            
+            $verifica = $this -> verificaLoginUnico($_SESSION['PIN'],$_SESSION['token']);
+            
+            if($verifica == true){
+                 $dados = array(
+                     'pin' => $_SESSION['PIN'],
+                     'nome' => $nome,
+                     'id_perfil_acesso' => $id_perfil_acesso,
+                     'foto_perfil' => $foto_perfil,
+                     'loginUnico' => 'ok'
+                 );
+                                    
+            }else{
+                
+                $dados = array(
+                     'pin' => $_SESSION['PIN'],
+                     'nome' => $nome,
+                     'id_perfil_acesso' => $id_perfil_acesso,
+                     'foto_perfil' => $foto_perfil,
+                     'loginUnico' => 'nok'
+                 );
+                
+                
+            }     
+            
+           
             if (empty($sql['CAMINHO_FOTO']) || !isset($sql['CAMINHO_FOTO'])) {
-                $_SESSION['foto_perfil'] = "assets/images/default.png";
-            } else {
-                $_SESSION['foto_perfil'] = $sql['CAMINHO_FOTO'];
-            }
+                         $_SESSION['foto_perfil'] = "assets/images/default.png";
+                    } else {
+                         $_SESSION['foto_perfil'] = $sql['CAMINHO_FOTO'];
+                    }
 
 
 
-
-            $dados = array(
-                'pin' => $pin,
-                'nome' => $nome,
-                'id_perfil_acesso' => $id_perfil_acesso,
-                'foto_perfil' => $foto_perfil
-            );
+            
 
             return $dados;
         } else {
@@ -159,66 +193,28 @@ class Usuarios extends Model {
 
                 $_SESSION['CPF'] = $sql['CPF'];
                 $_SESSION['permissao'] = $sql['ID_PERFIL'];
-                $_SESSION['PIN'] = $sql['PIN'];
                 $_SESSION['foto_menu'] = $sql['CAMINHO_IMAGEM'];
                 $_SESSION['apelido'] = $sql['APELIDO'];
                 $_SESSION['email'] = $sql['EMAIL'];
                 $_SESSION['tema'] = $sql['ID_TEMA_PREFERIDO'];
-                $_SESSION['senha'] = $sql['SENHA'];
-                $_SESSION['token'] = uniqid().date("YmdHis");
-               
-                $_SESSION['registro'] = time(); // armazena o momento em que autenticado //
-                $_SESSION['limite'] = 10;
+                $_SESSION['senha'] = $sql['SENHA'];  
                 
-                $verifica = $this -> verificaLoginUnico($_SESSION['PIN'],$_SESSION['token']);
-                
-               
-                if($verifica == true){
-                     $this -> criaLoginUnico($_SESSION['PIN'],$_SESSION['token']);
-                     $dados = array(
-                        'statusLogado' => 'n tenho sessao aberta',
-                        'status' => BASE_URL
-                    );
-                    return $dados;
-                }else{
-                    
+                $criaLogin = $this -> criaLoginUnico($_SESSION['PIN'],$_SESSION['token']);
+                     
+                if($criaLogin == true){
                     $dados = array(
-                        'statusLogado' => 'tenho sessao aberta',
                         'status' => BASE_URL
                     );
-                    return $dados;
+                }else{
+                    return false;
                 }
                 
-                
-               /* $dados = array(
-                        'statusLogado' => $verifica['TOKEN'],
-                        'tokenatual' => $_SESSION['token'],
-                        'status' => BASE_URL
-                    );
-                    return $dados;*/
-                
-                
-                /*if($verifica === true){
-                    $this -> criaLoginUnico($_SESSION['PIN'],$_SESSION['token']);
-                    $dados = array(
-                         'statusLogado' => 'ok',
-                         'status' => BASE_URL
-                    );
-                    return $dados;
-                }else{
-                    $dados = array(
-                        'statusLogado' => 'logadoOutraEstacao',
-                        'status' => BASE_URL
-                    );
-                    return $dados;
-                }*/
-                
-                
-                
+                return $dados;
+                               
             } else {
 
                 $dados = array(
-                    'status' => false
+                    'status' => 'senhaIncorreta'                    
                 );
 
                 return $dados;

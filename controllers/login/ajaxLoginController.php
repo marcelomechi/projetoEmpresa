@@ -34,7 +34,8 @@ class AjaxLoginController extends Controller {
                         'nome' => $retorno['nome'],
                         'id_perfil_acesso' => $retorno['id_perfil_acesso'],
                         'foto_perfil' => $retorno['foto_perfil'],
-                        'tipo' => '1'
+                        'tipo' => '1',
+                        'loginUnico' => $retorno['loginUnico']
                     );
 
                     $this->loadViewAjax('login', 'ajaxLogin', $dados);
@@ -51,7 +52,6 @@ class AjaxLoginController extends Controller {
                 $retorno = $usuario->login($login, $senha);
 
                 $dados = array(
-                    'statusLogin' => $retorno['statusLogado'],
                     'logado' => $retorno['status']
                 );
 

@@ -5,6 +5,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="Content-Language" content="pt-br">
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <meta http-equiv="refresh" content="120;url=<?php echo BASE_URL;?>logout" />
+        
 
 
         <!--Import Google Icon Font-->
@@ -90,14 +92,8 @@
         
 
        setInterval(function(){
-        <?php 
-            $classe = new Usuarios();
-            $classe -> deslogaPorInatividade();        
-          //  Usuarios::verificaLogin();
-            
-        ?>
-         console.log("rodando")
-         },5000)
+                console.log("<?php echo $_SESSION['token']; ?>");
+         },50000)
          
         </script>
 
