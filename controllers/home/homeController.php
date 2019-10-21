@@ -3,17 +3,17 @@
 class HomeController extends Controller{
 	
         public function __construct() {
-            Usuarios::verificaLogin();                        
+                                            
             $classe = new Usuarios(); 
-            //$verifica = $classe -> verificaLoginUnico($_SESSION['PIN'],$_SESSION['token']);
+            $classe -> deslogaPinInvalido($_SESSION['token']);
             $classe -> updateSession($_SESSION['PIN']);
             
         }
     
     
 	public function index(){
-		 $classe = new Usuarios();                       
-            
+		$classe = new Usuarios();  
+                            
                 $_SESSION['relatorio'] = '';
                 
                 

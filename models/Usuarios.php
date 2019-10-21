@@ -9,12 +9,13 @@
 
 class Usuarios extends Model {
     
-    public static function verificaLogin() {
+    public function verificaLogin() {
 
         /* se não tiver setado ou se tiver setado e tiver vazio */
 
         if (empty($_SESSION['PIN'])) {
             header("Location: " . BASE_URL . "login");
+            session_destroy();
             exit;
         }
     }
@@ -25,17 +26,21 @@ class Usuarios extends Model {
         $sql = $this->db->prepare($sql);
         $sql->bindValue(':PIN', $_SESSION['PIN']);
         $sql->execute();        
-         
-        if ($sql -> rowCount() > 0) {
+        
+        if ($sql -> rowCount() > 0) {            
            $sql = $sql->fetch();        
            
            if($sql['TOKEN'] == $token){
                return true;
            }else{
-               return false;
+               $_SESSION['PIN'] = "";
+               $this -> verificaLogin();
+               
            }    
         }else{
-              return false;
+             $_SESSION['PIN'] = "";
+             $this -> verificaLogin();
+            
         }
         
     }

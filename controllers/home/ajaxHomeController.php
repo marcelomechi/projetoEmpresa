@@ -2,11 +2,11 @@
 
 class ajaxHomeController extends Controller {
     
-    public function __construct() {
-        Usuarios::verificaLogin();
-        $classe = new Usuarios();                       
-        $classe -> updateSession($_SESSION['PIN']);
-    }
+        public function __construct() {
+            $classe = new Usuarios(); 
+            $classe -> deslogaPinInvalido($_SESSION['token']);                    
+            $classe -> updateSession($_SESSION['PIN']);
+        }
     
     public function index(){
         $classe = new Usuarios();  

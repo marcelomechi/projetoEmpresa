@@ -3,9 +3,9 @@
 class PerfilController extends Controller{
 
         public function __construct() {
-           Usuarios::verificaLogin();
-            $updateSession = new Usuarios();                       
-            $updateSession -> updateSession($_SESSION['PIN']);
+            $classe = new Usuarios(); 
+            $classe -> deslogaPinInvalido($_SESSION['token']);                    
+            $classe -> updateSession($_SESSION['PIN']);
         }
     
 	public function index(){

@@ -234,7 +234,7 @@
                 </div>
                 <div class="modal-footer">
                     <a href="<?php echo BASE_URL;?>logout/closeSession" class="btn waves-effect">Sim</a>                  
-                    <button id="fecha" class="btn modal-close modal-action red">Não</button>
+                    <button id="fecha" class="btn waves-effect modal-close modal-action red">Não</button>
                 </div>
             </div>
 

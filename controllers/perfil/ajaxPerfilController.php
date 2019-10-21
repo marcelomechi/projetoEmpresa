@@ -2,7 +2,12 @@
 
 class AjaxPerfilController extends Controller{
 
-  
+
+        public function __construct() {
+            $classe = new Usuarios(); 
+            $classe -> deslogaPinInvalido($_SESSION['token']);                    
+        }
+    
 
 public function index(){
     

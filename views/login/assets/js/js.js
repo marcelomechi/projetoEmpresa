@@ -43,6 +43,7 @@ $(document).ready(function () {
                     return false;
                 } else if (dados[3] == 'nok') {
                     $("#modalSessaoAberta").modal("open");
+                    $("#loadUsuario").attr("hidden","hidden");
                     return false;
                 } else {
                     $("#loadUsuario").attr("hidden", "hidden");
