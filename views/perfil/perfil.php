@@ -110,7 +110,7 @@
                     <span>Exibir Aniversário?</span>
                 </label>
                 <div class="right-align">
-                    <button data-target="updateSenha" class="btn waves-effect modal-trigger grey" id="alteraSenha">Alterar Senha</button>
+                    <button data-target="updateSenha" class="btn waves-effect modal-trigger blue-grey lighten-1" id="alteraSenha">Alterar Senha</button>
                     <button class="btn waves-effect" id="gravaPreferencias">Gravar</button>
                     <button data-target="modalMsg" class="btn modal-trigger hide"></button>
                 </div>

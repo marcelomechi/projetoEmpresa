@@ -8,7 +8,7 @@
  */
 
 class Usuarios extends Model {
-    
+
     public function verificaLogin() {
 
         /* se não tiver setado ou se tiver setado e tiver vazio */
@@ -19,42 +19,47 @@ class Usuarios extends Model {
             exit;
         }
     }
-   
-    
-    public function deslogaPinInvalido($token){
+
+    public function verificaPermissao($idTool) {
+        /* verifica se o usuário tem permissão para acessar o módulo */
+        if (in_array($idTool, $_SESSION['ferramentasLiberadas'])) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function deslogaPinInvalido($token) {
         $sql = "SELECT * FROM TB_WFM_SESSAO WHERE ATIVO = 1 AND PIN = :PIN";
         $sql = $this->db->prepare($sql);
         $sql->bindValue(':PIN', $_SESSION['PIN']);
-        $sql->execute();        
-        
-        if ($sql -> rowCount() > 0) {            
-           $sql = $sql->fetch();        
-           
-           if($sql['TOKEN'] == $token){
-               return true;
-           }else{
-               $_SESSION['PIN'] = "";
-               $this -> verificaLogin();
-               
-           }    
-        }else{
-             $_SESSION['PIN'] = "";
-             $this -> verificaLogin();
-            
+        $sql->execute();
+
+        if ($sql->rowCount() > 0) {
+            $sql = $sql->fetch();
+
+            if ($sql['TOKEN'] == $token) {
+                return true;
+            } else {
+                $_SESSION['PIN'] = "";
+                $this->verificaLogin();
+            }
+        } else {
+            $_SESSION['PIN'] = "";
+            $this->verificaLogin();
         }
-        
     }
-    
-    private function criaLoginUnico($pin,$token){
-                 
-         $sql = "UPDATE TB_WFM_SESSAO SET TOKEN = :token, ATIVO = 1 WHERE PIN = :PIN";
 
-         $sql = $this->db->prepare($sql);
-         $sql->bindValue(':PIN', $pin);
-         $sql->bindValue(':token', $token);
+    private function criaLoginUnico($pin, $token) {
 
-         $sql->execute();
-         
+        $sql = "UPDATE TB_WFM_SESSAO SET TOKEN = :token, ATIVO = 1 WHERE PIN = :PIN";
+
+        $sql = $this->db->prepare($sql);
+        $sql->bindValue(':PIN', $pin);
+        $sql->bindValue(':token', $token);
+
+        $sql->execute();
+
         $linhasAfetadas = $sql->rowCount();
 
         if ($linhasAfetadas === 0 || $linhasAfetadas > 0) {
@@ -62,38 +67,36 @@ class Usuarios extends Model {
         } else {
             return false;
         }
-             
     }
-    public function verificaLoginUnico($pin,$token){
-        
-        
-         $sql = "SELECT * FROM TB_WFM_SESSAO WHERE PIN = :PIN AND ATIVO = 1";
 
-         $sql = $this->db->prepare($sql);
-         $sql->bindValue(':PIN', $pin);
-         $sql->execute();
-         
-        if ($sql -> rowCount() > 0) {
-           $sql = $sql->fetch();        
-           
-           if($sql['TOKEN'] == $token){
-               return true;
-           }else{
-               return false;
-           }
-           
-        }else{
+    public function verificaLoginUnico($pin, $token) {
+
+
+        $sql = "SELECT * FROM TB_WFM_SESSAO WHERE PIN = :PIN AND ATIVO = 1";
+
+        $sql = $this->db->prepare($sql);
+        $sql->bindValue(':PIN', $pin);
+        $sql->execute();
+
+        if ($sql->rowCount() > 0) {
+            $sql = $sql->fetch();
+
+            if ($sql['TOKEN'] == $token) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
             return true;
         }
-        
     }
-    
-    public function desloga($pin,$tipo){
+
+    public function desloga($pin, $tipo) {
         /*
-        * tipo 1 desloga na tela de login e derruba a sessao atual        * 
-        */
-        if($tipo == 1){
-            
+         * tipo 1 desloga na tela de login e derruba a sessao atual        * 
+         */
+        if ($tipo == 1) {
+
             $sql = "UPDATE TB_WFM_SESSAO SET ATIVO = 0 WHERE PIN = :PIN";
 
             $sql = $this->db->prepare($sql);
@@ -108,11 +111,10 @@ class Usuarios extends Model {
             } else {
                 return false;
             }
-            
-        }else{
-           /*
-            * tipo 2 desloga na tela de login e derruba a sessao atual        * 
-           */
+        } else {
+            /*
+             * tipo 2 desloga na tela de login e derruba a sessao atual        * 
+             */
             $sql = "UPDATE TB_WFM_SESSAO SET ATIVO = 0 WHERE PIN = :PIN AND TOKEN = :TOKEN";
 
             $sql = $this->db->prepare($sql);
@@ -129,10 +131,6 @@ class Usuarios extends Model {
                 return false;
             }
         }
-        
-        
-        
-        
     }
 
     public function dadosUsuario($login) {
@@ -160,44 +158,41 @@ class Usuarios extends Model {
             $nome = $sql['APELIDO'];
             $id_perfil_acesso = $sql['ATIVO'];
             $foto_perfil = $sql['CAMINHO_FOTO'];
-            
-            $_SESSION['token'] = uniqid().date("YmdHis");
+
+            $_SESSION['token'] = uniqid() . date("YmdHis");
             $_SESSION['PIN'] = $sql['PIN'];
-            
-            $verifica = $this -> verificaLoginUnico($_SESSION['PIN'],$_SESSION['token']);
-            
-            if($verifica == true){
-                 $dados = array(
-                     'pin' => $_SESSION['PIN'],
-                     'nome' => $nome,
-                     'id_perfil_acesso' => $id_perfil_acesso,
-                     'foto_perfil' => $foto_perfil,
-                     'loginUnico' => 'ok'
-                 );
-                                    
-            }else{
-                
+
+            $verifica = $this->verificaLoginUnico($_SESSION['PIN'], $_SESSION['token']);
+
+            if ($verifica == true) {
                 $dados = array(
-                     'pin' => $_SESSION['PIN'],
-                     'nome' => $nome,
-                     'id_perfil_acesso' => $id_perfil_acesso,
-                     'foto_perfil' => $foto_perfil,
-                     'loginUnico' => 'nok'
-                 );
-                
-                
-            }     
-            
-           
+                    'pin' => $_SESSION['PIN'],
+                    'nome' => $nome,
+                    'id_perfil_acesso' => $id_perfil_acesso,
+                    'foto_perfil' => $foto_perfil,
+                    'loginUnico' => 'ok'
+                );
+            } else {
+
+                $dados = array(
+                    'pin' => $_SESSION['PIN'],
+                    'nome' => $nome,
+                    'id_perfil_acesso' => $id_perfil_acesso,
+                    'foto_perfil' => $foto_perfil,
+                    'loginUnico' => 'nok'
+                );
+            }
+
+
             if (empty($sql['CAMINHO_FOTO']) || !isset($sql['CAMINHO_FOTO'])) {
-                         $_SESSION['foto_perfil'] = "assets/images/default.png";
-                    } else {
-                         $_SESSION['foto_perfil'] = $sql['CAMINHO_FOTO'];
-                    }
+                $_SESSION['foto_perfil'] = "assets/images/default.png";
+            } else {
+                $_SESSION['foto_perfil'] = $sql['CAMINHO_FOTO'];
+            }
 
 
 
-            
+
 
             return $dados;
         } else {
@@ -210,51 +205,49 @@ class Usuarios extends Model {
             'status' => ''
         );
 
-            $sql = "SELECT U.PIN, U.CPF, U.SENHA, U.ATIVO, P.ID_TEMA_PREFERIDO, P.EXIBIR_ANIVERSARIO, P.APELIDO, P.CAMINHO_FOTO, UP.ID_PERFIL, IMFUNDO.CAMINHO_IMAGEM, P.EMAIL FROM TB_WFM_USUARIO U ";
-            $sql .= "JOIN TB_WFM_PERFIL_PESSOAL P ON P.PIN = U.PIN ";
-            $sql .= "JOIN TB_WFM_USUARIO_PERFIL UP ON U.PIN = UP.PIN ";
-            $sql .= "LEFT JOIN TB_WFM_IMAGEM_FUNDO IMFUNDO ON IMFUNDO.ID_IMAGEM_FUNDO = P.ID_IMAGEM_FUNDO ";
-            $sql .= "LEFT JOIN TB_WFM_USUARIO USER ON USER.PIN = P.PIN ";
-            $sql .= "WHERE U.CPF = :CPF ";
-            $sql .= "AND USER.SENHA = md5(:senha) ";
+        $sql = "SELECT U.PIN, U.CPF, U.SENHA, U.ATIVO, P.ID_TEMA_PREFERIDO, P.EXIBIR_ANIVERSARIO, P.APELIDO, P.CAMINHO_FOTO, UP.ID_PERFIL, IMFUNDO.CAMINHO_IMAGEM, P.EMAIL FROM TB_WFM_USUARIO U ";
+        $sql .= "JOIN TB_WFM_PERFIL_PESSOAL P ON P.PIN = U.PIN ";
+        $sql .= "JOIN TB_WFM_USUARIO_PERFIL UP ON U.PIN = UP.PIN ";
+        $sql .= "LEFT JOIN TB_WFM_IMAGEM_FUNDO IMFUNDO ON IMFUNDO.ID_IMAGEM_FUNDO = P.ID_IMAGEM_FUNDO ";
+        $sql .= "LEFT JOIN TB_WFM_USUARIO USER ON USER.PIN = P.PIN ";
+        $sql .= "WHERE U.CPF = :CPF ";
+        $sql .= "AND USER.SENHA = md5(:senha) ";
 
-            $sql = $this->db->prepare($sql);
-            $sql->bindValue(':CPF', $login);
-            $sql->bindValue(':senha', $senha);
-            $sql->execute();
+        $sql = $this->db->prepare($sql);
+        $sql->bindValue(':CPF', $login);
+        $sql->bindValue(':senha', $senha);
+        $sql->execute();
 
-            if ($sql->rowCount() > 0) {
-                $sql = $sql->fetch();
+        if ($sql->rowCount() > 0) {
+            $sql = $sql->fetch();
 
-                $_SESSION['CPF'] = $sql['CPF'];
-                $_SESSION['permissao'] = $sql['ID_PERFIL'];
-                $_SESSION['foto_menu'] = $sql['CAMINHO_IMAGEM'];
-                $_SESSION['apelido'] = $sql['APELIDO'];
-                $_SESSION['email'] = $sql['EMAIL'];
-                $_SESSION['tema'] = $sql['ID_TEMA_PREFERIDO'];
-                $_SESSION['senha'] = $sql['SENHA'];  
-                
-                $criaLogin = $this -> criaLoginUnico($_SESSION['PIN'],$_SESSION['token']);
-                     
-                if($criaLogin == true){
-                    $dados = array(
-                        'status' => BASE_URL
-                    );
-                }else{
-                    return false;
-                }
-                
-                return $dados;
-                               
-            } else {
+            $_SESSION['CPF'] = $sql['CPF'];
+            $_SESSION['permissao'] = $sql['ID_PERFIL'];
+            $_SESSION['foto_menu'] = $sql['CAMINHO_IMAGEM'];
+            $_SESSION['apelido'] = $sql['APELIDO'];
+            $_SESSION['email'] = $sql['EMAIL'];
+            $_SESSION['tema'] = $sql['ID_TEMA_PREFERIDO'];
+            $_SESSION['senha'] = $sql['SENHA'];
 
+            $criaLogin = $this->criaLoginUnico($_SESSION['PIN'], $_SESSION['token']);
+
+            if ($criaLogin == true) {
                 $dados = array(
-                    'status' => 'senhaIncorreta'                    
+                    'status' => BASE_URL
                 );
-
-                return $dados;
+            } else {
+                return false;
             }
-        
+
+            return $dados;
+        } else {
+
+            $dados = array(
+                'status' => 'senhaIncorreta'
+            );
+
+            return $dados;
+        }
     }
 
     public function getPreferencias($pin) {
@@ -438,62 +431,58 @@ class Usuarios extends Model {
             return false;
         }
     }
-    
-    public function gravaAlteracaoSenhaPerfil($PIN, $senhaAntiga, $senhaNova){
-       
-        if(isset($senhaAntiga) && !empty($senhaAntiga) && isset($senhaNova) && !empty($senhaNova)){
-            
-            $autentica = $this -> verificaSenhaAtual($PIN, $senhaAntiga);
-            
-            if($autentica === false){
+
+    public function gravaAlteracaoSenhaPerfil($PIN, $senhaAntiga, $senhaNova) {
+        if (isset($senhaAntiga) && !empty($senhaAntiga) && isset($senhaNova) && !empty($senhaNova)) {
+            if ($senhaNova == $_SESSION['CPF']) {
                 return false;
-            }else{
-                $sql = "UPDATE TB_WFM_USUARIO ";
-                $sql.= "SET SENHA = md5(:senha) ";
-                $sql.= "WHERE PIN = :PIN ";
+            } else {
+                $autentica = $this->verificaSenhaAtual($PIN, $senhaAntiga);
 
-                $sql = $this->db->prepare($sql);
-                $sql->bindValue(':senha', $senhaNova);
-                $sql->bindValue(':PIN', $PIN);
-
-                $sql->execute();
-
-                $linhasAfetadas = $sql->rowCount();
-
-                if ($linhasAfetadas === 0 || $linhasAfetadas > 0) {
-                    $_SESSION['senha'] = $senhaNova;
-                    return true;
-                    
-                } else {
+                if ($autentica === false) {
                     return false;
+                } else {
+                    $sql = "UPDATE TB_WFM_USUARIO ";
+                    $sql .= "SET SENHA = md5(:senha) ";
+                    $sql .= "WHERE PIN = :PIN ";
+
+                    $sql = $this->db->prepare($sql);
+                    $sql->bindValue(':senha', $senhaNova);
+                    $sql->bindValue(':PIN', $PIN);
+
+                    $sql->execute();
+
+                    $linhasAfetadas = $sql->rowCount();
+
+                    if ($linhasAfetadas === 0 || $linhasAfetadas > 0) {
+                        $_SESSION['senha'] = $senhaNova;
+                        return true;
+                    } else {
+                        return false;
+                    }
                 }
             }
-            
-                     
-            
-                        
-        }else{
+        } else {
             return false;
         }
     }
-    
-    private function verificaSenhaAtual($PIN, $senhaAtual){
+
+    private function verificaSenhaAtual($PIN, $senhaAtual) {
         $sql = "SELECT * FROM TB_WFM_USUARIO ";
         $sql .= "WHERE PIN = :PIN ";
         $sql .= "AND SENHA = md5(:senha)";
-        
-         $sql = $this->db->prepare($sql);         
-         $sql->bindValue(':PIN', $PIN);
-         $sql->bindValue(':senha', $senhaAtual);
-         $sql->execute();
-         
-         if($sql->rowCount() > 0){
-             $sql = $sql->fetch();
-             return $sql;            
-         }else{
-             return false;
-         }
-        
+
+        $sql = $this->db->prepare($sql);
+        $sql->bindValue(':PIN', $PIN);
+        $sql->bindValue(':senha', $senhaAtual);
+        $sql->execute();
+
+        if ($sql->rowCount() > 0) {
+            $sql = $sql->fetch();
+            return $sql;
+        } else {
+            return false;
+        }
     }
 
     public function carregaCarousel() {
@@ -544,45 +533,69 @@ class Usuarios extends Model {
 
     public function menu() {
 
-        $sql = "SELECT DISTINCT M.ID_MODULO, ";
-        $sql .= "M.ID_MODULO_REFERENCIA, ";
-        $sql .= "M.TITULO_WEB, ";
-        $sql .= "M.ID_WEB_MODULO, ";
-        $sql .= "M.CAMINHO_ICONE, ";
-        $sql .= "M.CAMINHO_LINK, ";
-        $sql .= "COUNT(MSUB.ID_MODULO) AS QTDESUB, ";
-        $sql .= "M.ORDENACAO ";
-        $sql .= "FROM TB_WFM_MODULO M ";
-        $sql .= "LEFT JOIN TB_WFM_MODULO MSUB ON MSUB.ID_MODULO_REFERENCIA = M.ID_MODULO ";
-        $sql .= "WHERE M.ATIVO = 1 ";
-        $sql .= "AND (M.ID_MODULO IN ";
-        $sql .= "(SELECT ID_MODULO ";
-        $sql .= "FROM TB_WFM_MODULO_ACESSO_PERFIL ";
-        $sql .= "WHERE ID_PERFIL IN ";
-        $sql .= "(SELECT ID_PERFIL ";
-        $sql .= "FROM TB_WFM_USUARIO_PERFIL ";
-        $sql .= "WHERE PIN = :PIN ) ) ";
-        $sql .= "OR M.ID_MODULO IN ";
-        $sql .= "(SELECT ID_MODULO ";
-        $sql .= "FROM TB_WFM_MODULO_ACESSO_INDIVIDUAL ";
-        $sql .= "WHERE PIN = :PIN ";
-        $sql .= "AND LIBERADO = 1 )) ";
-        $sql .= "AND M.ID_MODULO NOT IN ";
-        $sql .= "(SELECT ID_MODULO ";
-        $sql .= "FROM TB_WFM_MODULO_ACESSO_INDIVIDUAL ";
-        $sql .= "WHERE PIN = :PIN ";
-        $sql .= "AND BLOQUEADO = 1 ) ";
-        $sql .= "GROUP BY M.ID_MODULO, M.TITULO_WEB, M.ID_WEB_MODULO, M.CAMINHO_ICONE, M.CAMINHO_LINK, M.ORDENACAO
-				ORDER BY M.ORDENACAO; ";
+        $sql = "SELECT DISTINCT M.ID_MODULO,
+                M.ID_MODULO_REFERENCIA,
+                M.TITULO_WEB,
+                M.ID_WEB_MODULO,
+                M.CAMINHO_ICONE,
+                M.CAMINHO_LINK,
+                COUNT(MSUB.ID_MODULO) AS QTDESUB,
+                M.ORDENACAO
+FROM TB_WFM_MODULO M
+LEFT JOIN 	( 
+			SELECT	*
+            FROM	TB_WFM_MODULO
+            WHERE 	ID_MODULO IN 	(
+									SELECT ID_MODULO
+									FROM TB_WFM_MODULO_ACESSO_PERFIL
+									WHERE ID_PERFIL IN
+										(
+										SELECT ID_PERFIL
+										FROM TB_WFM_USUARIO_PERFIL
+										WHERE PIN = :PIN 
+										)
+									)
+			)MSUB ON MSUB.ID_MODULO_REFERENCIA = M.ID_MODULO
+WHERE M.ATIVO = 1
+  AND (M.ID_MODULO IN
+         (SELECT ID_MODULO
+          FROM TB_WFM_MODULO_ACESSO_PERFIL
+          WHERE ID_PERFIL IN
+              (SELECT ID_PERFIL
+               FROM TB_WFM_USUARIO_PERFIL
+               WHERE PIN = :PIN ) )
+       OR M.ID_MODULO IN
+         (SELECT ID_MODULO
+          FROM TB_WFM_MODULO_ACESSO_INDIVIDUAL
+          WHERE PIN = :PIN
+            AND LIBERADO = 1 ))
+  AND M.ID_MODULO NOT IN
+    (SELECT ID_MODULO
+     FROM TB_WFM_MODULO_ACESSO_INDIVIDUAL
+     WHERE PIN = :PIN
+       AND BLOQUEADO = 1 )
+GROUP BY M.ID_MODULO,
+         M.TITULO_WEB,
+         M.ID_WEB_MODULO,
+         M.CAMINHO_ICONE,
+         M.CAMINHO_LINK,
+         M.ORDENACAO
+ORDER BY M.ORDENACAO;";
 
 
         $sql = $this->db->prepare($sql);
         $sql->bindValue(':PIN', $_SESSION['PIN']);
         $sql->execute();
 
-
         if ($sql->rowCount() > 0) {
             $sql = $sql->fetchAll();
+
+            $_SESSION['ferramentasLiberadas'] = array();
+            
+            /* guarda em uma session as ferramentas liberadas para o usuário */
+            foreach ($sql as $dados) {
+                $_SESSION['ferramentasLiberadas'][] = $dados['ID_MODULO'];
+            }
 
             foreach ($sql as $menuPrincipal):
                 if ($menuPrincipal['QTDESUB'] == 0 && $menuPrincipal['ID_MODULO_REFERENCIA'] == NULL):

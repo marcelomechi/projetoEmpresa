@@ -83,7 +83,6 @@
         <script>
         function carregaTema(id) {
             if (id == 1) {
-                //alert("oi")
                 document.documentElement.setAttribute('data-theme', 'dark');
                 localStorage.setItem('theme', 'dark');
             } else {
