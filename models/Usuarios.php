@@ -205,13 +205,15 @@ class Usuarios extends Model {
             'status' => ''
         );
 
-        $sql = "SELECT U.PIN, U.CPF, U.SENHA, U.ATIVO, P.ID_TEMA_PREFERIDO, P.EXIBIR_ANIVERSARIO, P.APELIDO, P.CAMINHO_FOTO, UP.ID_PERFIL, IMFUNDO.CAMINHO_IMAGEM, P.EMAIL FROM TB_WFM_USUARIO U ";
+        $sql = "SELECT U.PIN, U.CPF, U.SENHA, U.ATIVO, P.ID_TEMA_PREFERIDO, P.EXIBIR_ANIVERSARIO, P.APELIDO, P.CAMINHO_FOTO, UP.ID_PERFIL, IMFUNDO.CAMINHO_IMAGEM, P.EMAIL, MIN(PA.DESLOGUE_AUTOMATICO) AS DESLOGUE_AUTOMATICO FROM TB_WFM_USUARIO U ";
         $sql .= "JOIN TB_WFM_PERFIL_PESSOAL P ON P.PIN = U.PIN ";
         $sql .= "JOIN TB_WFM_USUARIO_PERFIL UP ON U.PIN = UP.PIN ";
         $sql .= "LEFT JOIN TB_WFM_IMAGEM_FUNDO IMFUNDO ON IMFUNDO.ID_IMAGEM_FUNDO = P.ID_IMAGEM_FUNDO ";
         $sql .= "LEFT JOIN TB_WFM_USUARIO USER ON USER.PIN = P.PIN ";
+        $sql .= "JOIN TB_WFM_PERFIL_ACESSO PA ON PA.ID_PERFIL = UP.ID_PERFIL ";
         $sql .= "WHERE U.CPF = :CPF ";
         $sql .= "AND USER.SENHA = md5(:senha) ";
+        $sql .= "GROUP BY U.PIN, U.CPF, U.SENHA, U.ATIVO, P.ID_TEMA_PREFERIDO, P.EXIBIR_ANIVERSARIO, P.APELIDO, P.CAMINHO_FOTO, UP.ID_PERFIL, IMFUNDO.CAMINHO_IMAGEM, P.EMAIL ";
 
         $sql = $this->db->prepare($sql);
         $sql->bindValue(':CPF', $login);
@@ -228,6 +230,7 @@ class Usuarios extends Model {
             $_SESSION['email'] = $sql['EMAIL'];
             $_SESSION['tema'] = $sql['ID_TEMA_PREFERIDO'];
             $_SESSION['senha'] = $sql['SENHA'];
+            $_SESSION['perfilTipo'] = $sql['DESLOGUE_AUTOMATICO'];
 
             $criaLogin = $this->criaLoginUnico($_SESSION['PIN'], $_SESSION['token']);
 

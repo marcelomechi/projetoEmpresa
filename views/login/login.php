@@ -98,8 +98,8 @@
                             <div class="input-field">
                                 <input type="text" autocomplete="off" class="validate cpf" name="usuario" id="usuario"/>
                                 <label for="usuario" data-error="Preencha corretamente o campo Usuário" data-success="">CPF</label>
-                                <span class="flow-text red-text" id="nLocalizado" hidden>Usuário não localizado</span>
-                                <span class="flow-text red-text" id="inativo" hidden>Usuário inativo</span>
+                                <span class="flow-text red-text" id="nLocalizado" hidden>CPF não localizado</span>
+                                <span class="flow-text red-text" id="inativo" hidden>CPF inativo</span>
                             </div>                  
                             <div class="input-field">
                                 <button type="submit" id="proximo" class="btn waves-effect waves-light w100">Próximo</button>

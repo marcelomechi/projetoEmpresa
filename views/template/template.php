@@ -5,8 +5,10 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="Content-Language" content="pt-br">
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-        <meta http-equiv="refresh" content="900;url=<?php echo BASE_URL;?>logout" />
-        
+
+    <?php if($_SESSION['perfilTipo'] == 1): ?>
+        <meta http-equiv="refresh" content="30;url=<?php echo BASE_URL;?>logout" />
+    <?php endif; ?>     
 
 
         <!--Import Google Icon Font-->
