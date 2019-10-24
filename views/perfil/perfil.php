@@ -122,6 +122,7 @@
  <div id="updateSenha" class="modal">
     <div class="modal-content center-align">
       <h5>Alteração de Senha</h5>
+      <p>Cadastre uma senha de sua preferência, diferente do seu CPF.</p>
         <div class="input-field">
           <input id="senhaAntiga" type="password" class="validate">
           <label for="senhaAntiga">Senha Atual</label>

@@ -88,6 +88,11 @@
                     <div class="grid grid-template-areas-4">      
 
                         <section id="cardUsuario" class="esquerda"> 
+                            <div id="loadUsuario" class="input-field" hidden> 
+                                <div class="progress">
+                                    <div class="indeterminate"></div>
+                                </div>
+                            </div>  
 
                             <div class="input-field">
                                 <img src="<?php echo BASE_URL; ?>assets/images/wfm.png" class="responsive-img foto">
@@ -96,28 +101,28 @@
                                 <div class="card-title w100 flow-text center-align"><b>Workforce Management</b></div>
                             </div> 
                             <div class="input-field">
-                                <input type="text" autocomplete="off" class="validate cpf" name="usuario" id="usuario"/>
-                                <label for="usuario" data-error="Preencha corretamente o campo Usuário" data-success="">CPF</label>
-                                <span class="flow-text red-text" id="nLocalizado" hidden>CPF não localizado</span>
-                                <span class="flow-text red-text" id="inativo" hidden>CPF inativo</span>
+                                <input type="text" autocomplete="off" class="validate cpf" name="usuarioLogin" id="usuarioLogin"/>
+                                <label for="usuarioLogin">CPF</label>
+                                <span id="loginHelper" class="helper-text" data-error="" data-success=""></span>
                             </div>                  
                             <div class="input-field">
-                                <button type="submit" id="proximo" class="btn waves-effect waves-light w100">Próximo</button>
+                                <button id="proximo" class="btn waves-effect waves-light w100">Próximo</button>
                             </div> 
                             <div class="input-field left-align">
                                 <a href="#">Acesso Convidado</a>
-                            </div>
-                            <div id="loadUsuario" class="input-field" hidden> 
-                                <div class="progress">
-                                    <div class="indeterminate"></div>
-                                </div>
-                            </div>                           
+                            </div>                                            
                         </section>            
 
 
                         <section id="cardSenha" class="esquerda" hidden> 
-                            <div class="card-title left-align">
+                            <div id="loadUsuario" class="input-field" hidden> 
+                                <div class="progress">
+                                    <div class="indeterminate"></div>
+                                </div>
+                            </div>           
 
+
+                            <div class="card-title left-align">
                                 <i id="voltar" class="fas fa-arrow-left"></i> 
                             </div>                                
 
@@ -125,9 +130,9 @@
 
                             <div class="card-title w100 flow-text">Olá, <span id="nomeUsuario"></span>!</div>
                             <div class="input-field col s12">              
-                                <input type="password" class="validate" name="password" id="password"/>
-                                <label for="password" data-error="Preencha corretamente o campo Senha" data-success="">Senha</label>
-                                <span class="flow-text red-text" id="senhaInvalida" hidden>Senha inválida</span>
+                                <input type="password" class="validate" name="password" id="passwordLogin"/>
+                                <label for="passwordLogin" data-error="Preencha corretamente o campo Senha" data-success="">Senha</label>
+                                <span id="helperSenha" class="helper-text" data-error="" data-success=""></span>
                             </div>
                             <div class="left-align">
                                 <label>
@@ -141,15 +146,13 @@
                             <div class="input-field">
                                 <button class="btn waves-effect waves-light w100" id="logar">Entrar</button>
                             </div>
-                            <div class="input-field" id="loadSenha" hidden> 
-                                <div class="progress">
-                                    <div class="indeterminate"></div>
-                                </div>
-                            </div>  
                         </section>
 
 
                         <section id="cardEsqueciSenha" class="esquerda" hidden>                     
+                            <div class="progress">
+                                <div class="indeterminate"></div>
+                            </div>
                             <div class="card-title w100 flow-text">Recuperação de Acesso</div>
                             <div class="input-field">
                                 <span>Vamos ajudá-lo a redefinir sua conta, primeiro digite seu CPF, caso tenha e-mail, digite também.
@@ -166,15 +169,15 @@
                             <div class="input-field right-align">                              
                                 <button id="cancelaEsqueciSenha" class="btn waves-effect waves-light red responsivo-w100">Cancelar</button>
                                 <button id="proximoRedefinirSenha" class="btn waves-effect waves-light responsivo-w100">Próximo</button>
-                            </div>
-                            <div class="progress">
-                                <div class="indeterminate"></div>
-                            </div>
+                            </div>                            
                         </section>
 
 
 
                         <section id="cardNovaSenha" class="esquerda" hidden>                     
+                            <div class="progress">
+                                <div class="indeterminate"></div>
+                            </div>
                             <div class="card-title w100 flow-text">Recuperação de Acesso</div>
                             <div class="input-field">              
                                 <input type="password" class="validate" name="novaSenha" id="novaSenha" required />
@@ -182,7 +185,8 @@
                             </div>
                             <div class="input-field">              
                                 <input type="password" class="validate" name="novaSenhaValidacao" id="novaSenhaValidacao" />
-                                <label for="novaSenhaValidacao" data-error="As senhas não conferem" data-success="">Digite novamente</label>
+                                <label for="novaSenhaValidacao">Digite novamente</label>
+                                <span class="helper-text" data-error="preencha o campo senha" data-success=""></span>                                
                             </div>
                             <div class="input-field">              
                                 <input type="text" class="validate" name="token" id="tokenValidaNovaSenha" />
@@ -190,9 +194,6 @@
                             </div>
                             <div class="input-field right-align">
                                 <button data-target="teste" class="btn waves-effect waves-light modal-trigger responsivo-w100">Gravar Alteração</button>
-                            </div>
-                            <div class="progress">
-                                <div class="indeterminate"></div>
                             </div>
                         </section>
 
@@ -225,15 +226,15 @@
                     <button id="fecha" class="btn modal-close modal-action red">Fechar</button>
                 </div>
             </div>
-            
-            
-            
+
+
+
             <div id="modalSessaoAberta" class="modal">
                 <div class="modal-content">
-                   <p>Identificamos que seu usuário está logado em outra estação de trabalho, deseja encerrar a sessão aberta e prosseguir com o login?</p>
+                    <p>Identificamos que seu usuário está logado em outra estação de trabalho, deseja encerrar a sessão aberta e prosseguir com o login?</p>
                 </div>
                 <div class="modal-footer">
-                    <a href="<?php echo BASE_URL;?>logout/closeSession" class="btn waves-effect">Sim</a>                  
+                    <a href="<?php echo BASE_URL; ?>logout/closeSession" class="btn waves-effect">Sim</a>                  
                     <button id="fecha" class="btn waves-effect modal-close modal-action red">Não</button>
                 </div>
             </div>
@@ -266,3 +267,12 @@
 
     </body>
 </html>
+
+<style>
+    #toast-container {
+        min-width: 10%;
+        top: 50%;
+        right: 50%;
+        transform: translateX(50%) translateY(50%);
+    }
+</style>

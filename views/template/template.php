@@ -74,13 +74,8 @@
         <script type="text/javascript" src="<?php echo BASE_URL; ?>assets/js/datatable.js"></script>
         <script type="text/javascript" src="<?php echo BASE_URL; ?>views/template/assets/js/jsTemplate.js"></script>
         <script type="text/javascript" src="<?php echo BASE_URL; ?>assets/jQuery-Mask-Plugin-master/dist/jquery.mask.js"></script>
-        
-        <div class="blue" id="teaaaaste"></div>
-
 
         <?php $this->loadViewInTemplate($viewName, $viewData); ?>
-        
-        <?php $classe = new Usuarios(); ?>
         
         <script>
         function carregaTema(id) {

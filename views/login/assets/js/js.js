@@ -19,41 +19,39 @@ $(document).ready(function () {
     var dados = "";
 
     $("#proximo").click(function () {
-
+        
+        if($("#usuarioLogin").val() == ""){
+            $("#usuarioLogin").addClass("invalid");
+            $(".helper-text").attr('data-error', 'Preencha este campo.');
+            return false;
+        }
+        
         $("#loadUsuario").removeAttr("hidden");
         $.ajax({
             url: 'http://10.11.194.42/ajaxLogin',
             type: 'POST',
             async: false,
-            data: {id_usuario: $("#usuario").val().replace(/[^0-9]/g, ''), tipo: 1},
+            data: {id_usuario: $("#usuarioLogin").val().replace(/[^0-9]/g, ''), tipo: 1},
             success: function (r) {
                 dados = r.split("|");
                 //alert(dados);
                 //return 0;
 
                 if (r == false) {
-                    $("#nLocalizado").removeAttr("hidden", "hidden");
+                    $("#usuarioLogin").addClass("invalid");
+                    $(".helper-text").attr('data-error', 'CPF não localizado.');
                     $("#loadUsuario").attr("hidden", "hidden");
-                    $("#inativo").attr("hidden", "hidden");
                     return false;
                 } else if (dados[1] == 0) {
-                    $("#inativo").removeAttr("hidden");
-                    $("#loadUsuario").attr("hidden", "hidden");
-                    $("#nLocalizado").attr("hidden", "hidden");
+                    $("#usuarioLogin").addClass("invalid");
+                    $(".helper-text").attr('data-error', 'CPF inativo.');
                     return false;
                 } else if (dados[3] == 'nok') {
                     $("#modalSessaoAberta").modal("open");
                     $("#loadUsuario").attr("hidden","hidden");
                     return false;
                 } else {
-                    $("#loadUsuario").attr("hidden", "hidden");
-                    $("#nLocalizado").attr("hidden", "hidden");
-                    $("#inativo").attr("hidden", "hidden");
                     $("#nomeUsuario").html(dados[0]);
-
-
-
-
                     $("#imagemUser").attr("src", dados[2]);
                     $("#cardUsuario").hide("slide", {direction: "left"}, 200, function () {
                         $("#cardSenha").show("slide", {direction: "right"}, 200);
@@ -66,18 +64,24 @@ $(document).ready(function () {
     // autentica a senha do usuario e loga na aplicação //
 
     $("#logar").click(function () {
-
+        
+        if($("#passwordLogin").val() == ""){
+            $("#passwordLogin").addClass("invalid");
+            $(".helper-text").attr('data-error', 'Preencha este campo.');
+            return false;
+        }
+        
+        
         $.ajax({
             url: 'http://10.11.194.42/ajaxLogin',
             type: 'POST',
             async: false,
-            data: {senha: $("#password").val(), tipo: 2, id_usuario: $("#usuario").val().replace(/[^0-9]/g, '')},
+            data: {senha: $("#passwordLogin").val(), tipo: 2, id_usuario: $("#usuarioLogin").val().replace(/[^0-9]/g, '')},
             success: function (r) {
-
                 if (r == 'senhaIncorreta') {
-                    $("#senhaInvalida").removeAttr("hidden");
+                        $("#passwordLogin").addClass("invalid");
+                        $(".helper-text").attr('data-error', 'Senha inválida.');
                 } else {
-                    $("#senhaInvalida").attr("hidden", "hidden");
                     window.location.href = r + 'home';
                 }
 
@@ -90,6 +94,7 @@ $(document).ready(function () {
     // Valida o Botão Voltar, utilizando o click function dessa maneira ele não irá chamar os dois slides no mesmo instante e sim a cada clique //
 
     $("#voltar").click(function () {
+        $("#loadUsuario").attr("hidden", "hidden");
         $("#cardSenha").hide("slide", {direction: "right"}, 200, function () {
             $("#cardUsuario").show("slide", {direction: "left"}, 200);
         });
