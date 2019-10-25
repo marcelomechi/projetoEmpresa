@@ -73,7 +73,7 @@
         <script src="<?php echo BASE_URL; ?>assets/js/Chart.min.js"></script>
         <script type="text/javascript" src="<?php echo BASE_URL; ?>assets/js/datatable.js"></script>
         <script type="text/javascript" src="<?php echo BASE_URL; ?>views/template/assets/js/jsTemplate.js"></script>
-        <script type="text/javascript" src="<?php echo BASE_URL; ?>assets/jQuery-Mask-Plugin-master/dist/jquery.mask.js"></script>
+        <script type="text/javascript" src="<?php echo BASE_URL; ?>assets/vendor/jQuery-Mask-Plugin-master/dist/jquery.mask.js"></script>
 
         <?php $this->loadViewInTemplate($viewName, $viewData); ?>
         

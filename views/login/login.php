@@ -248,7 +248,7 @@
             <script src="<?php echo BASE_URL; ?>assets/css/fontA/js/solid.js"></script>
             <script src="<?php echo BASE_URL; ?>assets/css/fontA/js/fontawesome.js"></script>
             <script src="<?php echo BASE_URL; ?>views/login/assets/js/js.js"></script>
-            <script type="text/javascript" src="<?php echo BASE_URL; ?>assets/jQuery-Mask-Plugin-master/dist/jquery.mask.js"></script>
+            <script type="text/javascript" src="<?php echo BASE_URL; ?>assets/vendor/jQuery-Mask-Plugin-master/dist/jquery.mask.js"></script>
 
             <script>
                 // valida campo somente numeros //

@@ -15,6 +15,8 @@
     --submenuBackground: #e0f2f1;
     --backgroundColorActiveLi:#b2dfdb;
     --modal: #FAFAFA;
+    --tabs: #e0e0e0;
+    --tabsFundoETexto:#80cbc4;
     
 }
 
@@ -33,6 +35,8 @@
     --submenuBackground: #424242;
     --backgroundColorActiveLi: #616161;
     --modal: #424242;
+    --tabs: #37474f;
+    --tabsFundoETexto:#00695c;
     
 }
 
@@ -207,6 +211,26 @@ label{
     background-color: #616161;
 }
 
+.tabs{
+    background-color: var(--tabs);
+    /*cor de fundo da ul do tab*/
+}
+
+.tabs .tab a:focus.active {
+    color: var(--font-color);
+    background-color: var(--tabsFundoETexto);
+     /*cor de fundo e de texto no hover do tab ativo*/
+}
+
+.tabs .tab a {
+    color: var(--font-color);
+     /*cor da fonte do tab*/
+}
+
+.tabs .tab a:hover, .tabs .tab a.active{
+    color: var(--font-color);
+    /* cor da fonte do tab */
+}
 
 @media (max-width: 600px) 
 {
