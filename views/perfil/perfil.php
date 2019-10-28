@@ -1,5 +1,5 @@
 <link rel="stylesheet" href="<?php echo BASE_URL; ?>views/perfil/assets/css/customPerfil.css">
-<div class="row h580 tool">
+<div class="row h580 tool scrollbar-inner">
     <div class="col s12 m12 l6">
         <div class="card h580">
             <div class="card-content">

@@ -13,7 +13,7 @@
 
 
     .tabs .tab a {
-       /* color: inherit; */
+        /* color: inherit; */
         /*estou herdando do sistema a cor da fonte*/
     }
     /*
@@ -23,14 +23,14 @@
     /*}*/
 
     .tabs .tab a:focus.active {
-       /* color:#26a69a;
-        background-color: #b2dfdb;*/
+        /* color:#26a69a;
+         background-color: #b2dfdb;*/
         /*cor de fundo e de texto no hover do tab ativo*/
-        
+
     }
 
     .tabs .tab a:hover, .tabs .tab a.active{
-       // color: #424242;
+        /* color: #424242;*/
         /* cor da fonte do tab */
     }
 
@@ -48,11 +48,11 @@
         font-size: 16px;
         color:#6A6A6A;
         font-weight: 500;
-
-
-
+        width: 300px;
+        margin-left: auto;
+        margin-right: auto;
     }
-    
+
 </style> 
 
 <div class="row">
@@ -73,20 +73,25 @@
                     <p class="center-align flow-text">Responsável por criar um Menu que irá agrupar novas ferramentas.</p> 
                     <div class="input-field">
                         <input id="nomeMenu" type="text" name="nomeMenu" class="validate" autocomplete="off" maxlength="96">
-                        <label for="nomeMenu">Nome do Menu</label>
+                        <label for="nomeMenu">Nome</label>
                         <span id="nomeMenuHelper" class="helper-text" data-error="" data-success=""></span>
                     </div>
                     <div class="input-field">
+                        <input id="linkMenu" type="text" name="linkMenu" class="validate" autocomplete="off" maxlength="512">
+                        <label for="linkMenu">Link</label>
+                        <span id="linkMenuHelper" class="helper-text" data-error="" data-success=""></span>
+                    </div>
+                    <div class="input-field">
                         <input id="descricaoMenu" type="text" name="descricaoMenu" class="validate" autocomplete="off" maxlength="256">
-                        <label for="descricaoMenu">Descrição do Menu</label>
-                         <span id="descricaoMenuHelper" class="helper-text" data-error="" data-success=""></span>
-                        
+                        <label for="descricaoMenu">Descrição</label>
+                        <span id="descricaoMenuHelper" class="helper-text" data-error="" data-success=""></span>
+
                     </div>
                     <div class="input-field">
                         <input id="ordemMenu" type="text" name="ordemMenu" class="validate" onkeypress="return SomenteNumero(event)" autocomplete="off">
                         <label for="ordemMenu">Ordenação</label>
-                         <span id="ordemMenuMenuHelper" class="helper-text" data-error="" data-success=""></span>
-                      
+                        <span id="ordemMenuMenuHelper" class="helper-text" data-error="" data-success=""></span>
+
                     </div>
                     <div class="file-field input-field">									  
                         <div class="btn waves-effect">
@@ -94,11 +99,11 @@
                             <input name="menuImg" type="file"  class="validate"><i class="fas fa-camera"></i>
                         </div>
                         <div class="file-path-wrapper">
-                            <input id="menuImg" class="file-path validate" type="text">
-                             <span id="menuImg" class="helper-text" data-error="" data-success=""></span>
-                         
+                            <input  class="file-path validate" type="text">
+                            <span  class="helper-text" data-error="" data-success=""></span>
+
                         </div>
-                        
+
                     </div>
                     <div class="input-field right-align">
                         <a id="gravaMenu" class="waves-effect waves-light btn">Gravar</a>
@@ -123,61 +128,99 @@
     <div id="test3" class="col s12"></div>
     <div id="test4" class="col s12"></div>
 </div>
-    <script>
-    function SomenteNumero(e){
-      
-    var tecla=(window.event)?event.keyCode:e.which;   
-    if((tecla>47 && tecla<58)) return true;
-    else{
-    	if (tecla==8 || tecla==0) return true;
-	else  
-	//alert ( "Este campo aceita apenas números.");
-	return false;
-    }
-}
-	
+<script>
+    function SomenteNumero(e) {
 
-        $(document).ready(function () {
-            $('.tabs').tabs();
-             $('.tooltipped').tooltip();
-          
-        
+        var tecla = (window.event) ? event.keyCode : e.which;
+        if ((tecla > 47 && tecla < 58))
+            return true;
+        else {
+            if (tecla == 8 || tecla == 0)
+                return true;
+            else
+                //alert ( "Este campo aceita apenas números.");
+                return false;
+        }
+    }
+
+
+    $(document).ready(function () {
+        $('.tabs').tabs();
+        $('.tooltipped').tooltip();
+
+
         $(".btn").change(function () {
             $("#imgMenu").attr('src', URL.createObjectURL(event.target.files[0]));
             var nome = $('input:file').val().split("\\").pop();
-            alert( nome );
         });
-       $("#nomeMenu").change(function () {
+        $("#nomeMenu").change(function () {
             $("#previewNomeMenu").html($("#nomeMenu").val());
-            
-       });
-       
-       $("#gravaMenu").click(function () {
-           if($("#nomeMenu").val() == ""){
-                 $("#nomeMenu").addClass("invalid");
-                 $(".helper-text").attr('data-error', 'Preencha este campo.');
-                 return false;
-           }else if($("#descricaoMenu").val() == ""){
-                 $("#descricaoMenu").addClass("invalid");
-                 $(".helper-text").attr('data-error', 'Preencha este campo.');
-                 return false;
-           }else if($("#ordemMenu").val() == ""){
-                 $("#ordemMenu").addClass("invalid");
-                 $(".helper-text").attr('data-error', 'Preencha este campo.');
-                 return false;
-           }else if($("#ordemMenu").val() == "0"){
-                 $("#ordemMenu").addClass("invalid");
-                 $(".helper-text").attr('data-error', 'Preencha um valor maior que 0');
-                 return false;
-           }else if($("#menuImg").val() == ""){
-                 $("#menuImg").addClass("invalid");
-                 $(".helper-text").attr('data-error', 'Preencha este campo.');
-                 return false;
-           }
-            
-       });
-       
 
-        
-});
-    </script>
+        });
+
+        $("#gravaMenu").click(function () {
+            if ($("#nomeMenu").val() == "") {
+                $("#nomeMenu").addClass("invalid");
+                $(".helper-text").attr('data-error', 'Preencha este campo.');
+                return false;
+            } else if ($("#linkMenu").val() == "") {
+                $("#linkMenu").addClass("invalid");
+                $(".helper-text").attr('data-error', 'Preencha este campo.');
+                return false;
+            } else if ($("#descricaoMenu").val() == "") {
+                $("#descricaoMenu").addClass("invalid");
+                $(".helper-text").attr('data-error', 'Preencha este campo.');
+                return false;
+            } else if ($("#ordemMenu").val() == "") {
+                $("#ordemMenu").addClass("invalid");
+                $(".helper-text").attr('data-error', 'Preencha este campo.');
+                return false;
+            } else if ($("#menuImg").val() == "") {
+                $("#menuImg").addClass("invalid");
+                $(".helper-text").attr('data-error', 'Preencha este campo.');
+                return false;
+            } else {
+
+                var dadosMenu = new FormData();
+
+                var arquivos = $('input[name=menuImg]')[0].files;
+
+
+                dadosMenu.append('icone', arquivos[0]);
+                dadosMenu.append('nomeMenu', $("#nomeMenu").val());
+                dadosMenu.append('linkMenu', $("#linkMenu").val());
+                dadosMenu.append('descricaoMenu', $("#descricaoMenu").val());
+                dadosMenu.append('ordem', $("#ordemMenu").val());
+
+                $.ajax({
+                    type: 'POST',
+                    url: 'http://10.11.194.42/ajaxModulo',
+                    data: dadosMenu,
+                    contentType: false,
+                    processData: false,
+                    success: function (r) {
+                        if (r == "success") {
+                            M.toast({html: 'Menu criado com sucesso!', classes: 'teal accent-4'});
+
+                            $("input").val("").removeClass("valid");
+                            $("#previewNomeMenu").html("");
+                            $("#imgMenu").removeAttr("src");
+
+                        } else {
+                            M.toast({html: 'Não foi possível criar o menu, verifique as informações preenchidas e o tipo de arquivo enviado.', classes: 'red lighten-2'});
+                            $("input").val("").removeClass("valid");
+                            $("#previewNomeMenu").html("");
+                            $("#imgMenu").removeAttr("src");
+                        }
+                    }
+                });
+
+
+            }
+
+        });
+
+
+
+    });
+</script>

@@ -16,7 +16,7 @@ public function index(){
     if($_POST['tipo'] == 1){
         
         Usuarios::verificaLogin();
-        
+       
         $idBackground = $_POST['backgroundMenu'];        
         
         if(isset($_FILES['foto']) && !empty($_FILES['foto'])){
