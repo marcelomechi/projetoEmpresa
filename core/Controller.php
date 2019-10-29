@@ -14,15 +14,20 @@
 
 	/* aqui puxa o template do site (tudo que é exibido em todas as páginas, no caso o menu) */
 
-	public function loadTemplate($viewName, $viewData = array()){
+	public function loadTemplate($viewName, $viewData = array(),$folder = NULL){
 		require 'views/template/template.php';
 	}
 
 	/* aqui ele vai carregar os dados do view no template que eu selecionei */
 
-	public function loadViewInTemplate($viewName, $viewData = array()){
-		extract($viewData); // o extract serve para extrair os dados do array e transformar em variáveis
-		require 'views/'.$viewName.'/'.$viewName.'.php';
+	public function loadViewInTemplate($viewName, $viewData = array(),$folder = NULL){
+            extract($viewData); // o extract serve para extrair os dados do array e transformar em variáveis
+                if(empty($folder) || !isset($folder)){
+                    require 'views/'.$viewName.'/'.$viewName.'.php';
+                }else{
+                    require 'views/'.$folder.'/'.$viewName.'.php';
+                }
+                
 	}
 
 

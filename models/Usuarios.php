@@ -113,7 +113,7 @@ class Usuarios extends Model {
             }
         } else {
             /*
-             * tipo 2 desloga na tela de login e derruba a sessao atual        * 
+             * tipo 2 desloga por inatividade      * 
              */
             $sql = "UPDATE TB_WFM_SESSAO SET ATIVO = 0 WHERE PIN = :PIN AND TOKEN = :TOKEN";
 
@@ -538,7 +538,7 @@ class Usuarios extends Model {
 
         $sql = "SELECT DISTINCT M.ID_MODULO,
                 M.ID_MODULO_REFERENCIA,
-                M.TITULO_WEB,
+                M.NOME_MODULO,
                 M.ID_WEB_MODULO,
                 M.CAMINHO_ICONE,
                 M.CAMINHO_LINK,
@@ -603,110 +603,110 @@ ORDER BY M.ORDENACAO;";
             foreach ($sql as $menuPrincipal):
                 if ($menuPrincipal['QTDESUB'] == 0 && $menuPrincipal['ID_MODULO_REFERENCIA'] == NULL):
                     if ($menuPrincipal['ID_MODULO'] == 1):
-                        echo '<li><a href="' . BASE_URL . $menuPrincipal['CAMINHO_LINK'] . '" class="collapsible-header"><i class="material icons"><img class="circle responsive-img iconeTemplate" src="' . BASE_URL . $menuPrincipal['CAMINHO_ICONE'] . '"></i>' . $menuPrincipal['TITULO_WEB'] . '</a></li>';
+                        echo '<li><a href="' . BASE_URL . $menuPrincipal['CAMINHO_LINK'] . '" class="collapsible-header"><i class="material icons"><img class="circle responsive-img iconeTemplate" src="' . BASE_URL . $menuPrincipal['CAMINHO_ICONE'] . '"></i>' . $menuPrincipal['NOME_MODULO'] . '</a></li>';
                         echo '<li><div class="divider"></div></li>';
                     else:
-                        echo '<li><a href="' . BASE_URL . $menuPrincipal['CAMINHO_LINK'] . '" class="collapsible-header"><i class="material icons"><img class="circle responsive-img iconeTemplate" src="' . BASE_URL . $menuPrincipal['CAMINHO_ICONE'] . '"></i>' . $menuPrincipal['TITULO_WEB'] . '</a></li>';
+                        echo '<li><a href="' . BASE_URL . $menuPrincipal['CAMINHO_LINK'] . '" class="collapsible-header"><i class="material icons"><img class="circle responsive-img iconeTemplate" src="' . BASE_URL . $menuPrincipal['CAMINHO_ICONE'] . '"></i>' . $menuPrincipal['NOME_MODULO'] . '</a></li>';
                     endif;
 
                 elseif ($menuPrincipal['QTDESUB'] > 0 && $menuPrincipal['ID_MODULO_REFERENCIA'] == NULL):
                     echo '<li>';
-                    echo '<a class="collapsible-header"><i class="material icons"><img class="circle responsive-img iconeTemplate" src="' . BASE_URL . $menuPrincipal['CAMINHO_ICONE'] . '"></i>' . $menuPrincipal['TITULO_WEB'] . '<i class="material icons small right"><i class="fas fa-angle-down"></i></i></a>';
+                    echo '<a class="collapsible-header"><i class="material icons"><img class="circle responsive-img iconeTemplate" src="' . BASE_URL . $menuPrincipal['CAMINHO_ICONE'] . '"></i>' . $menuPrincipal['NOME_MODULO'] . '<i class="material icons small right"><i class="fas fa-angle-down"></i></i></a>';
                     echo '<div class="collapsible-body">';
                     echo '<ul>';
                     foreach ($sql as $submenu):
                         if ($submenu['QTDESUB'] == 0 && $submenu['ID_MODULO_REFERENCIA'] != NULL && $submenu['ID_MODULO_REFERENCIA'] == $menuPrincipal['ID_MODULO']):
-                            echo '<li><a href="' . BASE_URL . $submenu['CAMINHO_LINK'] . '">' . $submenu['TITULO_WEB'] . '</a></li>';
+                            echo '<li><a href="' . BASE_URL . $submenu['CAMINHO_LINK'] . '">' . $submenu['NOME_MODULO'] . '</a></li>';
                         elseif ($submenu['QTDESUB'] > 0 && $submenu['ID_MODULO_REFERENCIA'] != NULL && $submenu['ID_MODULO_REFERENCIA'] == $menuPrincipal['ID_MODULO']):
                             echo '<ul class="collapsible">';
                             echo '<li>';
-                            echo '<a class="collapsible-header"><i class="material icons small right"><i class="fas fa-angle-down"></i></i>' . $submenu['TITULO_WEB'] . '</a>';
+                            echo '<a class="collapsible-header"><i class="material icons small right"><i class="fas fa-angle-down"></i></i>' . $submenu['NOME_MODULO'] . '</a>';
                             echo '<div class="collapsible-body">';
                             echo '<ul>';
                             foreach ($sql as $submenuNivel1):
                                 if ($submenuNivel1['QTDESUB'] == 0 && $submenuNivel1['ID_MODULO_REFERENCIA'] != NULL && $submenuNivel1['ID_MODULO_REFERENCIA'] == $submenu['ID_MODULO']):
-                                    echo '<li><a href="' . BASE_URL . $submenuNivel1['CAMINHO_LINK'] . '">' . $submenuNivel1['TITULO_WEB'] . '</a></li>';
+                                    echo '<li><a href="' . BASE_URL . $submenuNivel1['CAMINHO_LINK'] . '">' . $submenuNivel1['NOME_MODULO'] . '</a></li>';
                                 elseif ($submenuNivel1['QTDESUB'] > 0 && $submenuNivel1['ID_MODULO_REFERENCIA'] != NULL && $submenuNivel1['ID_MODULO_REFERENCIA'] == $submenu['ID_MODULO']):
                                     echo '<ul class="collapsible">';
                                     echo '<li>';
-                                    echo '<a class="collapsible-header"><i class="material icons small right"><i class="fas fa-angle-down"></i></i>' . $submenuNivel1['TITULO_WEB'] . '</a>';
+                                    echo '<a class="collapsible-header"><i class="material icons small right"><i class="fas fa-angle-down"></i></i>' . $submenuNivel1['NOME_MODULO'] . '</a>';
                                     echo '<div class="collapsible-body">';
                                     echo '<ul>';
                                     foreach ($sql as $submenuNivel2):
                                         if ($submenuNivel2['QTDESUB'] == 0 && $submenuNivel2['ID_MODULO_REFERENCIA'] != NULL && $submenuNivel2['ID_MODULO_REFERENCIA'] == $submenuNivel1['ID_MODULO']):
-                                            echo '<li><a href="' . BASE_URL . $submenuNivel2['CAMINHO_LINK'] . '">' . $submenuNivel2['TITULO_WEB'] . '</a></li>';
+                                            echo '<li><a href="' . BASE_URL . $submenuNivel2['CAMINHO_LINK'] . '">' . $submenuNivel2['NOME_MODULO'] . '</a></li>';
                                         elseif ($submenuNivel2['QTDESUB'] > 0 && $submenuNivel2['ID_MODULO_REFERENCIA'] != NULL && $submenuNivel2['ID_MODULO_REFERENCIA'] == $submenuNivel1['ID_MODULO']):
                                             echo '<ul class="collapsible">';
                                             echo '<li>';
-                                            echo '<a class="collapsible-header"><i class="material icons small right"><i class="fas fa-angle-down"></i></i>' . $submenuNivel2['TITULO_WEB'] . '</a>';
+                                            echo '<a class="collapsible-header"><i class="material icons small right"><i class="fas fa-angle-down"></i></i>' . $submenuNivel2['NOME_MODULO'] . '</a>';
                                             echo '<div class="collapsible-body">';
                                             echo '<ul>';
                                             foreach ($sql as $submenuNivel3):
                                                 if ($submenuNivel3['QTDESUB'] == 0 && $submenuNivel3['ID_MODULO_REFERENCIA'] != NULL && $submenuNivel3['ID_MODULO_REFERENCIA'] == $submenuNivel2['ID_MODULO']):
-                                                    echo '<li><a href="' . BASE_URL . $submenuNivel3['CAMINHO_LINK'] . '">' . $submenuNivel3['TITULO_WEB'] . '</a></li>';
+                                                    echo '<li><a href="' . BASE_URL . $submenuNivel3['CAMINHO_LINK'] . '">' . $submenuNivel3['NOME_MODULO'] . '</a></li>';
                                                 elseif ($submenuNivel3['QTDESUB'] > 0 && $submenuNivel3['ID_MODULO_REFERENCIA'] != NULL && $submenuNivel3['ID_MODULO_REFERENCIA'] == $submenuNivel2['ID_MODULO']):
                                                     echo '<ul class="collapsible">';
                                                     echo '<li>';
-                                                    echo '<a class="collapsible-header"><i class="material icons small right"><i class="fas fa-angle-down"></i></i>' . $submenuNivel3['TITULO_WEB'] . '</a>';
+                                                    echo '<a class="collapsible-header"><i class="material icons small right"><i class="fas fa-angle-down"></i></i>' . $submenuNivel3['NOME_MODULO'] . '</a>';
                                                     echo '<div class="collapsible-body">';
                                                     echo '<ul>';
                                                     foreach ($sql as $submenuNivel4):
                                                         if ($submenuNivel4['QTDESUB'] == 0 && $submenuNivel4['ID_MODULO_REFERENCIA'] != NULL && $submenuNivel4['ID_MODULO_REFERENCIA'] == $submenuNivel3['ID_MODULO']):
-                                                            echo '<li><a href="' . BASE_URL . $submenuNivel4['CAMINHO_LINK'] . '">' . $submenuNivel4['TITULO_WEB'] . '</a></li>';
+                                                            echo '<li><a href="' . BASE_URL . $submenuNivel4['CAMINHO_LINK'] . '">' . $submenuNivel4['NOME_MODULO'] . '</a></li>';
                                                         elseif ($submenuNivel4['QTDESUB'] > 0 && $submenuNivel4['ID_MODULO_REFERENCIA'] != NULL && $submenuNivel4['ID_MODULO_REFERENCIA'] == $submenuNivel3['ID_MODULO']):
                                                             echo '<ul class="collapsible">';
                                                             echo '<li>';
-                                                            echo '<a class="collapsible-header"><i class="material icons small right"><i class="fas fa-angle-down"></i></i>' . $submenuNivel4['TITULO_WEB'] . '</a>';
+                                                            echo '<a class="collapsible-header"><i class="material icons small right"><i class="fas fa-angle-down"></i></i>' . $submenuNivel4['NOME_MODULO'] . '</a>';
                                                             echo '<div class="collapsible-body">';
                                                             echo '<ul>';
                                                             foreach ($sql as $submenuNivel5):
                                                                 if ($submenuNivel5['QTDESUB'] == 0 && $submenuNivel5['ID_MODULO_REFERENCIA'] != NULL && $submenuNivel5['ID_MODULO_REFERENCIA'] == $submenuNivel4['ID_MODULO']):
-                                                                    echo '<li><a href="' . BASE_URL . $submenuNivel5['CAMINHO_LINK'] . '">' . $submenuNivel5['TITULO_WEB'] . '</a></li>';
+                                                                    echo '<li><a href="' . BASE_URL . $submenuNivel5['CAMINHO_LINK'] . '">' . $submenuNivel5['NOME_MODULO'] . '</a></li>';
                                                                 elseif ($submenuNivel5['QTDESUB'] > 0 && $submenuNivel5['ID_MODULO_REFERENCIA'] != NULL && $submenuNivel5['ID_MODULO_REFERENCIA'] == $submenuNivel4['ID_MODULO']):
                                                                     echo '<ul class="collapsible">';
                                                                     echo '<li>';
-                                                                    echo '<a class="collapsible-header"><i class="material icons small right"><i class="fas fa-angle-down"></i></i>' . $submenuNivel5['TITULO_WEB'] . '</a>';
+                                                                    echo '<a class="collapsible-header"><i class="material icons small right"><i class="fas fa-angle-down"></i></i>' . $submenuNivel5['NOME_MODULO'] . '</a>';
                                                                     echo '<div class="collapsible-body">';
                                                                     echo '<ul>';
                                                                     foreach ($sql as $submenuNivel6):
                                                                         if ($submenuNivel6['QTDESUB'] == 0 && $submenuNivel6['ID_MODULO_REFERENCIA'] != NULL && $submenuNivel6['ID_MODULO_REFERENCIA'] == $submenuNivel5['ID_MODULO']):
-                                                                            echo '<li><a href="' . BASE_URL . $submenuNivel6['CAMINHO_LINK'] . '">' . $submenuNivel6['TITULO_WEB'] . '</a></li>';
+                                                                            echo '<li><a href="' . BASE_URL . $submenuNivel6['CAMINHO_LINK'] . '">' . $submenuNivel6['NOME_MODULO'] . '</a></li>';
                                                                         elseif ($submenuNivel6['QTDESUB'] > 0 && $submenuNivel6['ID_MODULO_REFERENCIA'] != NULL && $submenuNivel6['ID_MODULO_REFERENCIA'] == $submenuNivel5['ID_MODULO']):
                                                                             echo '<ul class="collapsible">';
                                                                             echo '<li>';
-                                                                            echo '<a class="collapsible-header"><i class="material icons small right"><i class="fas fa-angle-down"></i></i>' . $submenuNivel6['TITULO_WEB'] . '</a>';
+                                                                            echo '<a class="collapsible-header"><i class="material icons small right"><i class="fas fa-angle-down"></i></i>' . $submenuNivel6['NOME_MODULO'] . '</a>';
                                                                             echo '<div class="collapsible-body">';
                                                                             echo '<ul>';
                                                                             foreach ($sql as $submenuNivel7):
                                                                                 if ($submenuNivel7['QTDESUB'] == 0 && $submenuNivel7['ID_MODULO_REFERENCIA'] != NULL && $submenuNivel7['ID_MODULO_REFERENCIA'] == $submenuNivel6['ID_MODULO']):
-                                                                                    echo '<li><a href="' . BASE_URL . $submenuNivel7['CAMINHO_LINK'] . '">' . $submenuNivel7['TITULO_WEB'] . '</a></li>';
+                                                                                    echo '<li><a href="' . BASE_URL . $submenuNivel7['CAMINHO_LINK'] . '">' . $submenuNivel7['NOME_MODULO'] . '</a></li>';
                                                                                 elseif ($submenuNivel7['QTDESUB'] > 0 && $submenuNivel7['ID_MODULO_REFERENCIA'] != NULL && $submenuNivel7['ID_MODULO_REFERENCIA'] == $submenuNivel6['ID_MODULO']):
                                                                                     echo '<ul class="collapsible">';
                                                                                     echo '<li>';
-                                                                                    echo '<a class="collapsible-header"><i class="material icons small right"><i class="fas fa-angle-down"></i></i>' . $submenuNivel7['TITULO_WEB'] . '</a>';
+                                                                                    echo '<a class="collapsible-header"><i class="material icons small right"><i class="fas fa-angle-down"></i></i>' . $submenuNivel7['NOME_MODULO'] . '</a>';
                                                                                     echo '<div class="collapsible-body">';
                                                                                     echo '<ul>';
                                                                                     foreach ($sql as $submenuNivel8):
                                                                                         if ($submenuNivel8['QTDESUB'] == 0 && $submenuNivel8['ID_MODULO_REFERENCIA'] != NULL && $submenuNivel8['ID_MODULO_REFERENCIA'] == $submenuNivel7['ID_MODULO']):
-                                                                                            echo '<li><a href="' . BASE_URL . $submenuNivel8['CAMINHO_LINK'] . '">' . $submenuNivel8['TITULO_WEB'] . '</a></li>';
+                                                                                            echo '<li><a href="' . BASE_URL . $submenuNivel8['CAMINHO_LINK'] . '">' . $submenuNivel8['NOME_MODULO'] . '</a></li>';
                                                                                         elseif ($submenuNivel8['QTDESUB'] > 0 && $submenuNivel8['ID_MODULO_REFERENCIA'] != NULL && $submenuNivel8['ID_MODULO_REFERENCIA'] == $submenuNivel7['ID_MODULO']):
                                                                                             echo '<ul class="collapsible">';
                                                                                             echo '<li>';
-                                                                                            echo '<a class="collapsible-header"><i class="material icons small right"><i class="fas fa-angle-down"></i></i>' . $submenuNivel8['TITULO_WEB'] . '</a>';
+                                                                                            echo '<a class="collapsible-header"><i class="material icons small right"><i class="fas fa-angle-down"></i></i>' . $submenuNivel8['NOME_MODULO'] . '</a>';
                                                                                             echo '<div class="collapsible-body">';
                                                                                             echo '<ul>';
                                                                                             foreach ($sql as $submenuNivel9):
                                                                                                 if ($submenuNivel9['QTDESUB'] == 0 && $submenuNivel9['ID_MODULO_REFERENCIA'] != NULL && $submenuNivel9['ID_MODULO_REFERENCIA'] == $submenuNivel8['ID_MODULO']):
-                                                                                                    echo '<li><a href="' . BASE_URL . $submenuNivel9['CAMINHO_LINK'] . '">' . $submenuNivel9['TITULO_WEB'] . '</a></li>';
+                                                                                                    echo '<li><a href="' . BASE_URL . $submenuNivel9['CAMINHO_LINK'] . '">' . $submenuNivel9['NOME_MODULO'] . '</a></li>';
                                                                                                 elseif ($submenuNivel9['QTDESUB'] > 0 && $submenuNivel9['ID_MODULO_REFERENCIA'] != NULL && $submenuNivel9['ID_MODULO_REFERENCIA'] == $submenuNivel8['ID_MODULO']):
                                                                                                     echo '<ul class="collapsible">';
                                                                                                     echo '<li>';
-                                                                                                    echo '<a class="collapsible-header"><i class="material icons small right"><i class="fas fa-angle-down"></i></i>' . $submenuNivel9['TITULO_WEB'] . '</a>';
+                                                                                                    echo '<a class="collapsible-header"><i class="material icons small right"><i class="fas fa-angle-down"></i></i>' . $submenuNivel9['NOME_MODULO'] . '</a>';
                                                                                                     echo '<div class="collapsible-body">';
                                                                                                     echo '<ul>';
                                                                                                     foreach ($sql as $submenuNivel10):
                                                                                                         if ($submenuNivel10['ID_MODULO_REFERENCIA'] == $submenuNivel9['ID_MODULO']):
-                                                                                                            echo '<li><a href="' . BASE_URL . $submenuNivel10['CAMINHO_LINK'] . '">' . $submenuNivel10['TITULO_WEB'] . '</a></li>';
+                                                                                                            echo '<li><a href="' . BASE_URL . $submenuNivel10['CAMINHO_LINK'] . '">' . $submenuNivel10['NOME_MODULO'] . '</a></li>';
                                                                                                         endif;
                                                                                                     endforeach;
                                                                                                     echo '</ul>';

@@ -232,6 +232,16 @@ label{
     /* cor da fonte do tab */
 }
 
+.tabs .tab.disabled a, .tabs .tab.disabled a:hover{
+    color: var(--font-color);
+}
+
+.tabs .tab a:focus.disabled {
+    color: var(--font-color);
+    background-color: var(--tabsFundoETexto);
+     /*cor de fundo e de texto no hover do tab ativo*/
+}
+
 @media (max-width: 600px) 
 {
 

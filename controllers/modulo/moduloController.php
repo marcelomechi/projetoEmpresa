@@ -8,8 +8,49 @@
 
 class ModuloController extends Controller{
     
+    public $nomeMenu;
+    public $descricao;
+    public $fotoMenu;
+    public $menuReferencia;
+    
+    
+    public function getNomeMenu() {
+        return $this->nomeMenu;
+    }
+
+    public function getDescricao() {
+        return $this->descricao;
+    }
+
+    public function getFotoMenu() {
+        return $this->fotoMenu;
+    }
+
+    public function getMenuReferencia() {
+        return $this->menuReferencia;
+    }
+
+    public function setNomeMenu($nomeMenu) {
+        $this->nomeMenu = $nomeMenu;
+    }
+
+    public function setDescricao($descricao) {
+        $this->descricao = $descricao;
+    }
+
+    public function setFotoMenu($fotoMenu) {
+        $this->fotoMenu = $fotoMenu;
+    }
+
+    public function setMenuReferencia($menuReferencia) {
+        $this->menuReferencia = $menuReferencia;
+    }
+
+        
+    
+    
     public function __construct() {
-            $idTool = 22;
+            $idTool = 2;
         
             $classe = new Usuarios(); 
             $classe -> deslogaPinInvalido($_SESSION['token']);                    
@@ -27,6 +68,21 @@ class ModuloController extends Controller{
         $dados = array();
         $_SESSION['relatorio'] = 'Módulos';
         $this -> loadTemplate('modulo',$dados);
+    }
+    
+    public function ordenar(){
+        
+        $this ->setNomeMenu($_POST['nomeMenu']);
+        $this ->setDescricao($_POST['descricaoMenu']);
+        $this ->setFotoMenu($_FILES['menuImg']);
+        //$this ->setMenuReferencia($_POST['nomeMenu']);
+        
+        
+
+        
+        $dados = array();
+        $_SESSION['relatorio'] = 'Módulos';
+        $this ->loadTemplate('ordenar',$dados,'modulo');
     }
     
 }

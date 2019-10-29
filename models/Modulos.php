@@ -11,7 +11,7 @@ class Modulos extends Model {
     public $ordemMenu;
     public $descricaoMenu;
     public $imagemMenu;
-    public $linkMenu;
+    public $menuReferencia;
 
     function getIdMenu() {
         return $this->idMenu;
@@ -33,8 +33,8 @@ class Modulos extends Model {
         return $this->imagemMenu;
     }
 
-    function getLinkMenu() {
-        return $this->linkMenu;
+    function getMenuReferencia() {
+        return $this->menuReferencia;
     }
 
     function setIdMenu($idMenu) {
@@ -57,8 +57,8 @@ class Modulos extends Model {
         $this->imagemMenu = $imagemMenu;
     }
 
-    function setLinkMenu($linkMenu) {
-        $this->linkMenu = $linkMenu;
+    function setMenuReferencia($menuReferencia) {
+        $this->menuReferencia = $menuReferencia;
     }
 
     public function criaNovoMenu() {
@@ -66,22 +66,20 @@ class Modulos extends Model {
         $envio = $this->enviaFoto();
 
         if ($envio != false) {
-            $sql = "INSERT INTO TB_WFM_MODULO (NOME_MODULO, ORDENACAO, TITULO_WEB, ID_WEB_MODULO, CAMINHO_ICONE, CAMINHO_LINK, DESCRICAO, CRIACAO, RESPONSAVEL, ATIVO) VALUES ( ";
-            $sql .= ":nomeModulo, :ordenacao, :nomeMenu, 'null', :caminhoIcone, :caminhoLink, :descricao, now(), :responsavel, 1) ";
+            $sql = "INSERT INTO TB_WFM_MODULO (NOME_MODULO, ORDENACAO, TITULO_WEB, CAMINHO_ICONE, DESCRICAO, CRIACAO, RESPONSAVEL, ATIVO) VALUES ( ";
+            $sql .= ":nomeModulo, :nomeMenu, :caminhoIcone, :descricao, now(), :responsavel, 1) ";
             $sql = $this->db->prepare($sql);
 
             $sql->bindValue(':nomeModulo', $this->getNomeMenu());
-            $sql->bindValue(':ordenacao', $this->getOrdemMenu());
             $sql->bindValue(':nomeMenu', $this->getNomeMenu());
             $sql->bindValue(':caminhoIcone', $envio[1]);
-            $sql->bindValue(':caminhoLink', $this->getLinkMenu());
             $sql->bindValue(':descricao', $this->getDescricaoMenu());
             $sql->bindValue(':responsavel', $_SESSION['PIN']);
 
             $sql->execute();
 
             if ($sql->rowCount() > 0) {
-                $this -> geraArquivos();
+                $this->geraArquivos();
                 return true;
             } else {
                 return false;
@@ -90,7 +88,61 @@ class Modulos extends Model {
             return false;
         }
     }
-    
+
+    public function criaNovoSubmenu() {
+        $sql = "INSERT INTO TB_WFM_MODULO (NOME_MODULO, ID_MODULO_REFERENCIA, ORDENACAO, DESCRICAO, CRIACAO, RESPONSAVEL, ATIVO )";
+        $sql .= "VALUES(:nomeModulo, :id_modulo_referencia, :descricao, now(), :responsavel, 1)";
+        $sql = $this->db->prepare($sql);
+
+        $sql->bindValue(':nomeModulo', $this->getNomeMenu());
+        $sql->bindValue(':id_modulo_referencia', $this->getMenuReferencia());
+        $sql->bindValue(':descricao', $this->getDescricaoMenu());
+        $sql->bindValue(':responsavel', $_SESSION['PIN']);
+
+        $sql->execute();
+
+        if ($sql->rowCount() > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function carregaHeaderMenu() {
+        $sql = "SELECT * FROM TB_WFM_MODULO WHERE CAMINHO_LINK IS NULL ";
+        $sql = $this->db->prepare($sql);
+        $sql->execute();
+        if ($sql->rowCount() > 0) {
+            $sql = $sql->fetchAll();
+            return $sql;
+        } else {
+            return false;
+        }
+    }
+
+    /* carrega lista de menus para ordenaçao */
+
+    public function carregaMenuOrdenacao() {
+        $sql = "SELECT SUB.ID_MODULO,
+                       SUB.NOME_MODULO
+                       FROM TB_WFM_MODULO SUB
+                       LEFT JOIN TB_WFM_MODULO BASE ON BASE.ID_MODULO_REFERENCIA = SUB.ID_MODULO
+                       WHERE SUB.ATIVO = 1
+                       AND SUB.CAMINHO_LINK IS NULL
+                       GROUP BY SUB.ID_MODULO ,
+                                SUB.NOME_MODULO";
+        
+        $sql = $this->db->prepare($sql);
+        $sql->execute();
+        if ($sql->rowCount() > 0) {
+            $sql = $sql->fetchAll();
+            return $sql;
+        } else {
+            return false;
+        }
+        
+    }
+
     /* estrutura para gerar os arquivos quando for criar uma ferramenta (dar a opção de usar ou não ajax para criar ou não um controller e ajax pra ele. */
 
     private function geraArquivos() {
@@ -120,8 +172,8 @@ class Modulos extends Model {
     private function criaPasta() {
         mkdir('controllers/' . $this->getLinkMenu(), 0755, true);
         mkdir('views/' . $this->getLinkMenu(), 0755, true);
-        mkdir('views/' . $this->getLinkMenu().'/'.'assets/js', 0755, true);
-        mkdir('views/' . $this->getLinkMenu().'/'.'assets/css', 0755, true);
+        mkdir('views/' . $this->getLinkMenu() . '/' . 'assets/js', 0755, true);
+        mkdir('views/' . $this->getLinkMenu() . '/' . 'assets/css', 0755, true);
         return true;
     }
 
