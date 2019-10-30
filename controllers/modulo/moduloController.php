@@ -70,17 +70,13 @@ class ModuloController extends Controller{
         $this -> loadTemplate('modulo',$dados);
     }
     
-    public function ordenar(){
+    public function ordenar($moduloReferencia = null){
         
-        $this ->setNomeMenu($_POST['nomeMenu']);
-        $this ->setDescricao($_POST['descricaoMenu']);
-        $this ->setFotoMenu($_FILES['menuImg']);
-        //$this ->setMenuReferencia($_POST['nomeMenu']);
+    
+        $dados = array(
+            'moduloReferencia' => $moduloReferencia
+        );
         
-        
-
-        
-        $dados = array();
         $_SESSION['relatorio'] = 'Módulos';
         $this ->loadTemplate('ordenar',$dados,'modulo');
     }

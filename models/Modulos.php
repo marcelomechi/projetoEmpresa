@@ -66,21 +66,32 @@ class Modulos extends Model {
         $envio = $this->enviaFoto();
 
         if ($envio != false) {
-            $sql = "INSERT INTO TB_WFM_MODULO (NOME_MODULO, ORDENACAO, TITULO_WEB, CAMINHO_ICONE, DESCRICAO, CRIACAO, RESPONSAVEL, ATIVO) VALUES ( ";
-            $sql .= ":nomeModulo, :nomeMenu, :caminhoIcone, :descricao, now(), :responsavel, 1) ";
-            $sql = $this->db->prepare($sql);
 
-            $sql->bindValue(':nomeModulo', $this->getNomeMenu());
-            $sql->bindValue(':nomeMenu', $this->getNomeMenu());
-            $sql->bindValue(':caminhoIcone', $envio[1]);
-            $sql->bindValue(':descricao', $this->getDescricaoMenu());
-            $sql->bindValue(':responsavel', $_SESSION['PIN']);
+            $sqlOrdem = "SELECT MAX(ORDENACAO) + 1 AS ORDEM FROM TB_WFM_MODULO WHERE ATIVO = 1 AND ID_MODULO_REFERENCIA IS NULL ";
+            $sqlOrdem = $this->db->prepare($sqlOrdem);
+            $sqlOrdem->execute();
+            if ($sqlOrdem->rowCount() > 0) {
+                $sqlOrdem = $sqlOrdem->fetch();
+                $ordem = $sqlOrdem['ORDEM'];
 
-            $sql->execute();
+                $sql = "INSERT INTO TB_WFM_MODULO (NOME_MODULO, ORDENACAO, CAMINHO_ICONE, DESCRICAO, CRIACAO, RESPONSAVEL, ATIVO) VALUES ( ";
+                $sql .= ":nomeModulo, :ordenacao, :caminhoIcone, :descricao, now(), :responsavel, 1) ";
+                $sql = $this->db->prepare($sql);
 
-            if ($sql->rowCount() > 0) {
-                $this->geraArquivos();
-                return true;
+                $sql->bindValue(':nomeModulo', $this->getNomeMenu());
+                $sql->bindValue(':ordenacao', $ordem);
+                $sql->bindValue(':caminhoIcone', $envio[1]);
+                $sql->bindValue(':descricao', $this->getDescricaoMenu());
+                $sql->bindValue(':responsavel', $_SESSION['PIN']);
+
+                $sql->execute();
+
+                if ($sql->rowCount() > 0) {
+                    //$this->geraArquivos();
+                    return true;
+                } else {
+                    return false;
+                }
             } else {
                 return false;
             }
@@ -90,19 +101,32 @@ class Modulos extends Model {
     }
 
     public function criaNovoSubmenu() {
-        $sql = "INSERT INTO TB_WFM_MODULO (NOME_MODULO, ID_MODULO_REFERENCIA, ORDENACAO, DESCRICAO, CRIACAO, RESPONSAVEL, ATIVO )";
-        $sql .= "VALUES(:nomeModulo, :id_modulo_referencia, :descricao, now(), :responsavel, 1)";
-        $sql = $this->db->prepare($sql);
+        $sqlOrdem = "SELECT MAX(ORDENACAO) + 1 AS ORDEM FROM TB_WFM_MODULO WHERE ATIVO = 1 AND ID_MODULO_REFERENCIA = :id_modulo_referencia ";
+        $sqlOrdem = $this->db->prepare($sqlOrdem);
+        $sqlOrdem->bindValue(':id_modulo_referencia', $this->getMenuReferencia());
+        
+        $sqlOrdem->execute();
+        if ($sqlOrdem->rowCount() > 0) {
+            $sqlOrdem = $sqlOrdem->fetch();
+            $ordem = $sqlOrdem['ORDEM'];
 
-        $sql->bindValue(':nomeModulo', $this->getNomeMenu());
-        $sql->bindValue(':id_modulo_referencia', $this->getMenuReferencia());
-        $sql->bindValue(':descricao', $this->getDescricaoMenu());
-        $sql->bindValue(':responsavel', $_SESSION['PIN']);
+            $sql = "INSERT INTO TB_WFM_MODULO (NOME_MODULO, ID_MODULO_REFERENCIA, ORDENACAO, DESCRICAO, CRIACAO, RESPONSAVEL, ATIVO )";
+            $sql .= "VALUES(:nomeModulo, :id_modulo_referencia, :ordenacao, :descricao, now(), :responsavel, 1)";
+            $sql = $this->db->prepare($sql);
 
-        $sql->execute();
+            $sql->bindValue(':nomeModulo', $this->getNomeMenu());
+            $sql->bindValue(':id_modulo_referencia', $this->getMenuReferencia());
+            $sql->bindValue(':ordenacao', $ordem);
+            $sql->bindValue(':descricao', $this->getDescricaoMenu());
+            $sql->bindValue(':responsavel', $_SESSION['PIN']);
 
-        if ($sql->rowCount() > 0) {
-            return true;
+            $sql->execute();
+
+            if ($sql->rowCount() > 0) {
+                return true;
+            } else {
+                return false;
+            }
         } else {
             return false;
         }
@@ -122,17 +146,26 @@ class Modulos extends Model {
 
     /* carrega lista de menus para ordenaçao */
 
-    public function carregaMenuOrdenacao() {
-        $sql = "SELECT SUB.ID_MODULO,
-                       SUB.NOME_MODULO
-                       FROM TB_WFM_MODULO SUB
-                       LEFT JOIN TB_WFM_MODULO BASE ON BASE.ID_MODULO_REFERENCIA = SUB.ID_MODULO
-                       WHERE SUB.ATIVO = 1
-                       AND SUB.CAMINHO_LINK IS NULL
-                       GROUP BY SUB.ID_MODULO ,
-                                SUB.NOME_MODULO";
+    public function carregaMenuOrdenacao($idModulo = null) {
         
-        $sql = $this->db->prepare($sql);
+          
+        if (isset($idModulo) && !empty($idModulo)) {
+            
+            $sql = "SELECT * FROM TB_WFM_MODULO
+                             WHERE ID_MODULO_REFERENCIA = :idModulo
+                             AND CAMINHO_LINK IS NULL
+                             AND ATIVO = 1
+                             ORDER BY ORDENACAO";
+
+            $sql = $this->db->prepare($sql);
+            $sql->bindValue(':idModulo', $idModulo);
+        } else {
+            $sql = "SELECT * FROM TB_WFM_MODULO
+                             WHERE CAMINHO_LINK IS NULL
+                             ORDER BY ORDENACAO";
+
+            $sql = $this->db->prepare($sql);
+        }
         $sql->execute();
         if ($sql->rowCount() > 0) {
             $sql = $sql->fetchAll();
@@ -140,7 +173,6 @@ class Modulos extends Model {
         } else {
             return false;
         }
-        
     }
 
     /* estrutura para gerar os arquivos quando for criar uma ferramenta (dar a opção de usar ou não ajax para criar ou não um controller e ajax pra ele. */

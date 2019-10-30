@@ -15,7 +15,7 @@ class AjaxModuloController extends Controller {
             $retorno = $classe->criaNovoMenu();
 
             if ($retorno == true) {
-                echo "success";
+                 echo "success".'|'.$classe->getMenuReferencia();
             } else {
                 echo "fail";
             }
@@ -34,10 +34,18 @@ class AjaxModuloController extends Controller {
         $retorno = $classe->criaNovoSubmenu();
 
         if ($retorno == true) {
-            echo "success";
+            echo "success".'|'.$classe->getMenuReferencia();
         } else {
             echo "fail";
         }
+    }
+    
+    public function gravaOrdenacao(){
+        
+       print_r($_POST);
+    
+        
+        
     }
 
 }

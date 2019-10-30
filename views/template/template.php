@@ -7,7 +7,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 
     <?php if($_SESSION['perfilTipo'] == 1): ?>
-        <meta http-equiv="refresh" content="30;url=<?php echo BASE_URL;?>logout" />
+        <meta http-equiv="refresh" content="60;url=<?php echo BASE_URL;?>logout" />
     <?php endif; ?>     
 
 
@@ -66,6 +66,7 @@
 
         <script src="<?php echo BASE_URL; ?>assets/js/jquery-3.4.1.js"></script>
         <script src="<?php echo BASE_URL; ?>assets/js/jquery-ui-1.12.1/jquery-ui.js"></script>
+        <script src="<?php echo BASE_URL; ?>assets/js/jquery.ui.touch-punch.min.js"></script>
         <script src="<?php echo BASE_URL; ?>assets/css/fontA/js/brands.js"></script>
         <script src="<?php echo BASE_URL; ?>assets/css/fontA/js/solid.js"></script>
         <script src="<?php echo BASE_URL; ?>assets/css/fontA/js/fontawesome.js"></script>

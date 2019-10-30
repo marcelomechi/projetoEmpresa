@@ -83,7 +83,7 @@
                 <div class="card-content">
                     <p class="center-align flow-text">Responsável por criar um Menu que irá agrupar novas ferramentas.</p> 
                    
-                    <form id="formDados" method="POST" enctype="multipart/form-data" action="<?php echo BASE_URL;?>modulo/ordenar">
+                   
                     <div class="input-field">
                         <input id="nomeMenu" type="text" name="nomeMenu" class="validate" autocomplete="off" maxlength="96">
                         <label for="nomeMenu">Nome</label>
@@ -104,7 +104,8 @@
                             </p>
                     </div>
                      <div class="input-field selectSubmenu hide">
-                        <select id="selectSubmenu">
+                        <select name="moduloReferencia" id="selectSubmenu">
+                            <option value="" selected>Selecione</option> 
                             <?php $classe = new Modulos();
                                 $dados = $classe -> carregaHeaderMenu();                                
                                 foreach ($dados as $item): 
@@ -120,7 +121,7 @@
                     <div class="file-field input-field fileMenu">									  
                         <div class="btn waves-effect">
                             <span>Ícone</span>
-                            <input type="file"><i class="fas fa-camera"></i>
+                            <input name="envioFoto" type="file"><i class="fas fa-camera"></i>
                         </div>
                         <div class="file-path-wrapper">
                             <input id="menuImg" class="file-path validate" type="text" class="validade">
@@ -129,11 +130,11 @@
                         </div>
                     </div>
                     <div class="input-field right-align">
-                       <!-- <a id="gravaMenu" class="waves-effect waves-light btn">Gravar</a> -->
-                       <a id="proximoOrdenar" class="waves-effect waves-light btn">Próximo</a>
+                       <a id="gravaMenu" class="waves-effect waves-light btn">Gravar</a>
+                       <a  id="proximoOrdenar" class="waves-effect waves-light btn">Próximo</a>
                       <!--  <a href="<?php echo BASE_URL;?>modulo/ordenar" id="proximoNovoMenu" class="waves-effect waves-light btn">Próximo</a>-->
                     </div>
-                    </form>
+                  
                 </div>
             </div>            
         </div>
@@ -181,11 +182,9 @@
            if($(this).prop('checked')){
                $(".fileMenu").addClass("hide");
                $(".selectSubmenu").removeClass("hide");
-               $(".selectSubmenu").attr("required");
            }else{
                $(".fileMenu").removeClass("hide");
                $(".selectSubmenu").addClass("hide");
-               $("#imgMenu").attr("required");
            }; 
         });
 
@@ -199,7 +198,7 @@
         });
         
         
-        $("#proximoOrdenar").click(function(){
+    /*    $("#proximoOrdenar").click(function(){
             
      if($(".ckMenu").prop('checked')){
              if ($("#nomeMenu").val() == "") {
@@ -239,10 +238,10 @@
             
         }
             
-        });
+        });*/
                       
 
-        $("#gravaMenu").click(function () {
+        $("#proximoOrdenar").click(function () {
         
         if($(".ckMenu").prop('checked')){
              if ($("#nomeMenu").val() == "") {
@@ -263,7 +262,9 @@
                     data: {nomeMenu: $("#nomeMenu").val(), descricaoMenu: $("#descricaoMenu").val(), menuReferencia: $("#selectSubmenu").val()},
                     async:false,
                     success: function (r) {
-                        if (r == "success") {
+                        dados = r.split("|");
+                        if (dados[0] == "success") {
+                            $("#proximoOrdenar").attr("href","<?php echo BASE_URL;?>modulo/ordenar/" + dados[1] == "" ? "<?php echo BASE_URL;?>modulo/ordenar" : "<?php echo BASE_URL;?>modulo/ordenar/" + dados[1]);
                             M.toast({html: 'Menu criado com sucesso!', classes: 'teal accent-4'});
                         } else {
                             M.toast({html: 'Não foi possível criar o menu, verifique as informações preenchidas e o tipo de arquivo enviado.', classes: 'red lighten-2'});
@@ -292,7 +293,7 @@
 
                 var dadosMenu = new FormData();
 
-                var arquivos = $('input[name=menuImg]')[0].files;
+                var arquivos = $('input[name=envioFoto]')[0].files;
 
 
                 dadosMenu.append('icone', arquivos[0]);
@@ -307,8 +308,12 @@
                     data: dadosMenu,
                     contentType: false,
                     processData: false,
-                    success: function (r) {
-                        if (r == "success") {
+                    async:false,
+                    success: function (r) {                        
+                    dados = r.split("|");
+                    
+                        if (dados[0] == "success") {
+                            $("#proximoOrdenar").attr("href","<?php echo BASE_URL;?>modulo/ordenar");
                             M.toast({html: 'Menu criado com sucesso!', classes: 'teal accent-4'});
 
                             $("input").val("").removeClass("valid");
