@@ -51,6 +51,10 @@
         margin-left: auto;
         margin-right: auto;
     }
+    
+    table tr{
+        cursor: pointer;
+    }
 
 </style> 
 
@@ -67,22 +71,12 @@
     </div>
 </div>
 <div class="row">
- <div class="col s12">
-        <ul class="tabs">
-            <li class="tab col s4 disabled"><a>Cadastrar</a></li>
-            <li class="tab col s4"><a class="active" id="ordenar">Ordenar</a></li>
-            <li class="tab col s4 disabled"><a id="finalizar">Permissões</a></li>
-        </ul>
-    </div>
-</div>
-
-<div class="row">
     <div id="novoMenu" class="col s12">
         <div  class="col s12">        
             <div class="card">
                 <div class="card-content">
                     <p class="center-align flow-text">Agora você precisa definir a ordem de exibição do menu, para isso arraste a opção destacada na ordem de sua preferência.</p> 
-                    <table id="sort" class="highlight">
+                    <table id="sort" class="highlight centered">
                         <thead>
                             <tr>
                                 <th class="hide">Id Modulo</th>
@@ -106,8 +100,7 @@
                         </tbody>
                     </table>
                 <div class="input-field right-align">
-                    <a id="proximoOrdenar" class="waves-effect waves-light btn red">Cancelar</a>
-                    <a id="gravaOrdenacao" class="waves-effect waves-light btn">Próximo</a>
+                    <a id="gravaOrdenacao" class="waves-effect waves-light btn">Gravar</a>
                 </div>
                     </div>
                    
@@ -132,21 +125,20 @@
         }
     }*/
 
-
     $(document).ready(function () {
         $('.tabs').tabs();
         $('.tooltipped').tooltip();
         $('select').formSelect();
         
         
-        var fixHelperModified = function(e, tr) {
+var fixHelperModified = function(e, tr) {
     var $originals = tr.children();
     var $helper = tr.clone();
     $helper.children().each(function(index) {
         $(this).width($originals.eq(index).width())
     });
     return $helper;
-},
+}
     updateIndex = function(e, ui) {
         $('td.index', ui.item.parent()).each(function (i) {
             $(this).html(i + 1);
@@ -158,11 +150,8 @@ $("#sort tbody").sortable({
     stop: updateIndex
 }).disableSelection();
 
-
-
-
 $("#gravaOrdenacao").click(function(){
-    var ordenacao = new Array();
+    var ordenacao = [];
     var table = $("table tbody");
 
     table.find('tr').each(function (i) {
@@ -173,14 +162,17 @@ $("#gravaOrdenacao").click(function(){
             nome = $tds.eq(3).text()
         
                ordenacao.push({idModulo: idModulo,
-                        ordemMenu: ordem});
+                               idModuloReferencia : referencia,
+                               ordemMenu: ordem});
     
             console.log(ordenacao);                
         /*alert('LINHA ' + (i + 1) + ':\ID: ' + idModulo
               + '\REFERENCIA: ' + referencia + '\ORDEM:' + ordenacao + '\NOME' + nome)*/
         
         
-    });
+   });
+   
+
     
      $.ajax({
                     type: 'POST',
@@ -188,7 +180,11 @@ $("#gravaOrdenacao").click(function(){
                     data:{ordenacao},
                     async:false,
                     success: function (r) {                        
-                    
+                        if(r == "success"){
+                            M.toast({html: 'Ordenação concluída.', classes: 'teal accent-4'});
+                        }else{
+                            M.toast({html: 'Não foi possível ordenar o menu.', classes: 'red lighten-2'});
+                        }
                                             
                     }
                 });

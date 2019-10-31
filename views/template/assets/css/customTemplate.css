@@ -17,7 +17,6 @@
     --modal: #FAFAFA;
     --tabs: #e0e0e0;
     --tabsFundoETexto:#80cbc4;
-    
 }
 
 [data-theme="dark"] {
@@ -37,7 +36,12 @@
     --modal: #424242;
     --tabs: #37474f;
     --tabsFundoETexto:#00695c;
+    --borderBotom: #bdbdbd;
     
+}
+
+.highlight tr{
+    border-bottom: 1px solid var(--borderBotom);
 }
 
 body{

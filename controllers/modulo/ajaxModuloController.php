@@ -15,7 +15,7 @@ class AjaxModuloController extends Controller {
             $retorno = $classe->criaNovoMenu();
 
             if ($retorno == true) {
-                 echo "success".'|'.$classe->getMenuReferencia();
+                 echo "success";
             } else {
                 echo "fail";
             }
@@ -34,18 +34,23 @@ class AjaxModuloController extends Controller {
         $retorno = $classe->criaNovoSubmenu();
 
         if ($retorno == true) {
-            echo "success".'|'.$classe->getMenuReferencia();
+            echo "success";
         } else {
             echo "fail";
         }
     }
     
     public function gravaOrdenacao(){
+        Usuarios::verificaLogin();
+        $classe = new Modulos();       
+       
+        $retorno = $classe ->updateOrdenacao($_POST['ordenacao']);
         
-       print_r($_POST);
-    
-        
-        
+        if($retorno == true){
+            echo "success";
+        }else{
+            echo "fail";
+        }
     }
 
 }

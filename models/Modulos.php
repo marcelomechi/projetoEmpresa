@@ -87,7 +87,6 @@ class Modulos extends Model {
                 $sql->execute();
 
                 if ($sql->rowCount() > 0) {
-                    //$this->geraArquivos();
                     return true;
                 } else {
                     return false;
@@ -101,10 +100,10 @@ class Modulos extends Model {
     }
 
     public function criaNovoSubmenu() {
-        $sqlOrdem = "SELECT MAX(ORDENACAO) + 1 AS ORDEM FROM TB_WFM_MODULO WHERE ATIVO = 1 AND ID_MODULO_REFERENCIA = :id_modulo_referencia ";
+        $sqlOrdem = "SELECT CASE WHEN MAX(ORDENACAO) + 1 IS NULL THEN 1 ELSE MAX(ORDENACAO) + 1 END ORDEM FROM TB_WFM_MODULO WHERE ATIVO = 1 AND ID_MODULO_REFERENCIA = :id_modulo_referencia ";
         $sqlOrdem = $this->db->prepare($sqlOrdem);
         $sqlOrdem->bindValue(':id_modulo_referencia', $this->getMenuReferencia());
-        
+
         $sqlOrdem->execute();
         if ($sqlOrdem->rowCount() > 0) {
             $sqlOrdem = $sqlOrdem->fetch();
@@ -147,10 +146,10 @@ class Modulos extends Model {
     /* carrega lista de menus para ordenaçao */
 
     public function carregaMenuOrdenacao($idModulo = null) {
-        
-          
+
+
         if (isset($idModulo) && !empty($idModulo)) {
-            
+
             $sql = "SELECT * FROM TB_WFM_MODULO
                              WHERE ID_MODULO_REFERENCIA = :idModulo
                              AND CAMINHO_LINK IS NULL
@@ -162,6 +161,7 @@ class Modulos extends Model {
         } else {
             $sql = "SELECT * FROM TB_WFM_MODULO
                              WHERE CAMINHO_LINK IS NULL
+                             AND ID_MODULO_REFERENCIA IS NULL
                              ORDER BY ORDENACAO";
 
             $sql = $this->db->prepare($sql);
@@ -170,6 +170,29 @@ class Modulos extends Model {
         if ($sql->rowCount() > 0) {
             $sql = $sql->fetchAll();
             return $sql;
+        } else {
+            return false;
+        }
+    }
+
+    public function updateOrdenacao($dados) {
+        foreach ($dados as $value) {
+            if (empty($dados['idModuloReferencia']) || !isset($dados['idModuloReferencia'])) {
+                $sql = "UPDATE TB_WFM_MODULO SET ORDENACAO = :ordem WHERE ID_MODULO = :idModulo";
+                $sql = $this->db->prepare($sql);
+                $sql->bindValue(':ordem', $value['ordemMenu']);
+                $sql->bindValue(':idModulo', $value['idModulo']);
+            } else {
+                $sql = "UPDATE TB_WFM_MODULO SET ORDENACAO = :ordem WHERE ID_MODULO_REFERENCIA = :idModuloReferencia AND ID_MODULO = :idModulo";
+                $sql = $this->db->prepare($sql);
+                $sql->bindValue(':ordem', $value['ordemMenu']);
+                $sql->bindValue(':idModuloReferencia', $value['idModuloReferencia']);
+                $sql->bindValue(':idModulo', $value['idModulo']);
+            }
+            $sql->execute();
+        }
+        if ($sql->rowCount() > 0) {
+            return true;
         } else {
             return false;
         }
@@ -214,7 +237,7 @@ class Modulos extends Model {
         $icone = $this->validaImagem();
         if ($icone != false) {
             $dadosImagem = explode("|", $icone);
-            move_uploaded_file($foto['tmp_name'], 'assets/images/' . $dadosImagem[0]);
+            move_uploaded_file($foto['tmp_name'], $dadosImagem[1]);
             return $dadosImagem;
         } else {
             return false;

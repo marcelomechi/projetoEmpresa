@@ -20,7 +20,7 @@
 
 	/* aqui ele vai carregar os dados do view no template que eu selecionei */
 
-	public function loadViewInTemplate($viewName, $viewData = array(),$folder = NULL){
+	public function loadViewInTemplate($viewName, $viewData = array(),$folder = NULL){ // coloquei o folder como parametro para casos de mais de uma view dentro de uma pasta
             extract($viewData); // o extract serve para extrair os dados do array e transformar em variáveis
                 if(empty($folder) || !isset($folder)){
                     require 'views/'.$viewName.'/'.$viewName.'.php';
