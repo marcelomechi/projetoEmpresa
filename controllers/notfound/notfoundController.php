@@ -3,8 +3,8 @@
 class NotFoundController extends Controller{
     
     public function __construct(){
-        $classe = new Usuarios(); 
-        $classe -> deslogaPinInvalido($_SESSION['token']);
+       /* $classe = new Validacoes(); 
+        $classe -> deslogaPinInvalido($_SESSION['token']);*/
     }
     
     

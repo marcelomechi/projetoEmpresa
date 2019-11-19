@@ -1,4 +1,20 @@
 <?php
+
+/* define o limitador de cache para 'private'
+session_cache_limiter('private');
+$cache_limiter = session_cache_limiter();
+ */
+/* define o prazo do cache em 1440 minutos (1hr) 
+session_cache_expire(1440);
+$cache_expire = session_cache_expire();
+*/
+/* inicia a sessão */
+
+
+/* SALVANDO EM UMA PASTA A PARTE O ARQUIVO DE SESSION E DEFININDO EM 8 HORAS O TEMPO DE EXPIRAR, FUNCIONANDO ATÉ O MOMENTO */
+session_save_path('teste');
+ini_set('session.gc_maxlifetime', '28800');
+
 session_start();
 
 require 'config.php';

@@ -51,31 +51,37 @@
         margin-left: auto;
         margin-right: auto;
     }
-    
+
     table tr{
         cursor: pointer;
     }
+
+
+    
 
 </style> 
 
 <div class="row">
     <div class="col s12">
         <ul class="tabs">
-            <li class="tab col s2"><a href="#novoMenu">Novo menu</a></li>
-            <li class="tab col s2 disabled"><a href="#test2">Nova Ferramenta</a></li>
+            <li class="tab col s2 disabled"><a href="#novoMenu">Novo menu</a></li>
+            <li class="tab col s2 disabled "><a href="#test2">Nova Ferramenta</a></li>
             <li class="tab col s2 disabled"><a href="#test3">Inativa Menu</a></li>
-            <li class="tab col s2 disabled"><a href="#test4">Inativa Ferramenta</a></li>
-            <li class="tab col s2 disabled"><a href="#test4">Ordenação</a></li>
-            <li class="tab col s2 disabled"><a href="#test4">Página de Manutenção</a></li>
+            <li class="tab col s2 disabled"><a href="#test55">Inativa Ferramenta</a></li>
+            <li class="tab col s2 active"><a href="#test4" class="active">Ordenação</a></li>
+            <li class="tab col s2 disabled"><a href="#test556">Página de Manutenção</a></li>
         </ul>
     </div>
 </div>
 <div class="row">
-    <div id="novoMenu" class="col s12">
+    <div id="test4" class="col s12">
+        <div class="input-field">
+            <a href="../modulo" class="waves-effect waves-light btn">Voltar</a>
+        </div>
         <div  class="col s12">        
             <div class="card">
                 <div class="card-content">
-                    <p class="center-align flow-text">Agora você precisa definir a ordem de exibição do menu, para isso arraste a opção destacada na ordem de sua preferência.</p> 
+                    <p class="center-align flow-text">Para definir a ordenação do menu, arraste a opção desejada na ordem de sua preferência, as demais serão ajustadas automaticamente.</p> 
                     <table id="sort" class="highlight centered">
                         <thead>
                             <tr>
@@ -86,112 +92,123 @@
                         </thead>
                         <tbody>
                             <?php
-                                $classe = new Modulos();
-                  
-                                $tabela = $classe -> carregaMenuOrdenacao($moduloReferencia);
-                    
-                                                     
+                            $classe = new Modulos();
+
+                            $tabela = $classe->carregaMenuOrdem($moduloReferencia);
+
+                            if (empty($tabela)):
+                                ?>
+
+                                <tr>
+                                    <td colspan="3">Não foram localizados Registros...</td>
+                                </tr>
+                            <?php
+                            else:
+
                                 foreach ($tabela as $item):
+                                    ?>
+                                    <tr>
+                                        <td class="hide"><?php echo $item['ID_MODULO']; ?></td><td class="hide"><?php echo $item['ID_MODULO_REFERENCIA']; ?></td><td class="index"><?php echo $item['ORDENACAO']; ?></td><td><?php echo $item['NOME_MODULO']; ?></td>                                                                
+                                    </tr>
+                                <?php
+                                endforeach;
+                            endif;
                             ?>
-                            <tr>
-                                <td class="hide"><?php echo $item['ID_MODULO']; ?></td><td class="hide"><?php echo $item['ID_MODULO_REFERENCIA']; ?></td><td class="index"><?php echo $item['ORDENACAO']; ?></td><td><?php echo $item['NOME_MODULO']; ?></td>                                                                
-                            </tr>
-                                <?php endforeach; ?>
                         </tbody>
                     </table>
-                <div class="input-field right-align">
-                    <a id="gravaOrdenacao" class="waves-effect waves-light btn">Gravar</a>
-                </div>
+                    <div class="input-field right-align">
+                        <a id="gravaOrdenacao" class="waves-effect waves-light btn">Gravar</a>
                     </div>
-                   
                 </div>
-            </div>            
-        </div>        
+
+            </div>
+        </div>            
+    </div>        
 </div>
 <script>
     /*function SomenteNumero(e) {
-        
-        // colocar dentro da tag  onkeypress="return SomenteNumero(event)"
-
-        var tecla = (window.event) ? event.keyCode : e.which;
-        if ((tecla > 47 && tecla < 58))
-            return true;
-        else {
-            if (tecla == 8 || tecla == 0)
-                return true;
-            else
-                //alert ( "Este campo aceita apenas números.");
-                return false;
-        }
-    }*/
+     
+     // colocar dentro da tag  onkeypress="return SomenteNumero(event)"
+     
+     var tecla = (window.event) ? event.keyCode : e.which;
+     if ((tecla > 47 && tecla < 58))
+     return true;
+     else {
+     if (tecla == 8 || tecla == 0)
+     return true;
+     else
+     //alert ( "Este campo aceita apenas números.");
+     return false;
+     }
+     }*/
 
     $(document).ready(function () {
         $('.tabs').tabs();
         $('.tooltipped').tooltip();
         $('select').formSelect();
-        
-        
-var fixHelperModified = function(e, tr) {
-    var $originals = tr.children();
-    var $helper = tr.clone();
-    $helper.children().each(function(index) {
-        $(this).width($originals.eq(index).width())
-    });
-    return $helper;
-}
-    updateIndex = function(e, ui) {
-        $('td.index', ui.item.parent()).each(function (i) {
-            $(this).html(i + 1);
-        });
-    };
 
-$("#sort tbody").sortable({
-    helper: fixHelperModified,
-    stop: updateIndex
-}).disableSelection();
 
-$("#gravaOrdenacao").click(function(){
-    var ordenacao = [];
-    var table = $("table tbody");
+        var fixHelperModified = function (e, tr) {
+            var $originals = tr.children();
+            var $helper = tr.clone();
+            $helper.children().each(function (index) {
+                $(this).width($originals.eq(index).width())
+            });
+            return $helper;
+        }
+        updateIndex = function (e, ui) {
+            $('td.index', ui.item.parent()).each(function (i) {
+                $(this).html(i + 1);
+            });
+        };
 
-    table.find('tr').each(function (i) {
-        var $tds = $(this).find('td'),
-            idModulo = $tds.eq(0).text(),
-            referencia = $tds.eq(1).text(),
-            ordem = $tds.eq(2).text(),
-            nome = $tds.eq(3).text()
-        
-               ordenacao.push({idModulo: idModulo,
-                               idModuloReferencia : referencia,
-                               ordemMenu: ordem});
-    
-            console.log(ordenacao);                
-        /*alert('LINHA ' + (i + 1) + ':\ID: ' + idModulo
-              + '\REFERENCIA: ' + referencia + '\ORDEM:' + ordenacao + '\NOME' + nome)*/
-        
-        
-   });
-   
+        $("#sort tbody").sortable({
+            helper: fixHelperModified,
+            stop: updateIndex
+        }).disableSelection();
 
-    
-     $.ajax({
-                    type: 'POST',
-                    url: 'http://10.11.194.42/ajaxModulo/gravaOrdenacao',
-                    data:{ordenacao},
-                    async:false,
-                    success: function (r) {                        
-                        if(r == "success"){
-                            M.toast({html: 'Ordenação concluída.', classes: 'teal accent-4'});
-                        }else{
-                            M.toast({html: 'Não foi possível ordenar o menu.', classes: 'red lighten-2'});
-                        }
-                                            
+        $("#gravaOrdenacao").click(function () {
+            var ordenacao = [];
+            var table = $("table tbody");
+
+            table.find('tr').each(function (i) {
+                var $tds = $(this).find('td'),
+                        idModulo = $tds.eq(0).text(),
+                        referencia = $tds.eq(1).text(),
+                        ordem = $tds.eq(2).text(),
+                        nome = $tds.eq(3).text()
+
+                ordenacao.push({idModulo: idModulo,
+                    idModuloReferencia: referencia,
+                    ordemMenu: ordem});
+
+                console.log(ordenacao);
+                /*alert('LINHA ' + (i + 1) + ':\ID: ' + idModulo
+                 + '\REFERENCIA: ' + referencia + '\ORDEM:' + ordenacao + '\NOME' + nome)*/
+
+
+            });
+
+
+
+            $.ajax({
+                type: 'POST',
+                url: 'http://10.11.194.42/ajaxModulo/gravaOrdenacao',
+                data: {ordenacao},
+                async: false,
+                success: function (r) {
+                    if (r == "success") {
+                        M.toast({html: 'Ordenação concluída.', classes: 'teal accent-4'});
+                    } else {
+                        M.toast({html: 'Não foi possível ordenar o menu.', classes: 'red lighten-2'});
                     }
-                });
-        
-        
 
-});
+                }
+            });
+
+
+
+        });
 
 
 

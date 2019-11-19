@@ -64,7 +64,7 @@ $(document).ready(function () {
     // autentica a senha do usuario e loga na aplicação //
 
     $("#logar").click(function () {
-        
+ 
         if($("#passwordLogin").val() == ""){
             $("#passwordLogin").addClass("invalid");
             $(".helper-text").attr('data-error', 'Preencha este campo.');
@@ -78,6 +78,7 @@ $(document).ready(function () {
             async: false,
             data: {senha: $("#passwordLogin").val(), tipo: 2, id_usuario: $("#usuarioLogin").val().replace(/[^0-9]/g, '')},
             success: function (r) {
+                           //return false;
                 if (r == 'senhaIncorreta') {
                         $("#passwordLogin").addClass("invalid");
                         $(".helper-text").attr('data-error', 'Senha inválida.');

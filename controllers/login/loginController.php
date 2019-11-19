@@ -14,17 +14,6 @@ class LoginController extends Controller{
 		$this -> loadView('login',$dados);
 	}
 
-	public function entrar(){
-		$usuario = new Usuarios();		
-		
-		$dados = array(
-		 'id_usuario' => $usuario -> getUsuario()
-		);
-
-		//$this -> loadView('login',$dados);
-	}
-
-	
 }
 
 

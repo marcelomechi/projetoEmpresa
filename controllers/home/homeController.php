@@ -4,20 +4,25 @@ class HomeController extends Controller {
 
     public function __construct() {
 
-        $classe = new Usuarios();
-        $classe->deslogaPinInvalido($_SESSION['token']);
-        $classe->updateSession($_SESSION['PIN']);
+        Validacoes::verificaLogin();
     }
 
     public function index() {
-        $classe = new Usuarios();
+        
+        if (!in_array(1, $_SESSION['perfil'])) {
+            $classe = new Modulos();
+            $retorno = $classe->verificaWorkforceManutencao();
+            if ($retorno == true) {
+                $this->loadView("503");
+                exit;
+            }
+        }
 
+
+
+        $classe = new Usuario();
         $_SESSION['relatorio'] = '';
-
-
         $dadosPessoais = $classe->getPreferencias($_SESSION['PIN']);
-
-
 
         $dados = array(
             'nome' => $dadosPessoais['apelido'],

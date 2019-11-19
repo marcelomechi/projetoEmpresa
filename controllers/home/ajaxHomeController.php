@@ -3,13 +3,14 @@
 class ajaxHomeController extends Controller {
     
         public function __construct() {
-            $classe = new Usuarios(); 
+            Validacoes::verificaLogin();
+            $classe = new Validacoes(); 
             $classe -> deslogaPinInvalido($_SESSION['token']);                    
             $classe -> updateSession($_SESSION['PIN']);
         }
     
     public function index(){
-        $classe = new Usuarios();  
+        $classe = new Usuario();  
         
         if(isset($_POST['CPF']) && isset($_POST['novaSenha']) && isset($_POST['novaSenhaConfirma']) && !empty($_POST['CPF']) && !empty($_POST['novaSenha']) && !empty($_POST['novaSenhaConfirma']) ){
         

@@ -4,18 +4,18 @@ class AjaxPerfilController extends Controller{
 
 
         public function __construct() {
-            $classe = new Usuarios(); 
-            $classe -> deslogaPinInvalido($_SESSION['token']);                    
+            $classe = new Validacoes(); 
+            $classe -> deslogaTokenInvalido($_SESSION['TOKEN']);                    
         }
     
 
 public function index(){
     
-    $usuarios = new Usuarios();  
+    $usuarios = new Usuario();  
       
     if($_POST['tipo'] == 1){
         
-        Usuarios::verificaLogin();
+        Validacoes::verificaLogin();
        
         $idBackground = $_POST['backgroundMenu'];        
         
@@ -42,7 +42,7 @@ public function index(){
 	}
         
     }elseif($_POST['tipo'] == 2){
-        Usuarios::verificaLogin();
+        Validacoes::verificaLogin();
         
         
         $dadosPessoais = array(
@@ -67,7 +67,7 @@ public function index(){
 		}
                 
     }elseif($_POST['tipo'] == 3){
-        Usuarios::verificaLogin();
+        Validacoes::verificaLogin();
        
         if(isset($_POST['tema'])){
             $gravaTema = $usuarios -> gravaTema($_POST['tema']);
@@ -83,7 +83,7 @@ public function index(){
             
         
     }elseif($_POST['tipo'] == 4){
-        Usuarios::verificaLogin();
+        Validacoes::verificaLogin();
         
         $alteraSenha = $usuarios -> gravaAlteracaoSenhaPerfil($_SESSION['PIN'], $_POST['senhaAntiga'], $_POST['novaSenha']);
         

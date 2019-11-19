@@ -21,7 +21,7 @@
                         </div>
                     </div>                    
                     <?php
-                    $usuarios = new Usuarios();
+                    $usuarios = new Usuario();
                     $carousel = $usuarios->carregaCarousel();
                     ?>
                 </div>

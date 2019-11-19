@@ -3,11 +3,10 @@
 class PerfilController extends Controller{
 
         public function __construct() {
-            $idTool = 1;
+            $idTool = 3;
             
-            $classe = new Usuarios(); 
-            $classe -> deslogaPinInvalido($_SESSION['token']);                    
-            $classe -> updateSession($_SESSION['PIN']);
+            $classe = new Validacoes(); 
+            $classe ->deslogaTokenInvalido($_SESSION['TOKEN']);                    
             
             $verificaPermissao = $classe -> verificaPermissao($idTool);
             if($verificaPermissao == false){
@@ -19,7 +18,7 @@ class PerfilController extends Controller{
 	public function index(){
 		$dados = array();
 		
-		$preferencias = new Usuarios();
+		$preferencias = new Usuario();
 		$dados = $preferencias -> getPreferencias($_SESSION['PIN']);
 
 		$_SESSION['relatorio'] = 'Perfil Pessoal';

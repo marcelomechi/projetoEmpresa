@@ -15,12 +15,16 @@ class AjaxLoginController extends Controller {
 
         /* verificar uma forma de comparar os dados recebidos do ajax com o que puxei do banco para saber se o login e a senha conferem. */
 
+        $usuario = new Autenticacao();
+        
         if ($_POST['tipo'] == 1) {
 
             if (isset($_POST['id_usuario']) && !empty($_POST['id_usuario'])) {
 
-                $usuario = new Usuarios();
-                $retorno = $usuario->dadosUsuario(addslashes($_POST['id_usuario']));
+                $cpf = addslashes($_POST['id_usuario']);
+                
+                $retorno = $usuario->dadosUsuario($cpf);
+                
 
                 if ($retorno == false) {
                     $dados = array(
@@ -32,8 +36,8 @@ class AjaxLoginController extends Controller {
                     $dados = array(
                         'pin' => $retorno['pin'],
                         'nome' => $retorno['nome'],
-                        'id_perfil_acesso' => $retorno['id_perfil_acesso'],
-                        'foto_perfil' => $retorno['foto_perfil'],
+                        'usuarioAtivo' => $retorno['usuarioAtivo'],
+                        'fotoPerfil' => $retorno['fotoPerfil'],
                         'tipo' => '1',
                         'loginUnico' => $retorno['loginUnico']
                     );
@@ -48,14 +52,20 @@ class AjaxLoginController extends Controller {
                 $login = addslashes($_POST['id_usuario']);
                 $senha = addslashes($_POST['senha']);
 
-                $usuario = new Usuarios();
                 $retorno = $usuario->login($login, $senha);
-
-                $dados = array(
+                
+                if($retorno == false){
+                    $dados = array(
+                        'logado' => 'senhaIncorreta'
+                    );
+                }else{
+                    $dados = array(
                     'logado' => $retorno['status']
-                );
-
-
+                    );
+                }
+                
+                
+                
                 $this->loadViewAjax('login', 'ajaxLogin', $dados);
             }
         }

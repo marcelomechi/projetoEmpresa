@@ -1,0 +1,1 @@
+<?php $motivoManutencao = "I8UIH IUHIU HIUH IOUH"; $horaPrevisaoRetorno = "07:46"; $dataPrevisaoRetorno = "18/11/2019" ?>

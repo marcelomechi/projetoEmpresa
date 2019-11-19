@@ -8,15 +8,26 @@
     --heading-color: #292922;
     --card: #eeeeee;
     --sidenav: #ffffff;
-    --sidenavHover: #b2dfdb;
+    --sidenavHover: #26a69a;
+    --sidenavHoverSub: #80cbc4;
     --sidenavI: #6A6A6A;
     --sidenavDivider: #e0e0e0;
     --label: #ADADAD;
     --submenuBackground: #e0f2f1;
-    --backgroundColorActiveLi:#b2dfdb;
+    --backgroundColorActiveLi:#26a69a;
     --modal: #FAFAFA;
     --tabs: #e0e0e0;
     --tabsFundoETexto:#80cbc4;
+    
+    --sortTrHover:#b2dfdb;
+    --sortTr: #e0e0e0;
+    --sortTh: #4db6ac;
+    --sortTrEven: #bdbdbd;   
+        
+    --datatableTabelaTh: #4db6ac;
+    --datatableTabelaTr: #e0e0e0;
+    --datatableTabelaTrEven: #bdbdbd;
+    --datatableTabelaTrHover:#b2dfdb;
 }
 
 [data-theme="dark"] {
@@ -28,21 +39,62 @@
     --card: #424242;
     --label: #bdbdbd;
     --sidenav: #212121;
-    --sidenavHover: #616161;
+    --sidenavHover: #424242;
+    --sidenavHoverSub:#757575;
     --sidenavI: #e1e1ff;
     --sidenavDivider: #616161;
-    --submenuBackground: #424242;
-    --backgroundColorActiveLi: #616161;
+    --submenuBackground: #363636;
+    --backgroundColorActiveLi: #424242;
     --modal: #424242;
     --tabs: #37474f;
     --tabsFundoETexto:#00695c;
     --borderBotom: #bdbdbd;
     
+    --sortTrHover:#b2dfdb;
+    --sortTr: #e0e0e0;
+    --sortTh: #009688;
+    --sortTrEven: #bdbdbd; 
+    
+    --datatableTabelaTh: #009688;
+    --datatableTabelaTr: #000000;
+    --datatableTabelaTrEven: #212121;
+    --datatableTabelaTrHover:#424242;
+    
+}
+
+/* tabela de ordenação arrasta e solta */
+
+#sort th{
+  background-color: var(--sortTh);
+} 
+
+#sort tr:hover{
+  background-color: var(--sortTrHover);
+}  
+
+#sort tr:nth-child(even) {
+  background-color: var(--sortTrEven);
+}
+
+#sort tr:nth-child(even):hover{
+    background-color: var(--sortTrHover);
+}
+
+/* datatable */
+
+.dataTable thead th{
+  background-color: var(--datatableTabelaTh);
+  
 }
 
 .highlight tr{
-    border-bottom: 1px solid var(--borderBotom);
+  border-bottom: 1px solid var(--borderBotom);
 }
+
+.dataTable tr:nth-child(even) {
+  background-color: var(--datatableTabelaTrEven);
+}
+
 
 body{
     background-color: var(--bg-color);
@@ -78,9 +130,6 @@ input{
 }
 
 /* Em teste, remover caso os submenus ativos não fiquem coloridos */
-.sidenav .collapsible-body li.active > a{
-    background-color: orange !important;
-}
 
 #sidebar ul li div ul a {
   background-color: var(--submenuBackground) !important;
@@ -88,6 +137,10 @@ input{
 
 #sidebar ul li div ul a:hover {
   background-color: var(--sidenavHover) !important;
+}
+
+#sidebar ul li div ul a:hover{
+    background-color: var(--sidenavHoverSub) !important;
 }
 
 .sidenav{

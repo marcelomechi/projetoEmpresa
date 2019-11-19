@@ -6,8 +6,8 @@
         <meta http-equiv="Content-Language" content="pt-br">
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 
-    <?php if($_SESSION['perfilTipo'] == 1): ?>
-        <meta http-equiv="refresh" content="60;url=<?php echo BASE_URL;?>logout" />
+    <?php if($_SESSION['perfilDeslogueAutomatico'] == 1): ?>
+     <!--   <meta http-equiv="refresh" content="10;url=<?php /*echo BASE_URL;*/?>logout" /> -->
     <?php endif; ?>     
 
 
@@ -39,7 +39,7 @@
                 </div>
             </nav>
         </div>
-        <div id="sidebar" class="sidenav">    
+        <div id="sidebar" class="sidenav" style="width: 340px !important;">    
             <div class="user-view">
                 <div class="background">
                     <?php if (!isset($_SESSION['foto_menu']) || empty($_SESSION['foto_menu'])): ?>  
@@ -55,7 +55,7 @@
             <ul class="collapsible">
                 <li class="hide-on-med-and-up"><a href="<?php echo BASE_URL . 'home'; ?>" class="collapsible-header"><i class="material-icons"><i class="fas fa-home"></i></i>Página Inicial</a></li>
                 <?php
-                $menu = new Usuarios();
+                $menu = new Usuario();
                 $item = $menu->menu();
                 ?>
                 <li class="hide-on-med-and-up"><div class="divider"></div></li>
@@ -77,6 +77,7 @@
         <script type="text/javascript" src="<?php echo BASE_URL; ?>views/template/assets/js/jsTemplate.js"></script>
         <script type="text/javascript" src="<?php echo BASE_URL; ?>assets/vendor/jQuery-Mask-Plugin-master/dist/jquery.mask.js"></script>
         <script src="<?php echo BASE_URL; ?>assets/vendor/jquery-sortablejs-master/Sortable.js"></script>
+	<script src="<?php echo BASE_URL; ?>assets/vendor/jquery-validation-1.19.1/dist/jquery.validate.js"></script>
  <?php $this->loadViewInTemplate($viewName, $viewData,$folder); ?>
         
         <script>
