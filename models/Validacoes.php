@@ -1,4 +1,5 @@
 <?php
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -17,16 +18,16 @@ class Validacoes extends Model {
          * tipo 1 desloga na tela de login e derruba a sessao atual        * 
          */
         if ($tipo == 1) {
-                         $sql = "UPDATE TB_WFM_SESSAO SET ATIVO = 0 WHERE PIN = :PIN ";
+            $sql = "UPDATE TB_WFM_SESSAO SET ATIVO = 0 WHERE PIN = :PIN ";
 
             $sql = $this->db->prepare($sql);
             $sql->bindValue(':PIN', $pin);
             $sql->execute();
 
             $linhasAfetadas = $sql->rowCount();
-       
+
             if ($linhasAfetadas > 0) {
-           
+
                 session_destroy();
                 return true;
             } else {
@@ -36,9 +37,9 @@ class Validacoes extends Model {
             /*
              * tipo 2 desloga a sessao atual utilizando com o token como parametro   * 
              */
-            
-           
-            
+
+
+
             $sql = "UPDATE TB_WFM_SESSAO SET ATIVO = 0 WHERE PIN = :PIN AND TOKEN = :TOKEN";
 
             $sql = $this->db->prepare($sql);
@@ -124,9 +125,6 @@ class Validacoes extends Model {
             session_destroy();
             exit;
         }
-        }
-
-
-
+    }
 
 }

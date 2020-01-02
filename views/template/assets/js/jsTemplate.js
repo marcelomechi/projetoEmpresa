@@ -27,7 +27,7 @@ $(document).ready(function(){
     // tema escuro //
     
     const currentTheme = localStorage.getItem('theme');
-        document.documentElement.setAttribute('data-theme', currentTheme);
+          //document.documentElement.setAttribute('data-theme', currentTheme);
 
 
 });

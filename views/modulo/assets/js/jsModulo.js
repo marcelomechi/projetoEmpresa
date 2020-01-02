@@ -1,29 +1,3 @@
-$('#tblMenus').DataTable({
-    columnDefs: [
-        {
-            targets: [0, 1, 2]
-
-        }
-    ],
-    "order": [[0, "asc"]]
-});
-
-$('#tblFerramenta').DataTable({
-    columnDefs: [
-        {
-            targets: [0, 1, 2]
-
-        }
-    ],
-    "order": [[0, "asc"]]
-});
-$('select').formSelect();
-
-
-
-
-
-
 $(document).ready(function () {
     $('.tabs').tabs();
     $('.tooltipped').tooltip();
@@ -187,7 +161,7 @@ $(document).ready(function () {
             } else {
                 $.ajax({
                     type: 'POST',
-                    url: 'http://10.11.194.42/ajaxModulo/submenu',
+                    url: '/ajaxModulo/submenu',
                     data: {nomeMenu: $("#nomeMenu").val(), descricaoMenu: $("#descricaoMenu").val(), menuReferencia: $("#selectSubmenu").val()},
                     async: false,
                     success: function (r) {
@@ -305,7 +279,7 @@ $(document).ready(function () {
         } else {
             $.ajax({
                 type: 'POST',
-                url: 'http://10.11.194.42/ajaxModulo/novaFerramenta',
+                url: '/ajaxModulo/novaFerramenta',
                 data: {nomeFerramenta: $("#nomeFerramenta").val(), linkFerramenta: $("#linkFerramenta").val(), descricaoFerramenta: $("#descricaoFerramenta").val(), moduloReferencia: $("#menuReferenciaFerramenta").val()},
                 async: false,
                 success: function (r) {
@@ -324,7 +298,7 @@ $(document).ready(function () {
 
     /* inativa menu */
 
-    $('#tblMenus tbody').on('click', '.inativaMenu', function () {
+    $(document).on('click', '.inativaMenu', function () {
         idMenu = $(this).parent().parent().find('.idMenu').html();
         tipoExclusao = $(this).parent().parent().find('.tipoMenu').html();
 
@@ -336,18 +310,15 @@ $(document).ready(function () {
 
         $.ajax({
             type: 'POST',
-            url: 'http://10.11.194.42/ajaxModulo/inativarMenu',
+            url: '/ajaxModulo/inativarMenu',
             data: {idMenu: idMenu, tipoExclusao: tipo},
             //  contentType: false,
             // processData: false,
             async: false,
             success: function (r) {
                 if (r == "success") {
-                    M.toast({html: 'Menu inativado com sucesso, a página será atualizada, aguarde.', classes: 'teal accent-4'});
-                    setTimeout(function () {
-                        window.location.reload();
-                    }, 4000);
-
+                    M.toast({html: 'Menu inativado com sucesso!', classes: 'teal accent-4'});
+                    carregaMenu();
                 } else {
                     M.toast({html: 'Não foi possível inativar o menu, tente novamente.', classes: 'red lighten-2'});
                 }
@@ -359,7 +330,7 @@ $(document).ready(function () {
 
     /* ativa menu */
 
-    $('#tblMenus tbody').on('click', '.ativaMenu', function () {
+    $(document).on('click', '.ativaMenu', function () {
         idMenu = $(this).parent().parent().find('.idMenu').html();
         tipoAtiva = $(this).parent().parent().find('.tipoMenu').html();
 
@@ -371,17 +342,15 @@ $(document).ready(function () {
 
         $.ajax({
             type: 'POST',
-            url: 'http://10.11.194.42/ajaxModulo/ativarMenu',
+            url: '/ajaxModulo/ativarMenu',
             data: {idMenu: idMenu, ativa: tipo},
             //  contentType: false,
             // processData: false,
             async: false,
             success: function (r) {
                 if (r == "success") {
-                    M.toast({html: 'Menu ativado com sucesso, a página será atualizada, aguarde.', classes: 'teal accent-4'});
-                    setTimeout(function () {
-                        window.location.reload();
-                    }, 4000);
+                    M.toast({html: 'Menu ativado com sucesso!.', classes: 'teal accent-4'});
+                    carregaMenu();
 
                 } else {
                     M.toast({html: 'Não foi possível ativar o menu, tente novamente.', classes: 'red lighten-2'});
@@ -394,22 +363,20 @@ $(document).ready(function () {
 
     /* inativa ferramenta */
 
-    $('#tblFerramenta tbody').on('click', '.removeFerramenta', function () {
+    $(document).on('click', '.removeFerramenta', function () {
         idFerramenta = $(this).parent().parent().find('.idFerramenta').html();
 
         $.ajax({
             type: 'POST',
-            url: 'http://10.11.194.42/ajaxModulo/inativarFerramenta',
+            url: '/ajaxModulo/inativarFerramenta',
             data: {idFerramenta: idFerramenta},
             //  contentType: false,
             // processData: false,
             async: false,
             success: function (r) {
                 if (r == "success") {
-                    M.toast({html: 'Ferramenta inativada com sucesso, a página será atualizada, aguarde.', classes: 'teal accent-4'});
-                    setTimeout(function () {
-                        window.location.reload();
-                    }, 4000);
+                    M.toast({html: 'Ferramenta inativada com sucesso!', classes: 'teal accent-4'});
+                    carregaFerramenta();
 
                 } else {
                     M.toast({html: 'Não foi possível inativar a ferramenta, tente novamente.', classes: 'red lighten-2'});
@@ -422,22 +389,20 @@ $(document).ready(function () {
 
     /* ativa ferramenta */
 
-    $('#tblFerramenta tbody').on('click', '.ativaFerramenta', function () {
+    $(document).on('click', '.ativaFerramenta', function () {
         idFerramenta = $(this).parent().parent().find('.idFerramenta').html();
 
         $.ajax({
             type: 'POST',
-            url: 'http://10.11.194.42/ajaxModulo/ativarFerramenta',
+            url: '/ajaxModulo/ativarFerramenta',
             data: {idFerramenta: idFerramenta},
             //  contentType: false,
             // processData: false,
             async: false,
             success: function (r) {
                 if (r == "success") {
-                    M.toast({html: 'Ferramenta ativada com sucesso, a página será atualizada, aguarde.', classes: 'teal accent-4'});
-                    setTimeout(function () {
-                        window.location.reload();
-                    }, 4000);
+                    M.toast({html: 'Ferramenta ativada com sucesso!', classes: 'teal accent-4'});
+                    carregaFerramenta();
 
                 } else {
                     M.toast({html: 'Não foi possível ativar a ferramenta, tente novamente.', classes: 'red lighten-2'});
@@ -465,7 +430,7 @@ $(document).ready(function () {
         } else {
             $.ajax({
                 type: 'POST',
-                url: 'http://10.11.194.42/ajaxModulo/inativarWfm',
+                url: '/ajaxModulo/inativarWfm',
                 data: {dataPrevisaoRetorno: $("#dataPrevisaoRetorno").val(), previsaoRetorno: $("#previsaoRetorno").val(), descricaoManutencao: $("#descricaoManutencao").val()},
                 //  contentType: false,
                 // processData: false,
@@ -487,7 +452,7 @@ $(document).ready(function () {
     $('#tblWfmInativa tbody').on('click', '.removeMensagem503', function () {
         $.ajax({
             type: 'POST',
-            url: 'http://10.11.194.42/ajaxModulo/removeMensagem503',
+            url: '/ajaxModulo/removeMensagem503',
             //  contentType: false,
             // processData: false,
             async: false,
@@ -505,6 +470,47 @@ $(document).ready(function () {
         });
 
     });
+
+    function carregaMenu() {
+
+        $.ajax({
+            type: 'POST',
+            url: '/ajaxModulo/carregaMenu',
+            async: false,
+            success: function (r) {
+                $("#tabelaMenus").html(r);
+            }
+        });
+
+    }
+
+
+    function carregaFerramenta() {
+
+        $.ajax({
+            type: 'POST',
+            url: '/ajaxModulo/carregaFerramenta',
+            async: false,
+            success: function (r) {
+                $("#tabelaContainerAtivaInativaFerramenta").html(r);
+            }
+        });
+
+    }
+    
+    
+    function carregaWfmInativo() {
+
+        $.ajax({
+            type: 'POST',
+            url: '/ajaxModulo/carragaWfmInativo',
+            async: false,
+            success: function (r) {
+                $("#tabelaManutencao").html(r);
+            }
+        });
+
+    }
 
 
     function limpaCampos(tipo) {

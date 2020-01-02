@@ -407,7 +407,7 @@ ORDER BY M.ORDENACAO;";
                         echo '<li style="float:left; width:100%;"><a href="' . BASE_URL . $menuPrincipal['CAMINHO_LINK'] . '" class="collapsible-header"><i class="material icons"><img class="circle responsive-img iconeTemplate" src="' . BASE_URL . $menuPrincipal['CAMINHO_ICONE'] . '"></i>' . $menuPrincipal['NOME_MODULO'] . '</a></li>';
                 elseif ($menuPrincipal['QTDESUB'] > 0 && $menuPrincipal['ID_MODULO_REFERENCIA'] == NULL):
                     echo '<li>';
-                    echo '<a class="collapsible-header"><i class="material icons"><img class="circle responsive-img iconeTemplate" src="' . BASE_URL . $menuPrincipal['CAMINHO_ICONE'] . '"></i>' . $menuPrincipal['NOME_MODULO'] . '<i class="material icons small right"><i class="fas fa-angle-down"></i></i></a>';
+                    echo '<a class="collapsible-header"><i class="material icons"><img class="circle responsive-img iconeTemplate" src="' . BASE_URL . $menuPrincipal['CAMINHO_ICONE'] . '"></i>' . $menuPrincipal['NOME_MODULO'] . '<i class="material icons small right" style="margin:0;padding:0;"><i class="fas fa-caret-down"></i></i></a>';
                     echo '<div class="collapsible-body">';
                     echo '<ul>';
                     foreach ($sql as $submenu):

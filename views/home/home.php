@@ -23,7 +23,6 @@
         </div>
     </div>
 
-<script src="<?php echo BASE_URL; ?>views/home/assets/js/jsHome.js"></script> <!-- tenho que psssar todo o caminho para não dar erro no JS -->
-
+    <script src="<?php echo BASE_URL; ?>views/home/assets/js/jsHome.js"></script> <!-- tenho que psssar todo o caminho para não dar erro no JS -->
 
 <?php endif; ?>

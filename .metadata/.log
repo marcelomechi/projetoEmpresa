@@ -1,0 +1,77 @@
+!SESSION 2019-11-21 10:03:57.525 -----------------------------------------------
+eclipse.buildId=4.13.0.I20190916-1045
+java.version=11.0.1
+java.vendor=Oracle Corporation
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=pt_BR
+Framework arguments:  -product org.eclipse.epp.package.php.product
+Command-line arguments:  -os win32 -ws win32 -arch x86_64 -product org.eclipse.epp.package.php.product
+
+!ENTRY org.eclipse.core.net 1 0 2019-11-21 10:04:18.916
+!MESSAGE System property http.proxyHost is not set but should be proxysp.call.br.
+
+!ENTRY org.eclipse.core.net 1 0 2019-11-21 10:04:18.921
+!MESSAGE System property http.proxyPort is not set but should be 8080.
+
+!ENTRY org.eclipse.core.net 1 0 2019-11-21 10:04:18.926
+!MESSAGE System property https.proxyHost is not set but should be proxysp.call.br.
+
+!ENTRY org.eclipse.core.net 1 0 2019-11-21 10:04:18.931
+!MESSAGE System property https.proxyPort is not set but should be 8080.
+
+!ENTRY org.eclipse.core.net 1 0 2019-11-21 10:04:18.941
+!MESSAGE System property socksProxyHost is not set but should be proxysp.call.br.
+
+!ENTRY org.eclipse.core.net 1 0 2019-11-21 10:04:18.946
+!MESSAGE System property socksProxyPort is not set but should be 8080.
+
+!ENTRY org.eclipse.core.net 1 0 2019-11-21 10:04:18.952
+!MESSAGE System property https.proxyHost is not set but should be proxysp.call.br.
+
+!ENTRY org.eclipse.core.net 1 0 2019-11-21 10:04:18.958
+!MESSAGE System property https.proxyPort is not set but should be 8080.
+
+!ENTRY org.eclipse.core.net 1 0 2019-11-21 10:04:18.964
+!MESSAGE System property socksProxyHost is not set but should be proxysp.call.br.
+
+!ENTRY org.eclipse.core.net 1 0 2019-11-21 10:04:18.969
+!MESSAGE System property socksProxyPort is not set but should be 8080.
+
+!ENTRY org.eclipse.core.net 1 0 2019-11-21 10:04:18.974
+!MESSAGE System property socksProxyHost is not set but should be proxysp.call.br.
+
+!ENTRY org.eclipse.core.net 1 0 2019-11-21 10:04:18.978
+!MESSAGE System property socksProxyPort is not set but should be 8080.
+
+!ENTRY org.eclipse.egit.ui 2 0 2019-11-21 10:04:42.013
+!MESSAGE Warning: The environment variable HOME is not set. The following directory will be used to store the Git
+user global configuration and to define the default location to store repositories: 'C:\Users\BR03206'. If this is
+not correct please set the HOME environment variable and restart Eclipse. Otherwise Git for Windows and
+EGit might behave differently since they see different configuration options.
+This warning can be switched off on the Team > Git > Confirmations and Warnings preference page.
+
+!ENTRY org.eclipse.oomph.setup.core 2 0 2019-11-21 10:05:19.041
+!MESSAGE C:\Users\BR03206\.eclipse\org.eclipse.oomph.setup\cache\http___www.eclipse.org_setups_setups.zip (O sistema não pode encontrar o caminho especificado)
+!STACK 0
+java.io.FileNotFoundException: C:\Users\BR03206\.eclipse\org.eclipse.oomph.setup\cache\http___www.eclipse.org_setups_setups.zip (O sistema não pode encontrar o caminho especificado)
+	at java.base/java.io.FileInputStream.open0(Native Method)
+	at java.base/java.io.FileInputStream.open(FileInputStream.java:219)
+	at java.base/java.io.FileInputStream.<init>(FileInputStream.java:157)
+	at org.eclipse.emf.ecore.resource.impl.FileURIHandlerImpl.createInputStream(FileURIHandlerImpl.java:99)
+	at org.eclipse.oomph.setup.internal.core.util.SetupCoreUtil$4.createInputStream(SetupCoreUtil.java:509)
+	at org.eclipse.emf.ecore.resource.impl.ExtensibleURIConverterImpl.createInputStream(ExtensibleURIConverterImpl.java:360)
+	at org.eclipse.oomph.setup.internal.core.util.ECFURIHandlerImpl$InputStreamConnectionHandler.handleCache(ECFURIHandlerImpl.java:1861)
+	at org.eclipse.oomph.setup.internal.core.util.ECFURIHandlerImpl$InputStreamConnectionHandler.handleCache(ECFURIHandlerImpl.java:1)
+	at org.eclipse.oomph.setup.internal.core.util.ECFURIHandlerImpl$ConnectionHandler.process(ECFURIHandlerImpl.java:1796)
+	at org.eclipse.oomph.setup.internal.core.util.ECFURIHandlerImpl.createInputStream(ECFURIHandlerImpl.java:319)
+	at org.eclipse.emf.ecore.resource.impl.ExtensibleURIConverterImpl.createInputStream(ExtensibleURIConverterImpl.java:360)
+	at org.eclipse.emf.ecore.resource.impl.ResourceImpl.load(ResourceImpl.java:1314)
+	at org.eclipse.oomph.setup.internal.core.util.SetupCoreUtil.handleArchiveRedirection(SetupCoreUtil.java:669)
+	at org.eclipse.oomph.setup.internal.core.util.SetupCoreUtil.configureResourceSet(SetupCoreUtil.java:471)
+	at org.eclipse.oomph.setup.internal.core.util.SetupCoreUtil.configureResourceSet(SetupCoreUtil.java:265)
+	at org.eclipse.oomph.setup.internal.core.util.SetupCoreUtil.createResourceSet(SetupCoreUtil.java:259)
+	at org.eclipse.oomph.setup.ui.recorder.RecorderManager.<clinit>(RecorderManager.java:120)
+	at org.eclipse.oomph.setup.ui.SetupUIPlugin.performStartup(SetupUIPlugin.java:204)
+	at org.eclipse.oomph.setup.ui.EarlyStartup.earlyStartup(EarlyStartup.java:22)
+	at org.eclipse.oomph.internal.ui.EarlyStart.run(EarlyStart.java:112)
+	at org.eclipse.oomph.internal.ui.EarlyStart$1.run(EarlyStart.java:91)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)

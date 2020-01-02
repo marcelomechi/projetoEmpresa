@@ -2,9 +2,13 @@
 
 class Controller {
 
-    public function loadView($viewName, $viewData = array()) {
+    public function loadView($viewName, $viewData = array(),$folder = NULL) {
         extract($viewData);
-        require 'views/' . $viewName . '/' . $viewName . '.php';
+        if (empty($folder) || !isset($folder)) {
+             require 'views/' . $viewName . '/' . $viewName . '.php';
+        }else{
+             require 'views/' . $folder . '/' . $viewName . '.php';
+        }
     }
 
     public function loadViewAjax($viewName, $viewAjax, $viewData = array()) {

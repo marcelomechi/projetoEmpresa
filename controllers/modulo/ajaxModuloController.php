@@ -136,6 +136,30 @@ class AjaxModuloController extends Controller {
         }
     }
 
+    public function carregaMenu() {
+        $classe = new Modulos();
+        $retorno = $classe->consultaMenus();
+
+        $dados = array(
+            'menu' => $retorno,
+            'tipo' => 1
+        );
+
+        $this->loadViewAjax('modulo', 'ajaxModulo', $dados);
+    }
+
+    public function carregaFerramenta() {
+        $classe = new Modulos();
+        $retorno = $classe->consultaFerramentas();
+
+        $dados = array(
+            'ferramenta' => $retorno,
+            'tipo' => 2
+        );
+
+        $this->loadViewAjax('modulo', 'ajaxModulo', $dados);
+    }
+
     public function ordenar() {
 
         $dados = array(
@@ -176,6 +200,19 @@ class AjaxModuloController extends Controller {
         } else {
             echo "fail";
         }
+    }
+
+    public function carragaWfmInativo() {
+        $classe = new Modulos();
+        $retorno = $classe->carregaInativaWfm();
+
+
+        $dados = array(
+            'tabelaFerramentaInativa' => $retorno,
+            'tipo' => 3
+        );
+                
+        $this->loadViewAjax('modulo', 'ajaxModulo', $dados);
     }
 
 }

@@ -81,7 +81,7 @@
 
 
 
-            <div  class="card-panel hoverables center-align">                 
+            <div class="card-panel hoverables center-align">                 
 
                 <div class="card-content card-size">          
 
@@ -102,14 +102,14 @@
                             </div> 
                             <div class="input-field">
                                 <input type="text" autocomplete="off" class="validate cpf" name="usuarioLogin" id="usuarioLogin"/>
-                                <label for="usuarioLogin">CPF</label>
+                                <label for="usuarioLogin">Usuário</label>
                                 <span id="loginHelper" class="helper-text" data-error="" data-success=""></span>
                             </div>                  
                             <div class="input-field">
                                 <button id="proximo" class="btn waves-effect waves-light w100">Próximo</button>
                             </div> 
                             <div class="input-field left-align">
-                                <a href="#">Acesso Convidado</a>
+                                <a href="<?php echo BASE_URL;?>login/registro">Acesso Convidado</a>
                             </div>                                            
                         </section>            
 
@@ -149,23 +149,26 @@
                         </section>
 
 
-                        <section id="cardEsqueciSenha" class="esquerda" hidden>                     
-                            <div class="progress">
-                                <div class="indeterminate"></div>
+                        <section id="cardEsqueciSenha" class="esquerda" hidden> 
+                            <div class="input-field" id="loadRecuperaAcesso" hidden>
+                                <div class="progress">
+                                    <div class="indeterminate"></div>
+                                </div>
                             </div>
                             <div class="card-title w100 flow-text">Recuperação de Acesso</div>
                             <div class="input-field">
-                                <span>Vamos ajudá-lo a redefinir sua conta, primeiro digite seu CPF, caso tenha e-mail, digite também.
-                                </span>
+                                <!--<span>Vamos ajudá-lo a redefinir sua conta, primeiro digite seu CPF, caso tenha e-mail, digite também.</span>-->
+                                <span>Vamos ajudá-lo a redefinir sua conta, primeiro digite seu CPF.</span>
                             </div>
                             <div class="input-field">              
-                                <input type="text" class="validate" name="cpf" id="cpf" required />
-                                <label for="cpf" data-error="Preencha o campo corretamente" data-success="">CPF</label>
+                                <input type="text" class="validate cpf" name="cpfResetSenha" id="cpfResetSenha" />
+                                <label for="cpfResetSenha" data-error="Preencha o campo corretamente" data-success="">CPF</label>
+                                <span class="helper-text" data-error="preencha o campo senha" data-success=""></span> 
                             </div>
-                            <div class="input-field">              
+                            <!--<div class="input-field">              
                                 <input type="email" class="validate" name="email" id="email" />
                                 <label for="email" data-error="Preencha o campo corretamente" data-success="">E-mail</label>
-                            </div>
+                            </div>-->
                             <div class="input-field right-align">                              
                                 <button id="cancelaEsqueciSenha" class="btn waves-effect waves-light red responsivo-w100">Cancelar</button>
                                 <button id="proximoRedefinirSenha" class="btn waves-effect waves-light responsivo-w100">Próximo</button>
@@ -175,35 +178,76 @@
 
 
                         <section id="cardNovaSenha" class="esquerda" hidden>                     
-                            <div class="progress">
-                                <div class="indeterminate"></div>
+                            <div class="input-field" id="loadEnviaDadosReset" hidden>
+                                <div class="progress">
+                                    <div class="indeterminate"></div>
+                                </div>
                             </div>
                             <div class="card-title w100 flow-text">Recuperação de Acesso</div>
+                            <div class="input-field">
+                                <span>Defina sua nova senha de acesso, não utlize dados pessoais, como data de nascimento ou número de documento.</span>
+                            </div>
                             <div class="input-field">              
                                 <input type="password" class="validate" name="novaSenha" id="novaSenha" required />
                                 <label for="novaSenha" data-error="Preencha o campo corretamente" data-success="">Digite sua nova senha</label>
+                                <span class="helper-text" data-error="preencha o campo senha" data-success=""></span> 
                             </div>
                             <div class="input-field">              
                                 <input type="password" class="validate" name="novaSenhaValidacao" id="novaSenhaValidacao" />
-                                <label for="novaSenhaValidacao">Digite novamente</label>
+                                <label for="novaSenhaValidacao">Confirme sua nova senha</label>
                                 <span class="helper-text" data-error="preencha o campo senha" data-success=""></span>                                
                             </div>
                             <div class="input-field">              
                                 <input type="text" class="validate" name="token" id="tokenValidaNovaSenha" />
                                 <label for="tokenValidaNovaSenha" data-error="Digite corretamente o código recebido" data-success="">Digite o token recebido</label>
+                                <span class="helper-text" data-error="preencha o campo senha" data-success=""></span>     
                             </div>
                             <div class="input-field right-align">
-                                <button data-target="teste" class="btn waves-effect waves-light modal-trigger responsivo-w100">Gravar Alteração</button>
+                                <button  id="gravaAlteracaoSenha" class="btn waves-effect waves-light modal-trigger responsivo-w100">Gravar Alteração</button>
                             </div>
                         </section>
 
-
+                    <!-- altera senha e cadastra Email -->
+                        <section id="cardAlteraSenhaInicial" class="esquerda" hidden>                     
+                            <div id="loadEnviaDadosAlteraSenhaInicial" hidden>
+                                <div class="progress">
+                                    <div class="indeterminate"></div>
+                                </div>
+                            </div>
+                            <div class="card-title w100 flow-text">Cadastro de Senha</div>
+                            <!--<div class="card-title w100 flow-text">Cadastramento de Senha</div>-->
+                            <p class="center-align">Olá, <span id="nomeUsuarioAlteraSenhaInicial"></span>, identificamos que é seu primeiro acesso, por gentileza cadastre sua senha e seu e-mail.</p>
+                            <div class="input-field">              
+                                <input type="password" class="validate" name="senhaInicialCadastro" id="senhaInicialCadastro" required />
+                                <label for="senhaInicialCadastro" data-error="Preencha o campo corretamente" data-success="">Cadastre sua senha</label>
+                                <span class="helper-text" data-error="preencha o campo corretamente" data-success=""></span> 
+                            </div>
+                            <div class="input-field">              
+                                <input type="password" class="validate" name="senhaInicialCadastroConfirma" id="senhaInicialCadastroConfirma" required />
+                                <label for="senhaInicialCadastroConfirma" data-error="Preencha o campo corretamente" data-success="">Confirme sua senha</label>
+                                <span class="helper-text" data-error="preencha o campo corretamente" data-success=""></span> 
+                            </div>
+                            <p class="left-align">
+                                <label>
+                                    <input type="checkbox" id="ckEmail" class="filled-in" />
+                                    <span>Deseja Cadastrar Seu Email?</span>
+                                </label>
+                             </p>
+                            <div class="input-field">              
+                                <input disabled type="email" class="validate" name="emailCadastroInicial" id="emailCadastroInicial" />
+                                <label for="emailCadastroInicial" data-error="Preencha o campo corretamente" data-success="">Digite seu e-mail</label>
+                                <span class="helper-text" data-error="preencha o campo corretamente" data-success=""></span> 
+                            </div>                            
+                            <div class="input-field right-align">
+                                <button  id="gravaCadastroInicial" class="btn waves-effect waves-light responsivo-w100">Gravar</button>
+                            </div>
+                        </section>
                     </div>
+
                 </div>
-
             </div>
-
-            <div class="modal bottom-sheet" id="teste">
+        </div>
+          <!--  <div class="modal bottom-sheet" id="modalSenhaAlteradaSucesso">
                 <div class="modal-content center-align">
                     <h4>Sua Solicitação foi concluída</h4>
                     <p>
@@ -226,7 +270,7 @@
                     <button id="fecha" class="btn modal-close modal-action red">Fechar</button>
                 </div>
             </div>
-
+        -->
 
 
             <div id="modalSessaoAberta" class="modal">

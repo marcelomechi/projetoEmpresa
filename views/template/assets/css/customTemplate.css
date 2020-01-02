@@ -18,12 +18,12 @@
     --modal: #FAFAFA;
     --tabs: #e0e0e0;
     --tabsFundoETexto:#80cbc4;
-    
+
     --sortTrHover:#b2dfdb;
     --sortTr: #e0e0e0;
     --sortTh: #4db6ac;
     --sortTrEven: #bdbdbd;   
-        
+
     --datatableTabelaTh: #4db6ac;
     --datatableTabelaTr: #e0e0e0;
     --datatableTabelaTrEven: #bdbdbd;
@@ -49,31 +49,31 @@
     --tabs: #37474f;
     --tabsFundoETexto:#00695c;
     --borderBotom: #bdbdbd;
-    
+
     --sortTrHover:#b2dfdb;
     --sortTr: #e0e0e0;
     --sortTh: #009688;
     --sortTrEven: #bdbdbd; 
-    
+
     --datatableTabelaTh: #009688;
     --datatableTabelaTr: #000000;
     --datatableTabelaTrEven: #212121;
     --datatableTabelaTrHover:#424242;
-    
+
 }
 
 /* tabela de ordenação arrasta e solta */
 
 #sort th{
-  background-color: var(--sortTh);
+    background-color: var(--sortTh);
 } 
 
 #sort tr:hover{
-  background-color: var(--sortTrHover);
+    background-color: var(--sortTrHover);
 }  
 
 #sort tr:nth-child(even) {
-  background-color: var(--sortTrEven);
+    background-color: var(--sortTrEven);
 }
 
 #sort tr:nth-child(even):hover{
@@ -83,16 +83,16 @@
 /* datatable */
 
 .dataTable thead th{
-  background-color: var(--datatableTabelaTh);
-  
+    background-color: var(--datatableTabelaTh);
+
 }
 
 .highlight tr{
-  border-bottom: 1px solid var(--borderBotom);
+    border-bottom: 1px solid var(--borderBotom);
 }
 
 .dataTable tr:nth-child(even) {
-  background-color: var(--datatableTabelaTrEven);
+    background-color: var(--datatableTabelaTrEven);
 }
 
 
@@ -100,7 +100,7 @@ body{
     background-color: var(--bg-color);
     color: var(--font-color);
 }
-  
+
 .card{
     background-color: var(--card);
 }
@@ -110,8 +110,8 @@ body{
 }
 
 .modal{
-  background-color: var(--modal);  
-  color: var(--font-color);
+    background-color: var(--modal);  
+    color: var(--font-color);
 }
 
 .modal .modal-footer{
@@ -129,14 +129,15 @@ input{
     user-select: none;
 }
 
+
 /* Em teste, remover caso os submenus ativos não fiquem coloridos */
 
 #sidebar ul li div ul a {
-  background-color: var(--submenuBackground) !important;
+    background-color: var(--submenuBackground) !important;
 }
 
 #sidebar ul li div ul a:hover {
-  background-color: var(--sidenavHover) !important;
+    background-color: var(--sidenavHover) !important;
 }
 
 #sidebar ul li div ul a:hover{
@@ -145,6 +146,12 @@ input{
 
 .sidenav{
     background-color: var(--sidenav);
+}
+
+.sidenav li {
+    float: none;
+    line-height: 48px;
+    clear: both;
 }
 
 .sidenav .collapsible-header{
@@ -196,35 +203,35 @@ label{
 
 /* scroll */
 ::-webkit-scrollbar {
-  width: 10px;
+    width: 10px;
 }
 
 /* Track */
 ::-webkit-scrollbar-track {
-  background: #f1f1f1; 
+    background: #f1f1f1; 
 }
- 
+
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: #888; 
+    background: #888; 
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: #555; 
+    background: #555; 
 }
 
 
 
 
 .iconeTemplate{
-  height: 20px;
+    height: 20px;
 }
 
 .backgroundImgMenu{
-	background-repeat: no-repeat;		
-	background-size: cover;
-	-webkit-background-size: cover;
+    background-repeat: no-repeat;		
+    background-size: cover;
+    -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
@@ -234,23 +241,23 @@ label{
 
 
 .h110Template{
-  height: 110px !important;
-  width: 110px !important;
+    height: 110px !important;
+    width: 110px !important;
 }
 
 .h10Template{
-  height: 30px !important;
+    height: 30px !important;
 }
 
 .fotoUsuarioMenu{
-  /*background-color: #ddd;
-  border-radius: 100%;*/
-  height: 30px !important;
-  width: 30px !important;
-  margin: 0;
-  vertical-align: middle;
-  box-sizing: border-box;
- 
+    /*background-color: #ddd;
+    border-radius: 100%;*/
+    height: 30px !important;
+    width: 30px !important;
+    margin: 0;
+    vertical-align: middle;
+    box-sizing: border-box;
+
 }
 
 
@@ -261,7 +268,7 @@ label{
 
 
 .menuHoverTemplate{
-  cursor: pointer;
+    cursor: pointer;
 }
 
 .material-tooltip{
@@ -276,12 +283,12 @@ label{
 .tabs .tab a:focus.active {
     color: var(--font-color);
     background-color: var(--tabsFundoETexto);
-     /*cor de fundo e de texto no hover do tab ativo*/
+    /*cor de fundo e de texto no hover do tab ativo*/
 }
 
 .tabs .tab a {
     color: var(--font-color);
-     /*cor da fonte do tab*/
+    /*cor da fonte do tab*/
 }
 
 .tabs .tab a:hover, .tabs .tab a.active{
@@ -296,18 +303,28 @@ label{
 .tabs .tab a:focus.disabled {
     color: var(--font-color);
     background-color: var(--tabsFundoETexto);
-     /*cor de fundo e de texto no hover do tab ativo*/
+    /*cor de fundo e de texto no hover do tab ativo*/
 }
+
+.dropdown-content, .select-dropdown, .multiple-select-dropdown{
+
+    /* cor da ul*/
+}
+
+.select-dropdown.dropdown-content li.selected{
+    /* cor do selecionado */
+}
+
 
 @media (max-width: 600px) 
 {
 
-.tituloMenu{
-	font-size: 25px !important;
-}
+    .tituloMenu{
+        font-size: 25px !important;
+    }
 
-  #dadosPessoais{
-    display: none;
-  }
+    #dadosPessoais{
+        display: none;
+    }
 
 }

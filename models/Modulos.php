@@ -279,20 +279,19 @@ class Modulos extends Model {
         }
     }
 
-    
     /* DEPOIS INCLUIR NA CRIAÇÃO DE FERRAMENTAS, ASSIM JÁ LIBERA ACESSO AO PERFIL ADM NA CRIAÇÃO */
+
     private function liberaPerfilAdm($id) {
         $sql = "INSERT INTO TB_WFM_MODULO_ACESSO_PERFIL VALUES (:id, 1 ) ";
         $sql = $this->db->prepare($sql);
         $sql->bindValue(':id', $id);
-        $sql -> execute();
-        
-        if($sql -> rowCount > 0 ){
+        $sql->execute();
+
+        if ($sql->rowCount > 0) {
             return true;
-        }else{
+        } else {
             return false;
         }
-        
     }
 
     /* logs */
@@ -616,7 +615,7 @@ class Modulos extends Model {
     }
 
     public function carregaInativaWfm() {
-        $sql = "select * from TB_WFM_MODULO where ID_MODULO = 0 and ATIVO = 0 AND ID_MODULO NOT IN (0) ";
+        $sql = "select * from TB_WFM_MODULO where ID_MODULO = 0 and ATIVO = 0 AND ID_MODULO IN (0) ";
         $sql = $this->db->prepare($sql);
 
         $sql->execute();
@@ -687,12 +686,24 @@ class Modulos extends Model {
     }
 
     public function verificaWorkforceManutencao() {
-        $sql = "SELECT * FROM TB_WFM_MODULO WHERE ID_MODULO = 0 AND ATIVO = 0 ";
-        $sql = $this->db->prepare($sql);
-        $sql->execute();
+        $verificaAcesso = "SELECT MIN(ID_PERFIL) MENOR_ACESSO FROM TB_WFM_USUARIO_PERFIL WHERE PIN = :pin ";
+        $verificaAcesso = $this->db->prepare($verificaAcesso);
+        $verificaAcesso->bindValue(':pin', $_SESSION['PIN']);
+        $verificaAcesso->execute();
+        if ($verificaAcesso->rowCount() > 0) {
+            $verificaAcesso = $verificaAcesso->fetch();
+        }
 
-        if ($sql->rowCount() > 0) {
-            return true;
+        if ($verificaAcesso['MENOR_ACESSO'] != 1) {
+            $sql = "SELECT * FROM TB_WFM_MODULO WHERE ID_MODULO = 0 AND ATIVO = 0 ";
+            $sql = $this->db->prepare($sql);
+            $sql->execute();
+
+            if ($sql->rowCount() > 0) {
+                return true;
+            } else {
+                return false;
+            }
         } else {
             return false;
         }

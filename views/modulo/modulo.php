@@ -53,8 +53,13 @@
                             ?>
                         </select>
                         <label>Selecione o Menu Principal</label>
-                        <span id="selectMenuMenuHelper" class="helper-text" data-error="" data-success=""></span>
+                        <span id="selectMenuMenuHelper" class="helper-text" data-error="" data-success=""></span>                        
                     </div>
+                    <div class="input-field">
+
+                    </div>
+
+
                     <div class="file-field input-field fileMenu">									  
                         <div class="btn waves-effect">
                             <span>Ícone</span>
@@ -156,66 +161,31 @@
         </div>
     </div>
     <div id="inativaMenu" class="col s12 m12 l12">
-        <div id="tabelaContainer">
-            <p class="flow-text center-align">Ao inativar um menu do tipo Principal, todos os seus submenus serão inativados também, caso queira inativar um submenu em específico, atente-se ao tipo que deverá ser Submenu.</p>
-            <table id="tblMenus" class="display">
-                <thead>
-                    <tr>
-                        <th class="hide center-align">Id</th>
-                        <th class="center-align">Nome Menu</th>
-                        <th class="center-align">Tipo Menu</th>
-                        <th class="center-align">Ação</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php
-                    $classe = new Modulos();
-                    $dados = $classe->consultaMenus();
-                    foreach ($dados as $value):
-                        ?>
-                        <tr>
-                            <td class="hide idMenu" class="center-align"><?php echo $value['ID_MODULO']; ?></td>
-                            <td class="center-align"><?php echo $value['NOME_MODULO']; ?></td>
-                            <td class="tipoMenu center-align"><?php echo $value['TIPO_MENU']; ?></td>
-                            <?php if ($value['ATIVO'] == 1): ?>
-                                <td class="center-align"><a class="inativaMenu waves-effect waves-light btn red">Inativar</a></td>
-                            <?php else: ?>
-                                <td class="center-align"><a class="ativaMenu waves-effect waves-light btn">Ativar</a></td>
-                            <?php endif; ?>
-                        </tr> 
-                    <?php endforeach; ?>
-                </tbody>
-            </table> 
+        <div id="tabelaMenus">
+            <script>
+                $.ajax({
+                    type: 'POST',
+                    url: '/ajaxModulo/carregaMenu',
+                    async: false,
+                    success: function (r) {
+                        $("#tabelaMenus").html(r);
+                    }
+                });
+            </script>
         </div>
     </div>
     <div id="ativaInativaFerramenta" class="col s12">
         <div id="tabelaContainerAtivaInativaFerramenta">
-            <table id="tblFerramenta" class="display">
-                <thead>
-                    <tr>
-                        <th class="hide center-align">Id</th>
-                        <th class="center-align">Nome Ferramenta</th>
-                        <th class="center-align">Ação</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php
-                    $classe = new Modulos();
-                    $dados = $classe->consultaFerramentas();
-                    foreach ($dados as $value):
-                        ?>
-                        <tr>
-                            <td class="hide idFerramenta" class="center-align"><?php echo $value['ID_MODULO']; ?></td>
-                            <td class="center-align"><?php echo $value['NOME_MODULO']; ?></td>
-                            <?php if ($value['ATIVO'] == 1): ?>
-                                <td class="center-align"><a class="removeFerramenta waves-effect waves-light btn red">Inativar</a></td>
-                            <?php else: ?>
-                                <td class="center-align"><a class="ativaFerramenta waves-effect waves-light btn">Ativar</a></td>
-                            <?php endif; ?>
-                        </tr> 
-                    <?php endforeach; ?>
-                </tbody>
-            </table> 
+            <script>
+                $.ajax({
+                    type: 'POST',
+                    url: '/ajaxModulo/carregaFerramenta',
+                    async: false,
+                    success: function (r) {
+                        $("#tabelaContainerAtivaInativaFerramenta").html(r);
+                    }
+                });
+            </script>
         </div>    
     </div>
     <div id="ordenacao" class="col s12">
@@ -262,40 +232,17 @@
         <div class="input-field">
             <button class="waves-effect waves-light btn" id="inativaWfm">Gravar</button>
         </div>
-        <div class="input-field">
-            <table id="tblWfmInativa" class="centered">
-                <thead>
-                    <tr class="teal lighten-2">
-                        <th class="hide center-align"></th>
-                        <th class="center-align">Nome Ferramenta</th>
-                        <th class="center-align">Status</th>
-                        <th class="center-align">Ação</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php
-                    $teste = new Modulos();
-                    $tabelaa = $teste->carregaInativaWfm();
-
-                    if (!empty($tabelaa)):
-                        foreach ($tabelaa as $value):
-                            ?>                   
-                            <tr>
-                                <td class="hide" class="idMenu"><?php echo $value['ID_MODULO']; ?></td>
-                                <td><?php echo $value['NOME_MODULO'] ? 'Workforce' : ''; ?></td>
-                                <td>Sistema inativo desde <?php
-                                    $data = $value['CRIACAO'];
-                                    $dataFormatada = date("d/m/Y", strtotime($data));
-                                    echo $dataFormatada;
-                                    ?></td>    
-                                <td class="center-align"><a class="removeMensagem503 waves-effect waves-light btn red">Remover Mensagem</a></td>
-                            </tr>
-                        <?php endforeach; ?> 
-                    <?php else: ?>
-                    <td class="center-align" colspan="3">O sistema está ativo.</td>
-                <?php endif; ?>
-                </tbody>
-            </table> 
+        <div class="input-field" id="tabelaManutencao">
+            <script>
+                $.ajax({
+                    type: 'POST',
+                    url: '/ajaxModulo/carragaWfmInativo',
+                    async: false,
+                    success: function (r) {
+                        $("#tabelaManutencao").html(r);
+                    }
+                });
+            </script>
         </div>
     </div>
 </div>

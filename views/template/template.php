@@ -6,9 +6,9 @@
         <meta http-equiv="Content-Language" content="pt-br">
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 
-    <?php if($_SESSION['perfilDeslogueAutomatico'] == 1): ?>
-     <!--   <meta http-equiv="refresh" content="10;url=<?php /*echo BASE_URL;*/?>logout" /> -->
-    <?php endif; ?>     
+        <?php if ($_SESSION['perfilDeslogueAutomatico'] == 1): ?>
+                 <!--   <meta http-equiv="refresh" content="10;url=<?php /* echo BASE_URL; */ ?>logout" /> -->
+        <?php endif; ?>     
 
 
         <!--Import Google Icon Font-->
@@ -67,7 +67,7 @@
         <script src="<?php echo BASE_URL; ?>assets/js/jquery-3.4.1.js"></script>
         <script src="<?php echo BASE_URL; ?>assets/js/jquery-ui-1.12.1/jquery-ui.js"></script>
         <script src="<?php echo BASE_URL; ?>assets/js/jquery.ui.touch-punch.min.js"></script>
-        
+
         <script src="<?php echo BASE_URL; ?>assets/css/fontA/js/brands.js"></script>
         <script src="<?php echo BASE_URL; ?>assets/css/fontA/js/solid.js"></script>
         <script src="<?php echo BASE_URL; ?>assets/css/fontA/js/fontawesome.js"></script>
@@ -77,26 +77,39 @@
         <script type="text/javascript" src="<?php echo BASE_URL; ?>views/template/assets/js/jsTemplate.js"></script>
         <script type="text/javascript" src="<?php echo BASE_URL; ?>assets/vendor/jQuery-Mask-Plugin-master/dist/jquery.mask.js"></script>
         <script src="<?php echo BASE_URL; ?>assets/vendor/jquery-sortablejs-master/Sortable.js"></script>
-	<script src="<?php echo BASE_URL; ?>assets/vendor/jquery-validation-1.19.1/dist/jquery.validate.js"></script>
- <?php $this->loadViewInTemplate($viewName, $viewData,$folder); ?>
-        
+        <script src="<?php echo BASE_URL; ?>assets/vendor/jquery-validation-1.19.1/dist/jquery.validate.js"></script>
+        <script src="<?php echo BASE_URL; ?>assets/vendor/jquery.loadscript.js"></script>
+        <?php $this->loadViewInTemplate($viewName, $viewData, $folder); ?>
+
         <script>
         function carregaTema(id) {
+            // pegar os dados do session, ver se está preenchido, em seguida só pegar o valor ao invés de setar sempre o mesmo.... 
+            // ele vai setar só uma vez ao carregar a página, nas próximas vezes ele vai só carregar...
+
+            // var darkThemeSelected = (localStorage.getItem('themeSwitch') !== null && localStorage.getItem('themeSwitch') === 'dark');
+            // darkThemeSelected ? document.body.setAttribute('data-theme', 'dark') : document.body.removeAttribute('data-theme')
+           
+
             if (id == 1) {
                 document.documentElement.setAttribute('data-theme', 'dark');
-                localStorage.setItem('theme', 'dark');
+                //localStorage.setItem('theme', 'dark');
+
+                console.log("carregou tema escuro")
+              
             } else {
                 document.documentElement.setAttribute('data-theme', 'light');
-                localStorage.setItem('theme', 'light');
+                ///localStorage.setItem('theme', 'light');
+                console.log("carregou tema claro")
+             
             }
         }
+
+        /*
+         setInterval(function(){
          
-/*
-       setInterval(function(){
-             
          },2000);
-  */       
-         
+         */
+
         </script>
 
     </body>
