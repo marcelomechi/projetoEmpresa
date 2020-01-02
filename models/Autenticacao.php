@@ -33,9 +33,9 @@ class Autenticacao extends Model {
                 $_SESSION['foto_perfil'] = $sql['CAMINHO_FOTO'];
             }
 
-            if(md5($sql['CPF']) == $sql['SENHA']){
+            if (md5($sql['CPF']) == $sql['SENHA']) {
                 $senhaCpf = 1;
-            }else{
+            } else {
                 $senhaCpf = 2;
             }
 
@@ -200,19 +200,18 @@ class Autenticacao extends Model {
         $insert->bindValue(':ip', $ip);
         $insert->bindValue(':origem', "ESQUECI A SENHA");
         $insert->execute();
-        if ($insert -> rowCount() > 0) {
+        if ($insert->rowCount() > 0) {
 
             $update = "UPDATE TB_WFM_USUARIO SET SENHA = :senha WHERE PIN = :pin";
             $update = $this->db->prepare($update);
             $update->bindValue(':senha', md5($novaSenha));
             $update->bindValue(':pin', $_SESSION['PIN']);
             $update->execute();
-            if($update -> rowCount() > 0){
-              return true;  
-            }else{
+            if ($update->rowCount() > 0) {
+                return true;
+            } else {
                 return false;
             }
-            
         } else {
             return false;
         }
@@ -220,7 +219,7 @@ class Autenticacao extends Model {
 
     // cadastra senha inicial
 
-    public function cadastraSenhaInicial($senha,$email = null){
+    public function cadastraSenhaInicial($senha, $email = null) {
         if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
             $ip = $_SERVER['HTTP_CLIENT_IP'];
         } elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
@@ -228,50 +227,49 @@ class Autenticacao extends Model {
         } else {
             $ip = $_SERVER['REMOTE_ADDR'];
         }
-        
-        $sql = "UPDATE TB_WFM_USUARIO SET SENHA = :senha WHERE PIN = :pin ";
-        $sql = $this -> db -> prepare($sql);
-        $sql -> bindValue(':senha', md5($senha));
-        $sql -> bindValue(':pin',$_SESSION['PIN']);
 
-        $sql -> execute();
+        $sql = "UPDATE TB_WFM_USUARIO SET SENHA = :senha WHERE PIN = :pin ";
+        $sql = $this->db->prepare($sql);
+        $sql->bindValue(':senha', md5($senha));
+        $sql->bindValue(':pin', $_SESSION['PIN']);
+
+        $sql->execute();
 
         $logUsuario = "INSERT INTO LG_WFM_USUARIO (PIN, SENHA, CRIACAO, IP, ORIGEM) VALUES (:pin, :senha, now(), :ip, 'TELA DE LOGIN')";
-        $logUsuario = $this -> db -> prepare($logUsuario);
-        $logUsuario -> bindValue(':pin',$_SESSION['PIN']);
-        $logUsuario -> bindValue(':senha',md5($senha));
-        $logUsuario -> bindValue(':ip',$ip);
+        $logUsuario = $this->db->prepare($logUsuario);
+        $logUsuario->bindValue(':pin', $_SESSION['PIN']);
+        $logUsuario->bindValue(':senha', md5($senha));
+        $logUsuario->bindValue(':ip', $ip);
 
-        $logUsuario -> execute();
+        $logUsuario->execute();
 
-        if(isset($email) && !empty($email)){
+        if (isset($email) && !empty($email)) {
             $sqlPerfil = "UPDATE TB_WFM_PERFIL_PESSOAL SET email = :email WHERE PIN = :pin";
-            $sqlPerfil = $this -> db -> prepare($sqlPerfil);
-            $sqlPerfil -> bindValue(':email',$email);
-            $sqlPerfil -> bindValue(':pin',$_SESSION['PIN']);
+            $sqlPerfil = $this->db->prepare($sqlPerfil);
+            $sqlPerfil->bindValue(':email', $email);
+            $sqlPerfil->bindValue(':pin', $_SESSION['PIN']);
 
-            $sqlPerfil -> execute();
+            $sqlPerfil->execute();
 
             $logPerfil = "INSERT INTO LG_WFM_PERFIL_PESSOAL (PIN, EMAIL, CRIACAO, RESPONSAVEL) VALUES (:pin, :email, now(), :pinResponsavel)";
-            $logPerfil = $this -> db -> prepare($logPerfil);
-            $logPerfil -> bindValue(':pin',$_SESSION['PIN']);
-            $logPerfil -> bindValue(':email',$email);
-            $logPerfil -> bindValue(':pinResponsavel',$_SESSION['PIN']);
+            $logPerfil = $this->db->prepare($logPerfil);
+            $logPerfil->bindValue(':pin', $_SESSION['PIN']);
+            $logPerfil->bindValue(':email', $email);
+            $logPerfil->bindValue(':pinResponsavel', $_SESSION['PIN']);
 
-            $logPerfil -> execute();
-
+            $logPerfil->execute();
         }
 
-        if(isset($email) && !empty($email)){
-            if($sql -> rowCount() > 0 && $sqlPerfil -> rowCount() > 0){
+        if (isset($email) && !empty($email)) {
+            if ($sql->rowCount() > 0 && $sqlPerfil->rowCount() > 0) {
                 return true;
-            }else{
+            } else {
                 return false;
             }
-        }else{
-            if($sql -> rowCount() > 0){
+        } else {
+            if ($sql->rowCount() > 0) {
                 return true;
-            }else{
+            } else {
                 return false;
             }
         }
@@ -279,16 +277,23 @@ class Autenticacao extends Model {
 
     // cadastra Usuário Convidado
 
-    public function gravaUsuarioConvidado($dados = array()){
+    public function gravaUsuarioConvidado($dados = array()) {
         
-     $cep=$dados['cep'];
+       // $cep = $dados['cep'];
+        
+        //var_dump($cep);
+        //exit;
+        
+        $valida = $this -> validaCadastroConvidado($dados['cpf']);
 
-        $sql = "INSERT INTO TP_CHRONUS_CONVIDADO_APROVACAO (CPF, NOME, FUNCAO, CEP, RUA, NUMERO, BAIRRO, CIDADE, SEXO, EMAIL, ATIVO) 
+        if ($valida === true) {
+
+            $sql = "INSERT INTO TP_CHRONUS_CONVIDADO_APROVACAO (CPF, NOME, FUNCAO, CEP, RUA, NUMERO, BAIRRO, CIDADE, SEXO, EMAIL, ATIVO) 
                 VALUES (
                             :cpf,
                             :nome,
                             :funcao,
-                            $cep,
+                            :cep,
                             :rua,
                             :numero,
                             :bairro,
@@ -297,27 +302,42 @@ class Autenticacao extends Model {
                             :email,
                             0
                         )";
-                        $sql = $this->db->prepare($sql);
-                        $sql->bindValue(':cpf', $dados['cpf']);
-                        $sql->bindValue(':nome', $dados['nome']);
-                        $sql->bindValue(':funcao', $dados['cargo']);
-                        //$sql->bindParam(':cep', $dados['cep']);
-                        $sql->bindValue(':rua', $dados['rua']);
-                        $sql->bindValue(':numero', $dados['numero'] == null ? null : $dados['numero']);
-                        $sql->bindValue(':bairro', $dados['bairro']);
-                        $sql->bindValue(':cidade', $dados['cidade']);
-                        $sql->bindValue(':sexo', $dados['sexo']);
-                        $sql->bindValue(':email', $dados['email']);
-                        $retorno = $sql -> execute();
-                        
-                        if($retorno){
-                            return true;
-                        }else{
-                            return false;
-                        }
+            $sql = $this->db->prepare($sql);
+            $sql->bindValue(':cpf', $dados['cpf']);
+            $sql->bindValue(':nome', $dados['nome']);
+            $sql->bindValue(':funcao', $dados['cargo']);
+            $sql->bindValue(':cep', $dados['cep']);
+            $sql->bindValue(':rua', $dados['rua']);
+            $sql->bindValue(':numero', $dados['numero'] == null ? null : $dados['numero']);
+            $sql->bindValue(':bairro', $dados['bairro']);
+            $sql->bindValue(':cidade', $dados['cidade']);
+            $sql->bindValue(':sexo', $dados['sexo']);
+            $sql->bindValue(':email', $dados['email']);
+            $retorno = $sql->execute();
 
+            if ($retorno) {
+                return true;
+            } else {
+                return false;
+            }
+        }else{
+            return -1;
+        }
     }
 
+    // verifica se o usuário existe no acesso convidado.
+    private function validaCadastroConvidado($cpf) {
+        $sql = "SELECT * FROM TP_CHRONUS_CONVIDADO_APROVACAO WHERE CPF = :cpf ";
+        $sql = $this->db->prepare($sql);
+        $sql->bindValue(':cpf', $cpf);
+        $sql->execute();
+
+        if ($sql->rowCount() > 0) {
+            return false;
+        } else {
+            return true;
+        }
+    }
 
     // cria o login unico no banco
 

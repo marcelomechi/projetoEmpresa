@@ -206,18 +206,44 @@ class Permissao extends Model {
             } else {
                 return false;
             }
-        }else{
+        } else {
             return false;
         }
     }
-    
-    public function consultaPerfil(){
+
+    public function consultaPerfil() {
         $sql = "SELECT *, CASE WHEN DESLOGUE_AUTOMATICO = 1 THEN 'DESLOGA' ELSE 'NÃO DESLOGA' END DESLOGUE FROM TB_WFM_PERFIL_ACESSO ";
-        $sql = $this -> db -> prepare($sql);
-        $sql -> execute();
-        if($sql -> rowCount() > 0 ){
+        $sql = $this->db->prepare($sql);
+        $sql->execute();
+        if ($sql->rowCount() > 0) {
             return $sql;
-        }else{
+        } else {
+            return false;
+        }
+    }
+
+    public function consultaConvidados() {
+        $sql = "SELECT * FROM TP_CHRONUS_CONVIDADO_APROVACAO WHERE ATIVO = 0 AND EXECUCAO IS NULL ";
+        $sql = $this->db->prepare($sql);
+        $sql->execute();
+        if ($sql->rowCount() > 0) {
+            $sql = $sql->fetchAll();
+            return $sql;
+        } else {
+            return false;
+        }
+    }
+
+    public function consultaConvidadoIndividual($cpf) {
+        $sql = "SELECT * FROM TP_CHRONUS_CONVIDADO_APROVACAO WHERE ATIVO = 0 AND EXECUCAO IS NULL AND CPF = :cpf ";
+        $sql = $this->db->prepare($sql);
+        $sql->bindValue(':cpf', $cpf);
+        $sql->execute();
+
+        if ($sql->rowCount() > 0) {
+            $sql = $sql->fetch();
+            return $sql;
+        } else {
             return false;
         }
     }
@@ -237,55 +263,51 @@ class Permissao extends Model {
       return false;
       }
       } */
-    
-    
-    public function inativaPerfil($idPerfil){
+
+    public function inativaPerfil($idPerfil) {
         $sql = "UPDATE TB_WFM_PERFIL_ACESSO SET ATIVO = 0 WHERE ID_PERFIL = :idPerfil ";
         $sql = $this->db->prepare($sql);
         $sql->bindValue(':idPerfil', $idPerfil);
         $sql->execute();
-            if($sql -> rowCount() > 0 ){
-                $log = "INSERT INTO LG_WFM_PERFIL_ACESSO VALUES (:idPerfil, now(), :pin, 0)";
-                $log = $this -> db -> prepare($log);
-                $log ->bindValue(':idPerfil', $idPerfil);
-                $log ->bindValue(':pin', $_SESSION['PIN']);
-                $log->execute();
-                    if($sql -> rowCount() > 0 ){
-                        return true;
-                    }else{
-                        return false;
-                    }
-            }else{
+        if ($sql->rowCount() > 0) {
+            $log = "INSERT INTO LG_WFM_PERFIL_ACESSO VALUES (:idPerfil, now(), :pin, 0)";
+            $log = $this->db->prepare($log);
+            $log->bindValue(':idPerfil', $idPerfil);
+            $log->bindValue(':pin', $_SESSION['PIN']);
+            $log->execute();
+            if ($sql->rowCount() > 0) {
+                return true;
+            } else {
                 return false;
             }
-        
+        } else {
+            return false;
+        }
     }
-    
-    
-    public function ativaPerfil($idPerfil){
+
+    public function ativaPerfil($idPerfil) {
         $sql = "UPDATE TB_WFM_PERFIL_ACESSO SET ATIVO = 1 WHERE ID_PERFIL = :idPerfil ";
         $sql = $this->db->prepare($sql);
         $sql->bindValue(':idPerfil', $idPerfil);
         $sql->execute();
-            if($sql -> rowCount() > 0 ){
-                $log = "INSERT INTO LG_WFM_PERFIL_ACESSO VALUES (:idPerfil, now(), :pin, 1)";
-                $log = $this -> db -> prepare($log);
-                $log ->bindValue(':idPerfil', $idPerfil);
-                $log ->bindValue(':pin', $_SESSION['PIN']);
-                $log->execute();
-                    if($sql -> rowCount() > 0 ){
-                        return true;
-                    }else{
-                        return false;
-                    }
-            }else{
+        if ($sql->rowCount() > 0) {
+            $log = "INSERT INTO LG_WFM_PERFIL_ACESSO VALUES (:idPerfil, now(), :pin, 1)";
+            $log = $this->db->prepare($log);
+            $log->bindValue(':idPerfil', $idPerfil);
+            $log->bindValue(':pin', $_SESSION['PIN']);
+            $log->execute();
+            if ($sql->rowCount() > 0) {
+                return true;
+            } else {
                 return false;
             }
-        
+        } else {
+            return false;
+        }
     }
-    
-    public function cadastraNovoPerfil($nomePerfil,$descricaoPerfil,$nivelAcesso,$deslogue){
-        
+
+    public function cadastraNovoPerfil($nomePerfil, $descricaoPerfil, $nivelAcesso, $deslogue) {
+
         $sql = "INSERT INTO TB_WFM_PERFIL_ACESSO (PERFIL, DESCRICAO, NIVEL_GRUPO_PERFIL, DESLOGUE_AUTOMATICO, CRIACAO, RESPONSAVEL, ATIVO) VALUES (:perfil, :descricao, :nivelAcesso, :deslogue, now(), :pin, 1) ";
         $sql = $this->db->prepare($sql);
         $sql->bindValue(':perfil', $nomePerfil);
@@ -294,13 +316,12 @@ class Permissao extends Model {
         $sql->bindValue(':deslogue', $deslogue);
         $sql->bindValue(':pin', $_SESSION['PIN']);
         $sql->execute();
-       
-        if($sql -> rowCount() > 0){
-                return true;
-            }else{
-                return false;
-            }
-        
+
+        if ($sql->rowCount() > 0) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     private function queryAcessosVazio($idModulo) {

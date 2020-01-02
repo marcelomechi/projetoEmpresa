@@ -10,10 +10,10 @@
 <div class="row">
     <div class="col s12">
         <ul class="tabs">
-            <li class="tab col s4"><a href="#liberarAcesso">Acesso Perfil</a></li>
-            <li class="tab col s4"><a href="#liberarAcessoIndividual">Acesso Individual</a></li>
-            <!-- <li class="tab col s3"><a href="#">Liberar Usuário Convidado</a></li> -->
-            <li class="tab col s4"><a href="#administraPerfis">Gerenciar Perfil</a></li>
+            <li class="tab col s3"><a href="#liberarAcesso">Acesso Perfil</a></li>
+            <li class="tab col s3"><a href="#liberarAcessoIndividual">Acesso Individual</a></li>            
+            <li class="tab col s3"><a href="#administraPerfis">Gerenciar Perfil</a></li>
+            <li class="tab col s3"><a href="#gerenciaConvidado">Gerenciar Convidado</a></li>
         </ul>
     </div>
 </div>
@@ -59,7 +59,7 @@
                                         ?>
                                     </select>
                                 </td>
-                                <td><a class="gravaLiberacao waves-effect waves-light btn">Gravar</a></td>
+                                <td><a class="gravaLiberacao waves-effect waves-light btn-small">Gravar</a></td>
                             </tr>    
 
                         <?php endforeach; ?> 
@@ -78,7 +78,7 @@
                     <!--<form method="POST" action="/acesso/consulta">-->
                     <input id="cpfConsultaIndividual" type="text" name="cpfConsultaIndividual" placeholder="consultar acessos"  pattern="[\d,?!]*" class="validate" autocomplete="off">
                     <span class="helper-text" data-error="Preencha corretamente este campo." data-success="" ></span>
-                    <button id="btnConsultaAcessoIndividualCpf" class="waves-effect waves-light btn right">Consultar</button>
+                    <button id="btnConsultaAcessoIndividualCpf" class="waves-effect waves-light btn-small right">Consultar</button>
                     <!-- </form>-->
                 </div>
 
@@ -107,7 +107,7 @@
                                 <td> 
                                     <input type="text" id="<?php echo $menu['ID_MODULO']; ?>_individual" pattern="[\d,?!]*">
                                 </td>
-                                <td><a class="gravaLiberacaoIndividual waves-effect waves-light btn">Inserir</a> <a class="removeLiberacaoIndividual waves-effect waves-light btn red">Remover</a></td>
+                                <td><a class="gravaLiberacaoIndividual waves-effect waves-light btn-small">Inserir</a> <a class="removeLiberacaoIndividual waves-effect waves-light btn-small red">Remover</a></td>
                             </tr>    
                         <?php endforeach; ?> 
                     </tbody>
@@ -145,17 +145,17 @@
                 <p class="center-align">Utilize de preferência, uma única palavra para para o nome do perfil, descreva de forma resumida o mesmo, referente ao nível de acesso do perfil o nível 1 está acima do nível 2 e assim por diante.</p>
                 <div class="input-field col s12">
                     <input id="nomePerifl" type="text" class="validate" maxlength="92" data-error="Preencha corretamente este campo." data-success="" >
-                     <span class="helper-text" data-error="Preencha corretamente este campo." data-success="" ></span>
+                    <span class="helper-text" data-error="Preencha corretamente este campo." data-success="" ></span>
                     <label for="nomePerifl">Perfil</label>
                 </div>
                 <div class="input-field col s12">
                     <textarea id="descricaoPerfil" class="materialize-textarea validate" maxlength="128" data-error="Preencha corretamente este campo." data-success="" ></textarea>
-                     <span class="helper-text" data-error="Preencha corretamente este campo." data-success="" ></span>
+                    <span class="helper-text" data-error="Preencha corretamente este campo." data-success="" ></span>
                     <label for="descricaoPerfil">Descrição</label>
                 </div>
                 <div class="input-field col s12">
                     <input type="number" min="1" max="100" id="nivelAcesso" class="validate" data-error="Preencha corretamente este campo." data-success="" >
-                     <span class="helper-text" data-error="Preencha corretamente este campo." data-success="" ></span>
+                    <span class="helper-text" data-error="Preencha corretamente este campo." data-success="" ></span>
                     <label for="nivelAcesso">Nível Acesso</label>                    
                 </div>
                 <div class="input-field col s12">
@@ -168,15 +168,31 @@
                             <input value="0" name="radioDeslogue" type="radio" class="validate" data-error="Preencha corretamente este campo." data-success=""  />
                             <span>Não Deslogar</span>
                         </label>
-                         <span class="helper-text" data-error="Preencha corretamente este campo." data-success="" ></span>
+                        <span class="helper-text" data-error="Preencha corretamente este campo." data-success="" ></span>
                     </p>
                 </div>
             </div>
             <div class = "modal-footer">
                 <div class = "input-field col s12">
-                    <a class = "fechaModalNovoPerfil modal-close waves-effect waves-light btn red">Fechar</a>
-                    <a class = "gravaNovoPerfil waves-effect waves-light btn">Gravar</a>
+                    <a class = "fechaModalNovoPerfil modal-close waves-effect waves-light btn-small red">Fechar</a>
+                    <a class = "gravaNovoPerfil waves-effect waves-light btn-small">Gravar</a>
                 </div>
+            </div>
+        </div>
+    </div>
+    <div id="gerenciaConvidado">
+        <div class="card">
+            <div class="card-content" id="dadosConvidados" onload="carregaTabelaConvidado()">
+                <script>
+                    $.ajax({
+                        type: 'POST',
+                        url: '/ajaxPermissao/carregaTabelaConvidado',
+                        async: false,
+                        success: function (r) {
+                            $("#dadosConvidados").html(r);
+                        }
+                    });
+                </script>
             </div>
         </div>
     </div>
@@ -184,7 +200,7 @@
 
 <script>
 
-    
+
 
 
     $('#tabelaFeramenta').DataTable({
@@ -210,5 +226,8 @@
         "order": [1, "asc"]
 
     });
+
+
+    
 
 </script>

@@ -50,8 +50,8 @@ if ($tipo == 1):
 
     </script>
 
-<?php elseif ($tipo = 3): ?>
-     <p class="flow-text center-align">Para criar um novo Perfil de Acesso <a class="modal-trigger" href="#modalNovoPerfil">clique aqui</a>.</p>
+<?php elseif ($tipo == 2): ?>
+    <p class="flow-text center-align">Para criar um novo Perfil de Acesso <a class="modal-trigger" href="#modalNovoPerfil">clique aqui</a>.</p>
     <table id="tabelaPerfis" class="display centered responsive-table">
         <thead>
             <tr>
@@ -76,9 +76,9 @@ if ($tipo == 1):
                         <td><?php echo $value['DESLOGUE'] ?></td>
                         <td>
                             <?php if ($value['ATIVO'] == 1): ?>
-                                <a class="inativaPerfil waves-effect waves-light btn red">Inativar</a>
+                                <a class="inativaPerfil waves-effect waves-light btn-small red">Inativar</a>
                             <?php else: ?>
-                                <a class="ativaPerfil waves-effect waves-light btn">Ativar</a>
+                                <a class="ativaPerfil waves-effect waves-light btn-small">Ativar</a>
                             <?php endif; ?> 
                         </td>
                     </tr>
@@ -91,7 +91,7 @@ if ($tipo == 1):
         $(document).ready(function () {
             $('select').formSelect();
         });
-        
+
         $('#tabelaPerfis').DataTable({
 
             columnDefs: [
@@ -103,5 +103,62 @@ if ($tipo == 1):
             "order": [1, "asc"]
         });
     </script>
+
+<?php elseif ($tipo == 3): ?>
+
+
+    <table id="tabelaConvidados" class="display centered responsive-table">
+        <thead>
+            <tr>
+                <th>CPF</th>
+                <th>Nome</th>
+                <th>Contrato</th>
+                <th>Ação</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php
+            $classe = new Permissao();
+            $dadosConvidados = $classe->consultaConvidados();
+
+            foreach ($dadosConvidados as $convidado):
+                ?>
+                <tr>
+                    <td class="cpfConvidado"><?php echo $convidado['CPF'] ?></td>
+                    <td><?php echo $convidado['NOME'] ?></td>
+                    <td>CONTRATO</td>
+                    <td><a class="visualizaDadosConvidado waves-effect waves-light light-blue accent-4 btn-small">Visualizar</a> <a class="liberaAcessoConvidado waves-effect waves-light btn-small">Liberar</a> <a class="bloqueiaAcessoConvidado waves-effect waves-light btn-small red">Negar</a></td>
+                </tr>
+            <?php endforeach; ?> 
+        </tbody>
+    </table>
+
+    <script>
+
+        $('#tabelaConvidados').DataTable({
+
+            columnDefs: [
+                {
+                    targets: [0, 1, 2, 3]
+
+                }
+            ],
+            "order": [1, "asc"]
+        });
+    </script>
+<?php elseif ($tipo == 4): ?>
+
+    <div id="modalNovoPerfil" class="modal">
+        <div class="modal-content">
+                
+
+        </div>
+        <div class = "modal-footer">
+            <div class = "input-field col s12">
+                <a class = "fechaModalNovoPerfil modal-close waves-effect waves-light btn-small red">Fechar</a>
+                <a class = "gravaNovoPerfil waves-effect waves-light btn-small">Gravar</a>
+            </div>
+        </div>
+    </div>
 
 <?php endif; ?>

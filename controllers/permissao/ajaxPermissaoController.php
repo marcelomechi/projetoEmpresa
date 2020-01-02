@@ -111,30 +111,58 @@ class ajaxPermissaoController extends Controller {
 
         $dados = array(
             'tabelaPerfil' => $retorno,
-            'tipo' => 3
+            'tipo' => 2
         );
 
         $this->loadViewAjax('permissao', 'ajaxPermissao', $dados);
     }
-    
-    public function cadastraPerfil(){
-        if(isset($_POST['nomePerfil']) && !empty($_POST['nomePerfil']) && isset($_POST['descricaoPerfil']) && !empty($_POST['descricaoPerfil']) && isset($_POST['nivelAcesso']) && !empty($_POST['nivelAcesso']) && isset($_POST['deslogue']) && !empty($_POST['deslogue'])){
+
+    public function cadastraPerfil() {
+        if (isset($_POST['nomePerfil']) && !empty($_POST['nomePerfil']) && isset($_POST['descricaoPerfil']) && !empty($_POST['descricaoPerfil']) && isset($_POST['nivelAcesso']) && !empty($_POST['nivelAcesso']) && isset($_POST['deslogue']) && !empty($_POST['deslogue'])) {
             $classe = new Permissao();
-            
-            $nomePerfil = strtoupper(addslashes($_POST['nomePerfil']));   
-            $descricaoPerfil = strtoupper(addslashes($_POST['descricaoPerfil']));  
-            $nivelAcesso = strtoupper(addslashes($_POST['nivelAcesso']));  
+
+            $nomePerfil = strtoupper(addslashes($_POST['nomePerfil']));
+            $descricaoPerfil = strtoupper(addslashes($_POST['descricaoPerfil']));
+            $nivelAcesso = strtoupper(addslashes($_POST['nivelAcesso']));
             $deslogue = strtoupper(addslashes($_POST['deslogue']));
-            
-            $retorno = $classe -> cadastraNovoPerfil($nomePerfil,$descricaoPerfil,$nivelAcesso,$deslogue);
-                if($retorno == true){
-                    echo "success";
-                }else{
-                    echo "fail";
-                }
-            
-        }else{
+
+            $retorno = $classe->cadastraNovoPerfil($nomePerfil, $descricaoPerfil, $nivelAcesso, $deslogue);
+            if ($retorno == true) {
+                echo "success";
+            } else {
+                echo "fail";
+            }
+        } else {
             return false;
+        }
+    }
+
+    public function carregaTabelaConvidado() {
+        $classe = new Permissao();
+        $dadosConvidados = $classe->consultaConvidados();
+        if ($dadosConvidados != false) {
+            $dados = array(
+                'tabelaConvidados' => $dadosConvidados,
+                'tipo' => 3
+            );
+
+            $this->loadViewAjax('permissao', 'ajaxPermissao', $dados);
+        }
+    }
+
+    public function visualizaDadoConvidado($cpf) {
+        if (isset($_POST['cpf']) && !empty($_POST['cpf'])) {
+            $classe = new Permissao();
+            $retorno = $classe->consultaConvidadoIndividual($_POST['cpf']);
+
+            if ($retorno != false) {
+                $dados = array(
+                    'dadosConvidado' => $retorno,
+                    'tipo' => 4
+                );
+
+                $this->loadViewAjax('permissao', 'ajaxPermissao', $dados);
+            }
         }
     }
 

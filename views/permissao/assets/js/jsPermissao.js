@@ -167,7 +167,7 @@ $(document).ready(function () {
         $.ajax({
             type: 'POST',
             url: '/ajaxPermissao/ativaPerfil',
-            data: {idPerfil: idPerfil, tipo: 3},
+            data: {idPerfil: idPerfil, tipo: 2},
             async: false,
             success: function (r) {
                 if (r == "success") {
@@ -231,6 +231,73 @@ $(document).ready(function () {
         $("#input:radio[name=radioDeslogue]").val("")
 
     });
+    
+    
+     $(document).on("click", ".liberaAcessoConvidado", function () {
+        cpfConvidado = $(this).parent().parent().find('.cpfConvidado').html();
+        
+        alert(cpfConvidado)
+       /* $.ajax({
+            type: 'POST',
+            url: '/ajaxPermissao/ativaPerfil',
+            data: {idPerfil: idPerfil, tipo: 3},
+            async: false,
+            success: function (r) {
+                if (r == "success") {
+                    M.toast({html: 'Perfil ativado com sucesso!', classes: 'teal accent-4'});
+                    //$('#administraPerfis').load(document.URL + ' #administraPerfis');
+                    carregaTabelaPerfis();
+                    // $("#tabelaPerfis").load(" #tabelaPerfis > *");
+                    //           $('#tabelaPerfis').DataTable().ajax.reload();
+                } else {
+                    M.toast({html: 'Não foi possível atender a solicitação, tente novamente.', classes: 'red lighten-2'});
+                }
+
+            }
+        });*/
+    });
+    
+      $(document).on("click", ".bloqueiaAcessoConvidado", function () {
+        cpfConvidado = $(this).parent().parent().find('.cpfConvidado').html();
+        
+        alert(cpfConvidado)
+       /* $.ajax({
+            type: 'POST',
+            url: '/ajaxPermissao/ativaPerfil',
+            data: {idPerfil: idPerfil, tipo: 3},
+            async: false,
+            success: function (r) {
+                if (r == "success") {
+                    M.toast({html: 'Perfil ativado com sucesso!', classes: 'teal accent-4'});
+                    //$('#administraPerfis').load(document.URL + ' #administraPerfis');
+                    carregaTabelaPerfis();
+                    // $("#tabelaPerfis").load(" #tabelaPerfis > *");
+                    //           $('#tabelaPerfis').DataTable().ajax.reload();
+                } else {
+                    M.toast({html: 'Não foi possível atender a solicitação, tente novamente.', classes: 'red lighten-2'});
+                }
+
+            }
+        });*/
+    });
+    
+    $(document).on("click", ".visualizaDadosConvidado", function () {
+        cpfConvidado = $(this).parent().parent().find('.cpfConvidado').html();
+        
+       
+         $.ajax({
+            type: 'POST',
+            url: '/ajaxPermissao/visualizaDadoConvidado',
+            data: {cpf: cpfConvidado},
+            async: false,
+            success: function (r) {
+                alert(r)
+
+            }
+        });
+    });
+    
+    
 
 
     function carregaTabelaPerfis() {
@@ -245,6 +312,17 @@ $(document).ready(function () {
             }
         });
 
+    }
+
+    function carregaTabelaConvidado() {
+        $.ajax({
+            type: 'POST',
+            url: '/ajaxPermissao/carregaTabelaConvidado',
+            async: false,
+            success: function (r) {
+                $("#dadosConvidados").html(r);
+            }
+        });
     }
 
 
