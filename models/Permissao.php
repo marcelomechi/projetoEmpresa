@@ -247,6 +247,40 @@ class Permissao extends Model {
             return false;
         }
     }
+    
+    public function liberaUsuarioConvidado($cpf){
+        $sql = "UPDATE TP_CHRONUS_CONVIDADO_APROVACAO SET ATIVO = 1, EXECUCAO = NOW(), RESPONSAVEL_APROVACAO = :pin WHERE CPF = :cpf ";
+        $sql = $this->db->prepare($sql);
+        $sql->bindValue(':pin', $_SESSION['PIN']);
+        $sql->bindValue(':cpf', $cpf);
+        $sql->execute();        
+        
+        if ($sql->rowCount() > 0) {
+                $email = new Email();
+                $email->enviaEmail(2, 2, 'Marcelo', null, 'marcelo.goncalves@brbpo.com.br');
+            return true;
+        } else {
+            return false;
+        }
+        
+    }
+    
+    public function naoLiberaUsuarioConvidado($cpf){
+        $sql = "UPDATE TP_CHRONUS_CONVIDADO_APROVACAO SET ATIVO = 0, EXECUCAO = NOW(), RESPONSAVEL_APROVACAO = :pin WHERE CPF = :cpf ";
+        $sql = $this->db->prepare($sql);
+        $sql->bindValue(':pin', $_SESSION['PIN']);
+        $sql->bindValue(':cpf', $cpf);
+        $sql->execute();
+        
+        if ($sql->rowCount() > 0) {
+                $email = new Email();
+                $email->enviaEmail(2, 2, 'Marcelo', null, 'marcelo.goncalves@brbpo.com.br');
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
 
     /* public function tabelaFerramentas() {
       $sql = "SELECT PFAC.PERFIL, CASE WHEN ACPF.ID_MODULO IS NULL THEN 0 ELSE 1 END POSSUI_ACESSO FROM TB_WFM_PERFIL_ACESSO PFAC LEFT JOIN TB_WFM_MODULO_ACESSO_PERFIL ACPF ON ACPF.ID_PERFIL = PFAC.ID_PERFIL AND ACPF.ID_MODULO = :idModulo ";

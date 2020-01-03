@@ -141,7 +141,7 @@
         </div>
         <div id="modalNovoPerfil" class="modal">
             <div class="modal-content">
-                <h4 class="center-align">Novo Perfil</h4> 
+                <h5 class="center-align">Novo Perfil</h5> 
                 <p class="center-align">Utilize de preferência, uma única palavra para para o nome do perfil, descreva de forma resumida o mesmo, referente ao nível de acesso do perfil o nível 1 está acima do nível 2 e assim por diante.</p>
                 <div class="input-field col s12">
                     <input id="nomePerifl" type="text" class="validate" maxlength="92" data-error="Preencha corretamente este campo." data-success="" >
@@ -180,7 +180,7 @@
             </div>
         </div>
     </div>
-    <div id="gerenciaConvidado">
+    <div id="gerenciaConvidado" class="col s12">
         <div class="card">
             <div class="card-content" id="dadosConvidados" onload="carregaTabelaConvidado()">
                 <script>
@@ -194,6 +194,21 @@
                     });
                 </script>
             </div>
+        </div>
+    </div>
+    <div id="modalDadosConvidado" class="modal">
+        <div class="modal-content">
+            <div class="input-field">
+               <h5 class="center-align">Dados Convidado</h5> 
+            </div>
+            
+            <div id="dadosConvidadoDetalhe">
+                
+            </div>
+            
+        </div>
+        <div class="modal-footer">
+            <a class="modal-close waves-effect waves-light btn-small red">Fechar</a>
         </div>
     </div>
 </div>
@@ -228,6 +243,6 @@
     });
 
 
-    
+
 
 </script>

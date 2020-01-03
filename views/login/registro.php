@@ -62,7 +62,7 @@
             }
             .flex{
                 display: flex;
-                align-items: center;
+              //  align-items: center;
                 height: 100%;
                 width: 100%;
             }
@@ -142,13 +142,22 @@
                                         <input id="cidadeConvidado" type="text" name="cidadeConvidado" readonly required autocomplete="off">
                                         <label for="cidadeConvidado">Cidade</label>
                                     </div>
+                                </div>
+                                <div class="row">
+                                    <div class="input-field col s12">
+                                        <textarea placeholder="Informe de forma resumida os detalhes de sua solicitação, contratos e módulos que deseja visualizar." id="descricaoSolicitacao" name="descricaoSolicitacao" class="materialize-textarea validate" required autocomplete="off" data-length="512"></textarea>
+                                        <label for="descricaoSolicitacao">Observações</label>
+                                        <span class="helper-text" data-error="Preencha corretamente este campo" data-success=""></span>
+                                    </div>
+                                </div>
+                                    
                                     <!-- <div class="input-field col s2">
                                          <input id="estadoConvidado" type="text" name="estadoConvidado"  readonly required>
                                          <label for="estadoConvidado">Estado</label>
                                      </div> -->                   
-                                </div>        
+                                        
                                 <div class="row">
-                                    <div class="input-field col s12 right-align">
+                                    <div class="col s12 right-align">
                                         <a href="<?php echo BASE_URL; ?>login" onclick="limpaFormulario()" class="waves-effect waves-light btn red">Cancelar</a>
                                         <button type="submit" class="waves-effect waves-light btn">Gravar</button>
                                     </div>     
@@ -198,33 +207,39 @@
                                             $(document).ready(function () {
                                                 $('select').formSelect();
                                                 $('.cep').mask('00000-000');
-                                                
-                                                
-                                                <?php
+                                                $('#descricaoSolicitacao').characterCounter();
 
-                                                    if (isset($retorno) && !empty($retorno)) {
-                                                        if ($retorno == "sucesso") {
-                                                ?>
-                            
-                                                             M.toast({html: 'Cadastro efetuado com sucesso! Aguarde, você será redirecionado para a tela de login.', completeCallback: function(){window.location.href="<?php echo BASE_URL;?>login";}, classes: 'teal accent-4'});
-                            
-                                                            <?php
-                                                        } elseif ($retorno == "erro") {
-                                                            ?>
-                            
-                                                             M.toast({html: 'Não foi possível concluir sua solicitação, tente novamente.', completeCallback: function(){window.location.href="<?php echo BASE_URL;?>login/registro";}, classes: 'red lighten-2'});
-                            
-                                                            <?php
-                                                        } elseif ($retorno == "existente") {
-                                                             ?>
-                            
 
-                                                          M.toast({html: 'Você já possui um usuário cadastrado, aguarde a liberação do mesmo.', completeCallback: function(){window.location.href="<?php echo BASE_URL;?>login/registro";}, classes: 'red lighten-2'});
-                            
-                                                            <?php
-                                                        }
-                                                        }
-                                                        ?>
+<?php
+if (isset($retorno) && !empty($retorno)) {
+    if ($retorno == "sucesso") {
+        ?>
+
+                                                        M.toast({html: 'Cadastro efetuado com sucesso! Aguarde, você será redirecionado para a tela de login.', completeCallback: function () {
+                                                                window.location.href = "<?php echo BASE_URL; ?>login";
+                                                            }, classes: 'teal accent-4'});
+
+        <?php
+    } elseif ($retorno == "erro") {
+        ?>
+
+                                                        M.toast({html: 'Não foi possível concluir sua solicitação, tente novamente.', completeCallback: function () {
+                                                                window.location.href = "<?php echo BASE_URL; ?>login/registro";
+                                                            }, classes: 'red lighten-2'});
+
+        <?php
+    } elseif ($retorno == "existente") {
+        ?>
+
+
+                                                        M.toast({html: 'Você já possui um usuário cadastrado, aguarde a liberação do mesmo.', completeCallback: function () {
+                                                                window.location.href = "<?php echo BASE_URL; ?>login/registro";
+                                                            }, classes: 'red lighten-2'});
+
+        <?php
+    }
+}
+?>
                                             });
                                             // valida campo somente numeros //
                                             function SomenteNumero(e) {
@@ -335,6 +350,8 @@
                                                 $("#cidadeConvidado").val("");
 // $("#estadoConvidado").val("")
                                                 $("#cepConvidado").val("");
+                                                
+                                                
 
                                             }
 

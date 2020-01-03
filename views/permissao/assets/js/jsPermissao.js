@@ -235,50 +235,44 @@ $(document).ready(function () {
     
      $(document).on("click", ".liberaAcessoConvidado", function () {
         cpfConvidado = $(this).parent().parent().find('.cpfConvidado').html();
-        
-        alert(cpfConvidado)
-       /* $.ajax({
+       
+       $.ajax({
             type: 'POST',
-            url: '/ajaxPermissao/ativaPerfil',
-            data: {idPerfil: idPerfil, tipo: 3},
+            url: '/ajaxPermissao/liberaConvidado',
+            data: {cpfConvidado: cpfConvidado},
             async: false,
             success: function (r) {
                 if (r == "success") {
-                    M.toast({html: 'Perfil ativado com sucesso!', classes: 'teal accent-4'});
-                    //$('#administraPerfis').load(document.URL + ' #administraPerfis');
-                    carregaTabelaPerfis();
-                    // $("#tabelaPerfis").load(" #tabelaPerfis > *");
-                    //           $('#tabelaPerfis').DataTable().ajax.reload();
+                    M.toast({html: 'Acesso liberado com sucesso!', classes: 'teal accent-4'});
+                    carregaTabelaConvidado();                    
                 } else {
                     M.toast({html: 'Não foi possível atender a solicitação, tente novamente.', classes: 'red lighten-2'});
+                    carregaTabelaConvidado();  
                 }
 
             }
-        });*/
+        });
     });
     
       $(document).on("click", ".bloqueiaAcessoConvidado", function () {
         cpfConvidado = $(this).parent().parent().find('.cpfConvidado').html();
         
-        alert(cpfConvidado)
-       /* $.ajax({
+         $.ajax({
             type: 'POST',
-            url: '/ajaxPermissao/ativaPerfil',
-            data: {idPerfil: idPerfil, tipo: 3},
+            url: '/ajaxPermissao/naoLiberaConvidado',
+            data: {cpfConvidado: cpfConvidado},
             async: false,
             success: function (r) {
                 if (r == "success") {
-                    M.toast({html: 'Perfil ativado com sucesso!', classes: 'teal accent-4'});
-                    //$('#administraPerfis').load(document.URL + ' #administraPerfis');
-                    carregaTabelaPerfis();
-                    // $("#tabelaPerfis").load(" #tabelaPerfis > *");
-                    //           $('#tabelaPerfis').DataTable().ajax.reload();
+                    M.toast({html: 'O acesso não liberado com sucesso!', classes: 'teal accent-4'});
+                    carregaTabelaConvidado();                    
                 } else {
                     M.toast({html: 'Não foi possível atender a solicitação, tente novamente.', classes: 'red lighten-2'});
+                    carregaTabelaConvidado();  
                 }
 
             }
-        });*/
+        });
     });
     
     $(document).on("click", ".visualizaDadosConvidado", function () {
@@ -291,7 +285,9 @@ $(document).ready(function () {
             data: {cpf: cpfConvidado},
             async: false,
             success: function (r) {
-                alert(r)
+                $("#dadosConvidadoDetalhe").html(r); 
+                M.updateTextFields();
+                $('#modalDadosConvidado').modal('open');
 
             }
         });

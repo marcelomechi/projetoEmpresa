@@ -140,17 +140,16 @@ class ajaxPermissaoController extends Controller {
     public function carregaTabelaConvidado() {
         $classe = new Permissao();
         $dadosConvidados = $classe->consultaConvidados();
-        if ($dadosConvidados != false) {
+        
             $dados = array(
-                'tabelaConvidados' => $dadosConvidados,
+                'tabelaConvidados' => $dadosConvidados === false ? array() : $dadosConvidados,
                 'tipo' => 3
             );
 
             $this->loadViewAjax('permissao', 'ajaxPermissao', $dados);
-        }
     }
 
-    public function visualizaDadoConvidado($cpf) {
+    public function visualizaDadoConvidado() {
         if (isset($_POST['cpf']) && !empty($_POST['cpf'])) {
             $classe = new Permissao();
             $retorno = $classe->consultaConvidadoIndividual($_POST['cpf']);
@@ -163,6 +162,38 @@ class ajaxPermissaoController extends Controller {
 
                 $this->loadViewAjax('permissao', 'ajaxPermissao', $dados);
             }
+        }
+    }
+
+    public function liberaConvidado() {
+        if (isset($_POST['cpfConvidado']) && !empty($_POST['cpfConvidado'])) {
+            $cpf = preg_replace("/[^0-9]/", "",$_POST['cpfConvidado']);
+
+            $classe = new Permissao();
+            $retorno = $classe->liberaUsuarioConvidado($cpf);
+            if($retorno == true){
+                echo "success";
+            }else{
+                echo "fail";
+            }
+        } else {
+            return false;
+        }
+    }
+    
+    public function naoLiberaConvidado() {
+        if (isset($_POST['cpfConvidado']) && !empty($_POST['cpfConvidado'])) {
+            $cpf = preg_replace("/[^0-9]/", "",$_POST['cpfConvidado']);
+
+            $classe = new Permissao();
+            $retorno = $classe-> naoLiberaUsuarioConvidado($cpf);
+            if($retorno == true){
+                echo "success";
+            }else{
+                echo "fail";
+            }
+        } else {
+            return false;
         }
     }
 

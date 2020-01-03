@@ -21,7 +21,7 @@ class LoginController extends Controller {
 
     public function cadastraConvidado() {
 
-        if (isset($_POST['nomeConvidado']) && !empty($_POST['nomeConvidado']) && isset($_POST['cpfConvidado']) && !empty($_POST['cpfConvidado']) && isset($_POST['emailConvidado']) && !empty($_POST['emailConvidado']) && isset($_POST['cargoConvidado']) && !empty($_POST['cargoConvidado']) && isset($_POST['sexoConvidado']) && !empty($_POST['sexoConvidado']) && isset($_POST['cepConvidado']) && !empty($_POST['cepConvidado']) && isset($_POST['ruaConvidado']) && !empty($_POST['ruaConvidado']) && isset($_POST['bairroConvidado']) && !empty($_POST['bairroConvidado']) && isset($_POST['cidadeConvidado']) && !empty($_POST['cidadeConvidado'])
+        if (isset($_POST['nomeConvidado']) && !empty($_POST['nomeConvidado']) && isset($_POST['cpfConvidado']) && !empty($_POST['cpfConvidado']) && isset($_POST['emailConvidado']) && !empty($_POST['emailConvidado']) && isset($_POST['cargoConvidado']) && !empty($_POST['cargoConvidado']) && isset($_POST['sexoConvidado']) && !empty($_POST['sexoConvidado']) && isset($_POST['cepConvidado']) && !empty($_POST['cepConvidado']) && isset($_POST['ruaConvidado']) && !empty($_POST['ruaConvidado']) && isset($_POST['bairroConvidado']) && !empty($_POST['bairroConvidado']) && isset($_POST['cidadeConvidado']) && !empty($_POST['cidadeConvidado'] && isset($_POST['descricaoSolicitacao']) && !empty($_POST['descricaoSolicitacao']))
         /* && isset($_POST['estadoConvidado']) && !empty($_POST['estadoConvidado']) */) {
             $nome = addslashes($_POST['nomeConvidado']);
             $cpf = preg_replace("/[^0-9]/", "", $_POST['cpfConvidado']);
@@ -34,21 +34,23 @@ class LoginController extends Controller {
             $cidade = addslashes($_POST['cidadeConvidado']);
             //	$estado = addslashes($_POST['estadoConvidado']);
             $numero = isset($_POST['numeroConvidado']) ? addslashes($_POST['numeroConvidado']) : null;
+            $descricaoSolicitacao = addslashes($_POST['descricaoSolicitacao']);
             //	$complemento = isset($_POST['complementoConvidado']) ? addslashes($_POST['complementoConvidado']) : null;
 
 
             $arrayConvidado = array(
-                'nome' => $nome,
+                'nome' => strtoupper($nome),
                 'cpf' => $cpf,
                 'email' => $email,
-                'cargo' => $cargo,
-                'sexo' => $sexo,
+                'cargo' => strtoupper($cargo),
+                'sexo' => strtoupper($sexo),
                 'cep' => $cep,
-                'rua' => $rua,
-                'bairro' => $bairro,
-                'cidade' => $cidade,
+                'rua' => strtoupper($rua),
+                'bairro' => strtoupper($bairro),
+                'cidade' => strtoupper($cidade),
                 //'estado' => $estado,
-                'numero' => $numero,
+                'numero' => strtoupper($numero),
+                'descricao' => $descricaoSolicitacao
                     //'complemento' => $complemento
             );
 

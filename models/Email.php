@@ -24,16 +24,19 @@ class Email {
 
         if ($assunto == 1) {
             $textoAssunto = "Solicitação de Alteração de Senha";
-        } else if ($assunto = 2) {
-            return false;
-            // $textoAssunto = "Solicitação de Alteração de Senha";
-        } else {
+        }elseif($assunto == 2 || $assunto == 3 ) {
+             $textoAssunto = "RES: Solicitação de acesso";
+        }else{
             $textoAssunto = $assunto;
         }
 
 
-        if ($mensagem == 1) {
+        if ($mensagem == 1) { // alteração de senha
             $textoMensagem = "<div style='font-family: Calibri'><b>Olá, ".$nome."!</b><br><br>Recebemos sua solicitação, para prosseguir com a alteração, digite o token abaixo para alterar sua senha.<br><br>".$link."<br><br> Equipe M.I.S.</div>";
+        }elseif ($mensagem == 2){ // liberacao de acesso convidado
+            $textoMensagem = "<div style='font-family: Calibri'><b>Olá, ".$nome."!</b><br><br>Recebemos sua solicitação, seu cadastro está liberado, utilize seu CPF como usuário e senha para acesso ao sistema.<br><br>".$link."<br><br> Equipe M.I.S.</div>";
+        }elseif ($mensagem == 3){ // acesso convidado negado
+            $textoMensagem = "<div style='font-family: Calibri'><b>Olá, ".$nome."!</b><br><br>Recebemos sua solicitação, porém não foi possível liberar seu acesso, dúvidas entre em contato conosco.<br><br>".$link."<br><br> Equipe M.I.S.</div>";
         }else{
             $textoMensagem = $mensagem;
         }

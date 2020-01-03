@@ -117,12 +117,8 @@ if ($tipo == 1):
             </tr>
         </thead>
         <tbody>
-            <?php
-            $classe = new Permissao();
-            $dadosConvidados = $classe->consultaConvidados();
-
-            foreach ($dadosConvidados as $convidado):
-                ?>
+           
+            <?php foreach ($tabelaConvidados as $convidado): ?>
                 <tr>
                     <td class="cpfConvidado"><?php echo $convidado['CPF'] ?></td>
                     <td><?php echo $convidado['NOME'] ?></td>
@@ -147,18 +143,51 @@ if ($tipo == 1):
         });
     </script>
 <?php elseif ($tipo == 4): ?>
-
-    <div id="modalNovoPerfil" class="modal">
-        <div class="modal-content">
-                
-
-        </div>
-        <div class = "modal-footer">
-            <div class = "input-field col s12">
-                <a class = "fechaModalNovoPerfil modal-close waves-effect waves-light btn-small red">Fechar</a>
-                <a class = "gravaNovoPerfil waves-effect waves-light btn-small">Gravar</a>
-            </div>
-        </div>
+    <div class="input-field">
+        <input id="nomeConvidadoDetalhe" readonly type="text" value="<?php echo $dadosConvidado['NOME']; ?>">
+        <label for="nomeConvidadoDetalhe">Nome</label>        
     </div>
-
+    <div class="input-field">
+        <input id="cpfConvidadoDetalhe" readonly type="text" class="cpf" value="<?php echo $dadosConvidado['CPF']; ?>">
+        <label for="cpfConvidadoDetalhe">CPF</label>        
+    </div>
+    <div class="input-field">
+        <input id="funcaoConvidadoDetalhe" readonly type="text" value="<?php echo $dadosConvidado['FUNCAO']; ?>">
+        <label for="funcaoConvidadoDetalhe">Cargo</label>        
+    </div>
+    <div class="input-field">
+        <input id="cepConvidadoDetalhe" readonly type="text" class="cep" value="<?php echo str_pad($dadosConvidado['CEP'], 8, '0', STR_PAD_LEFT); ?>">
+        <label for="cepConvidadoDetalhe">CEP</label>        
+    </div>
+    <div class="input-field">
+        <input id="ruaConvidadoDetalhe" readonly type="text" value="<?php echo $dadosConvidado['RUA']; ?>">
+        <label for="ruaConvidadoDetalhe">Rua</label>        
+    </div>
+    <div class="input-field">
+        <input id="numeroConvidadoDetalhe" readonly type="text" value="<?php echo $dadosConvidado['NUMERO']; ?>">
+        <label for="numeroConvidadoDetalhe">Número</label>        
+    </div>
+    <div class="input-field">
+        <input id="bairroConvidadoDetalhe" readonly type="text" value="<?php echo $dadosConvidado['BAIRRO']; ?>">
+        <label for="bairroConvidadoDetalhe">Bairro</label>        
+    </div>
+    <div class="input-field">
+        <input id="cidadeConvidadoDetalhe" readonly type="text" value="<?php echo $dadosConvidado['CIDADE']; ?>">
+        <label for="cidadeConvidadoDetalhe">Cidade</label>        
+    </div>
+    <div class="input-field">
+        <input id="sexoConvidadoDetalhe" readonly type="text" value="<?php echo $dadosConvidado['SEXO']; ?>">
+        <label for="sexoConvidadoDetalhe">Sexo</label>        
+    </div>
+    <div class="input-field">
+        <textarea id="descricaoSolicitacao" name="descricaoSolicitacao" class="materialize-textarea" readonly><?php echo $dadosConvidado['DESCRICAO_LIBERACAO']; ?></textarea>
+        <label for="descricaoSolicitacao">Observações</label>
+    </div>
+    <script>
+        $(document).ready(function () {
+            $('.cep').mask('00000-000');
+            $('.cpf').mask('000.000.000-00', {reverse: true});
+            M.textareaAutoResize($('#descricaoSolicitacao'));
+        });
+    </script>
 <?php endif; ?>

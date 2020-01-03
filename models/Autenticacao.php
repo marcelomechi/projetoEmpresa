@@ -279,16 +279,19 @@ class Autenticacao extends Model {
 
     public function gravaUsuarioConvidado($dados = array()) {
         
-       // $cep = $dados['cep'];
-        
-        //var_dump($cep);
-        //exit;
+       if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
+            $ip = $_SERVER['HTTP_CLIENT_IP'];
+        } elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+            $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+        } else {
+            $ip = $_SERVER['REMOTE_ADDR'];
+        }
         
         $valida = $this -> validaCadastroConvidado($dados['cpf']);
 
         if ($valida === true) {
 
-            $sql = "INSERT INTO TP_CHRONUS_CONVIDADO_APROVACAO (CPF, NOME, FUNCAO, CEP, RUA, NUMERO, BAIRRO, CIDADE, SEXO, EMAIL, ATIVO) 
+            $sql = "INSERT INTO TP_CHRONUS_CONVIDADO_APROVACAO (CPF, NOME, FUNCAO, CEP, RUA, NUMERO, BAIRRO, CIDADE, SEXO, EMAIL, ATIVO, DESCRICAO_LIBERACAO,IP) 
                 VALUES (
                             :cpf,
                             :nome,
@@ -300,7 +303,9 @@ class Autenticacao extends Model {
                             :cidade,
                             :sexo,
                             :email,
-                            0
+                            0,
+                            :descricaoLiberacao,
+                            :ip
                         )";
             $sql = $this->db->prepare($sql);
             $sql->bindValue(':cpf', $dados['cpf']);
@@ -313,6 +318,8 @@ class Autenticacao extends Model {
             $sql->bindValue(':cidade', $dados['cidade']);
             $sql->bindValue(':sexo', $dados['sexo']);
             $sql->bindValue(':email', $dados['email']);
+            $sql->bindValue(':descricaoLiberacao', $dados['descricao']);
+            $sql->bindValue(':ip', $ip);
             $retorno = $sql->execute();
 
             if ($retorno) {
